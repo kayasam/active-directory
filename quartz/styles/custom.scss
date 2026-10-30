@@ -1,0 +1,244 @@
+@use "./variables.scss" as *;
+@use "./pc.scss";
+@use "./explorer-pc.scss";
+@use "./course-navigation.scss";
+@use "./course-resources.scss";
+@use "./support-viewer.scss";
+@use "./site-refresh.scss";
+
+body[data-slug="00-contexte/index"] .page-listing {
+  display: none;
+}
+
+body[data-slug="00-contexte/index"] article a.context-next,
+body[data-slug="00-contexte/index"] article a.context-next.internal {
+  display: inline-flex;
+  margin-top: 0.4rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.55rem;
+  color: #fff;
+  background: var(--secondary);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+@media all and ($desktop) {
+  .page > #quartz-body > .sidebar {
+    padding-top: 1rem;
+  }
+}
+
+body[data-slug="index"] .article-title,
+body[data-slug="index"] .content-meta,
+body[data-slug="index"] .note-properties,
+body[data-slug="index"] article .markdown-preview-view > h1:first-child,
+body[data-slug$="/index"] .note-properties,
+body[data-slug$="/index"] .content-meta,
+body[data-slug$="/index"] article .markdown-preview-view > h1:first-child {
+  display: none;
+}
+
+article a[href$="-interactif.html"]:not(.resource-button),
+article a[href*="/telechargements/"][href$=".md"]:not(.resource-download) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.45rem;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+article a[href$="-interactif.html"]:not(.resource-button) {
+  border: 1px solid color-mix(in srgb, var(--secondary) 55%, transparent);
+  background-color: var(--secondary);
+}
+
+article a[href*="/telechargements/"][href$=".md"]:not(.resource-download) {
+  border: 1px solid color-mix(in srgb, #0d9668 55%, transparent);
+  background-color: #0d9668;
+}
+
+article a[href$="-interactif.html"]:not(.resource-button):hover,
+article a[href*="/telechargements/"][href$=".md"]:not(.resource-download):hover {
+  color: #fff;
+  filter: brightness(1.13);
+}
+
+.obsidian-download {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, var(--lightgray));
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--secondary) 10%, var(--light));
+  box-shadow: 0 0.2rem 0.8rem rgb(0 0 0 / 8%);
+}
+
+.obsidian-download__icon {
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  place-items: center;
+  border-radius: 0.7rem;
+  color: #fff;
+  background: var(--secondary);
+  font-family: var(--codeFont);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.obsidian-download__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.obsidian-download__content strong {
+  color: var(--dark);
+  font-size: 1.05rem;
+}
+.obsidian-download__content span {
+  color: var(--darkgray);
+  font-size: 0.92rem;
+}
+
+.obsidian-download a.obsidian-download__button {
+  padding: 0.7rem 1rem;
+  border-radius: 0.55rem;
+  color: #fff;
+  background: var(--secondary);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.obsidian-download a.obsidian-download__button:hover {
+  color: #fff;
+  filter: brightness(1.13);
+}
+
+.home-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  margin: 1rem 0 2rem;
+}
+.home-links a {
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media all and ($mobile) {
+  .obsidian-download {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .obsidian-download a.obsidian-download__button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+.home-track {
+  --home-accent: #007a87;
+}
+
+.home-track--bash {
+  --home-accent: #8956ee;
+}
+
+.home-terminal-icon {
+  font-family: var(--codeFont);
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--home-accent);
+}
+
+.home-shortcuts a {
+  min-height: 4rem;
+}
+
+.home-track__logo img {
+  width: 4.5rem;
+  height: 4.5rem;
+  max-height: 4.5rem;
+  object-fit: contain;
+}
+
+.brand-credits {
+  margin-top: 1.5rem;
+  color: var(--darkgray);
+  font-size: 0.75rem;
+}
+.chapter-pagination {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Controls must keep readable text when the dark palette uses a light accent. */
+:root[saved-theme="dark"] article a[href$="-interactif.html"]:not(.resource-button),
+:root[saved-theme="dark"] article a[href*="/cours/quiz/"]:not(.resource-button),
+:root[saved-theme="dark"] .home-track__start,
+:root[saved-theme="dark"] .obsidian-download__button {
+  color: #102331;
+}
+
+:root[saved-theme="dark"] .home-track__start:hover,
+:root[saved-theme="dark"] .obsidian-download__button:hover,
+:root[saved-theme="dark"] article a[href$="-interactif.html"]:not(.resource-button):hover {
+  color: #102331;
+}
+
+:root[saved-theme="dark"] input,
+:root[saved-theme="dark"] select,
+:root[saved-theme="dark"] textarea {
+  color: var(--dark);
+  background-color: var(--lightgray);
+}
+
+/* Select the whole chapter card; its text must keep its normal geometry. */
+.explorer-content .folder-container.support-current-chapter,
+.explorer-content .folder-container:has(a:is(.active, .is-active, .course-current-page, [aria-current="page"])) {
+  border-color: var(--chapter-accent);
+  background: color-mix(in srgb, var(--chapter-accent) 12%, var(--light));
+}
+.explorer-content .folder-container a.folder-button,
+.explorer-content .folder-container a.folder-button:is(.active, .is-active, .course-current-page, [aria-current="page"]) {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  color: var(--dark);
+  opacity: 1;
+}
+.explorer-content .folder-container .folder-title { background: transparent; }
+
+/* Appendices use a purple cue; chapter cards retain their course color. */
+.explorer-content .folder-container:is([data-folderpath^="bash/ateliers"], [data-folderpath^="bash/jeu"], [data-folderpath^="bash/tp"]) {
+  --chapter-accent: #71539a;
+  border-style: dashed;
+  border-left-style: solid;
+}
+:root[saved-theme="dark"] .explorer-content .folder-container:is([data-folderpath^="bash/ateliers"], [data-folderpath^="bash/jeu"], [data-folderpath^="bash/tp"]) {
+  --chapter-accent: #c9afe8;
+}
+.explorer-content .folder-container:is([data-folderpath^="bash/ateliers"], [data-folderpath^="bash/jeu"], [data-folderpath^="bash/tp"])::before {
+  background-image: none;
+  background-color: color-mix(in srgb, var(--chapter-accent) 13%, var(--light));
+  border-radius: .5rem;
+  color: var(--chapter-accent);
+  font: 750 .7rem var(--codeFont);
+  content: "TP";
+}
+.explorer-content .folder-container[data-folderpath^="bash/jeu"]::before { content: "JEU"; }
+
+/* The chapter already links to its TP: omit Quartz's duplicate folder listing. */
+body:has(.chapter-resources) .page-listing { display: none; }

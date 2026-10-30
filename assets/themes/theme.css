@@ -1,0 +1,251 @@
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101923;
+  --surface: #192936;
+  --surface2: #243b4c;
+  --panel: #192936;
+  --panel-2: #243b4c;
+  --border: #587488;
+  --text: #edf5fb;
+  --text-dim: #b7c9d8;
+  --muted: #b7c9d8;
+  --accent: #72dfeb;
+  --accent2: #a5ecf4;
+  --accent-2: #a5ecf4;
+  --on-accent: #102331;
+  --warn: #ffd17c;
+  --danger: #ffabb2;
+  --wrong: #ffabb2;
+  --success: #91e6b3;
+  --correct: #91e6b3;
+  --code-bg: #121f2c;
+  --syntax-command: #a8d5ff;
+  --syntax-flag: #ffe29a;
+  --syntax-arg: #91e6b3;
+  --syntax-path: #b9b3ff;
+}
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f7fa;
+  --surface: #ffffff;
+  --surface2: #e5edf3;
+  --panel: #ffffff;
+  --panel-2: #e5edf3;
+  --border: #8196a6;
+  --text: #182d3e;
+  --text-dim: #455d70;
+  --muted: #455d70;
+  --accent: #006575;
+  --accent2: #005969;
+  --accent-2: #005969;
+  --on-accent: #ffffff;
+  --warn: #805000;
+  --danger: #a32336;
+  --wrong: #a32336;
+  --success: #17623c;
+  --correct: #17623c;
+  --code-bg: #eef3f7;
+  --syntax-command: #174f96;
+  --syntax-flag: #795000;
+  --syntax-arg: #17623c;
+  --syntax-path: #66449a;
+}
+html[data-theme] body {
+  background: var(--bg);
+  color: var(--text);
+}
+button,
+input,
+select,
+textarea {
+  color: var(--text);
+  font: inherit;
+}
+button:disabled {
+  opacity: 1;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+html[data-theme] header,
+html[data-theme] .header {
+  background: var(--surface);
+  color: var(--text);
+}
+html[data-theme] header h1,
+html[data-theme] .header h1 {
+  color: var(--text);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+html[data-theme] a {
+  color: var(--accent2);
+}
+html[data-theme] code,
+html[data-theme] pre {
+  color: var(--text);
+}
+html[data-theme] .cmd {
+  color: var(--syntax-command);
+}
+html[data-theme] .flag {
+  color: var(--syntax-flag);
+}
+html[data-theme] .arg {
+  color: var(--syntax-arg);
+}
+html[data-theme] .path {
+  color: var(--syntax-path);
+}
+html[data-theme] .comment {
+  color: var(--text-dim);
+}
+html[data-theme] .perm-char.x,
+html[data-theme] .perm-char.type {
+  color: var(--syntax-path);
+}
+html[data-theme] .callout.note,
+html[data-theme] .callout-note {
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+html[data-theme] .callout.tip,
+html[data-theme] .callout-tip {
+  background: color-mix(in srgb, var(--success) 8%, var(--surface));
+}
+html[data-theme] .callout.warn,
+html[data-theme] .callout-warn {
+  background: color-mix(in srgb, var(--warn) 8%, var(--surface));
+}
+html[data-theme] .callout.danger,
+html[data-theme] .callout-danger,
+html[data-theme] .danger-box {
+  background: color-mix(in srgb, var(--danger) 8%, var(--surface));
+}
+html[data-theme] .badge,
+html[data-theme] .btn-restart,
+html[data-theme] .primary-button,
+html[data-theme] .btn-quiz,
+html[data-theme] .step-num,
+html[data-theme] .prompt-part.active,
+html[data-theme] .app-filter-btn.active,
+html[data-theme] .app-filter-btn:hover,
+html[data-theme] .filter-btn.active,
+html[data-theme] .filter-btn:hover,
+html[data-theme] .copy-btn:hover,
+html[data-theme] .copy-btn.copied {
+  color: var(--on-accent);
+  background: var(--accent);
+}
+html[data-theme] nav button.active,
+html[data-theme] .nav button.active {
+  color: var(--accent2);
+  background: var(--surface2);
+  border-color: var(--accent);
+}
+html[data-theme] [style*="color:#"],
+html[data-theme] [style*="color: #"] {
+  color: var(--accent2) !important;
+}
+html[data-theme] .tag {
+  color: var(--accent2);
+  background: var(--surface2);
+}
+html[data-theme] .pipe-chain .pc-cmd {
+  color: var(--accent2);
+  background: var(--surface2);
+}
+html[data-theme] .op,
+html[data-theme] .pc-pipe {
+  color: var(--syntax-path);
+}
+html[data-theme] td.win {
+  color: var(--syntax-command);
+}
+html[data-theme] .svc-btn.stop {
+  color: var(--danger);
+}
+html[data-theme] .course-site-nav {
+  background: var(--surface);
+}
+.theme-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.7rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.theme-switch {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  font-weight: 650;
+}
+.course-quiz-frame {
+  width: 100%;
+  height: 1100px;
+  border: 0;
+  border-radius: 12px;
+  display: block;
+}
+html[data-theme] .quiz-hero,
+html[data-theme] .quiz-panel {
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 9%);
+}
+html[data-theme] .answer {
+  color: var(--text);
+  background: var(--panel-2);
+}
+html[data-theme] .answer.correct {
+  background: color-mix(in srgb, var(--correct) 12%, var(--panel));
+}
+html[data-theme] .answer.wrong {
+  background: color-mix(in srgb, var(--wrong) 12%, var(--panel));
+}
+html[data-theme] .primary-button:disabled {
+  opacity: 1;
+  color: var(--text-dim);
+  background: var(--surface2);
+  cursor: not-allowed;
+}
+html[data-theme] .progress-bar {
+  background: var(--accent);
+}
+/* These miniatures represent a screen or terminal and intentionally keep a dark surface. */
+html[data-theme] .gnome-mock,
+html[data-theme] .gnome-topbar,
+html[data-theme] .gnome-desktop,
+html[data-theme] .gnome-dock,
+html[data-theme] .terminal-mock,
+html[data-theme] .window-mock {
+  color: #edf5fb;
+}
+html[data-theme] .terminal-mock {
+  background: #121f2c;
+}
+html[data-theme] .terminal-mock * {
+  color: #edf5fb;
+}
+html[data-theme] .window-mock code,
+html[data-theme] .window-mock pre {
+  color: #edf5fb;
+}
+@media (max-width: 600px) {
+  .quiz-topbar {
+    flex-wrap: wrap;
+  }
+  .theme-toolbar {
+    padding: 0.5rem;
+  }
+  .course-quiz-frame {
+    height: 1250px;
+  }
+}

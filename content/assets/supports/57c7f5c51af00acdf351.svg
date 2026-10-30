@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 780" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAFAFA"/><stop offset="100%" style="stop-color:#F0F0F0"/>
+    </linearGradient>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#00000018"/></filter>
+    <marker id="aN" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#00897B"/></marker>
+  </defs>
+
+  <rect width="1180" height="780" fill="url(#bg)" rx="15"/>
+
+  <text x="590" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#333">Le montage du lab &#8212; ce qu'on construit sur votre machine</text>
+  <text x="590" y="62" text-anchor="middle" font-size="13" fill="#888">Tout tient sur un seul PC : 2 machines virtuelles reliees par un switch virtuel, avec un acces Internet via NAT.</text>
+
+  <!-- INTERNET -->
+  <ellipse cx="985" cy="140" rx="110" ry="42" fill="#ECEFF1" stroke="#607D8B" stroke-width="2.5" filter="url(#sh)"/>
+  <text x="985" y="135" text-anchor="middle" font-size="15" font-weight="bold" fill="#455A64">INTERNET</text>
+  <text x="985" y="155" text-anchor="middle" font-size="10.5" fill="#78909C">Windows Update</text>
+
+  <!-- CADRE HOTE -->
+  <rect x="40" y="205" width="1100" height="415" rx="16" fill="#fff" stroke="#455A64" stroke-width="3" stroke-dasharray="10 5" filter="url(#sh)"/>
+  <rect x="40" y="205" width="330" height="34" rx="16" fill="#455A64"/>
+  <rect x="40" y="222" width="330" height="17" fill="#455A64"/>
+  <text x="62" y="229" font-size="14" font-weight="bold" fill="#fff">VOTRE PC &#8212; l'hote Hyper-V</text>
+
+  <!-- CARTE PHYSIQUE -->
+  <rect x="800" y="262" width="300" height="86" rx="12" fill="#ECEFF1" stroke="#607D8B" stroke-width="2" filter="url(#sh)"/>
+  <text x="950" y="288" text-anchor="middle" font-size="13" font-weight="bold" fill="#455A64">Carte reseau physique</text>
+  <text x="950" y="309" text-anchor="middle" font-size="11" fill="#666">Wi-Fi ou Ethernet de la salle</text>
+  <text x="950" y="331" text-anchor="middle" font-size="10.5" font-style="italic" fill="#888">on n'y touche pas</text>
+  <line x1="950" y1="262" x2="950" y2="185" stroke="#607D8B" stroke-width="2.5"/>
+
+  <!-- NAT -->
+  <rect x="800" y="390" width="300" height="100" rx="12" fill="#E0F2F1" stroke="#00897B" stroke-width="2.5" filter="url(#sh)"/>
+  <text x="950" y="416" text-anchor="middle" font-size="14" font-weight="bold" fill="#00695C">NAT Hyper-V</text>
+  <text x="950" y="437" text-anchor="middle" font-size="11" fill="#333">New-NetNat</text>
+  <text x="950" y="457" text-anchor="middle" font-size="11" fill="#333">Passerelle : <tspan font-weight="bold">192.168.3.254</tspan></text>
+  <text x="950" y="477" text-anchor="middle" font-size="10.5" font-style="italic" fill="#00897B">donne Internet aux 2 VM</text>
+  <line x1="950" y1="390" x2="950" y2="352" stroke="#00897B" stroke-width="2.5"/>
+
+  <!-- VSWITCH -->
+  <rect x="90" y="530" width="1010" height="58" rx="10" fill="#37474F" filter="url(#sh)"/>
+  <text x="595" y="555" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">vSwitch-Rennes &#8212; commutateur virtuel INTERNE &#183; 192.168.3.0/24</text>
+  <text x="595" y="575" text-anchor="middle" font-size="11" fill="#B0BEC5">Interne = les VM se voient entre elles et voient l'hote, mais rien ne sort sans le NAT</text>
+  <line x1="950" y1="490" x2="950" y2="528" stroke="#00897B" stroke-width="3" marker-end="url(#aN)"/>
+
+  <!-- DC01 -->
+  <rect x="90" y="262" width="300" height="230" rx="14" fill="#E3F2FD" stroke="#1565C0" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="90" y="262" width="300" height="28" rx="14" fill="#1565C0"/>
+  <rect x="90" y="278" width="300" height="12" fill="#1565C0"/>
+  <text x="240" y="282" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">MACHINE VIRTUELLE 1</text>
+  <text x="240" y="315" text-anchor="middle" font-size="19" font-weight="bold" fill="#1565C0">DC01</text>
+  <line x1="115" y1="328" x2="365" y2="328" stroke="#1565C0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="115" y="349" font-size="11.5" fill="#333">Windows Server 2025 Standard</text>
+  <text x="115" y="369" font-size="11.5" fill="#333">4 vCPU &#183; 4 Go RAM &#183; 80 Go</text>
+  <text x="115" y="389" font-size="11.5" fill="#333">Generation 2 (UEFI)</text>
+  <line x1="115" y1="400" x2="365" y2="400" stroke="#1565C0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="115" y="421" font-size="11.5" font-weight="bold" fill="#1565C0">Role : AD DS + DNS</text>
+  <text x="115" y="441" font-size="11.5" fill="#333">Premier DC de la foret</text>
+  <rect x="115" y="453" width="250" height="28" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1"/>
+  <text x="240" y="472" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565C0">192.168.3.10 /24</text>
+  <line x1="240" y1="492" x2="240" y2="528" stroke="#1565C0" stroke-width="3"/>
+
+  <!-- DC02 -->
+  <rect x="440" y="262" width="300" height="230" rx="14" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="440" y="262" width="300" height="28" rx="14" fill="#2E7D32"/>
+  <rect x="440" y="278" width="300" height="12" fill="#2E7D32"/>
+  <text x="590" y="282" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">MACHINE VIRTUELLE 2</text>
+  <text x="590" y="315" text-anchor="middle" font-size="19" font-weight="bold" fill="#2E7D32">DC02</text>
+  <line x1="465" y1="328" x2="715" y2="328" stroke="#2E7D32" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="465" y="349" font-size="11.5" fill="#333">Windows Server 2025 Standard</text>
+  <text x="465" y="369" font-size="11.5" fill="#333">4 vCPU &#183; 4 Go RAM &#183; 80 Go</text>
+  <text x="465" y="389" font-size="11.5" fill="#333">Generation 2 (UEFI)</text>
+  <line x1="465" y1="400" x2="715" y2="400" stroke="#2E7D32" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="465" y="421" font-size="11.5" font-weight="bold" fill="#2E7D32">Role : DC additionnel + DFS</text>
+  <text x="465" y="441" font-size="11.5" fill="#333">Replique l'annuaire de DC01</text>
+  <rect x="465" y="453" width="250" height="28" rx="6" fill="#fff" stroke="#2E7D32" stroke-width="1"/>
+  <text x="590" y="472" text-anchor="middle" font-size="12" font-weight="bold" fill="#2E7D32">192.168.3.2 /24</text>
+  <line x1="590" y1="492" x2="590" y2="528" stroke="#2E7D32" stroke-width="3"/>
+
+  <!-- POWERSHELL DIRECT -->
+  <rect x="40" y="645" width="555" height="112" rx="12" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2" filter="url(#sh)"/>
+  <text x="317" y="672" text-anchor="middle" font-size="14" font-weight="bold" fill="#6A1B9A">PowerShell Direct : votre passe-droit</text>
+  <text x="62" y="697" font-size="11.5" fill="#333">Tant que les VM n'ont pas d'IP ni de reseau, on les pilote depuis l'hote</text>
+  <text x="62" y="717" font-size="11.5" fill="#333">avec <tspan font-weight="bold">Invoke-Command -VMName DC01</tspan> : ca passe par le bus Hyper-V,</text>
+  <text x="62" y="737" font-size="11.5" fill="#333">pas par le reseau. Plus besoin de taper dans la console de la VM.</text>
+
+  <!-- PIEGE -->
+  <rect x="625" y="645" width="515" height="112" rx="12" fill="#FFEBEE" stroke="#C62828" stroke-width="2" filter="url(#sh)"/>
+  <text x="882" y="672" text-anchor="middle" font-size="14" font-weight="bold" fill="#C62828">Pourquoi un switch INTERNE et pas EXTERNE ?</text>
+  <text x="648" y="697" font-size="11.5" fill="#333">Un switch Externe met les VM sur le reseau de la salle : elles prendraient</text>
+  <text x="648" y="717" font-size="11.5" fill="#333">une IP en DHCP, et 12 eleves creeraient 12 domaines sur le meme LAN.</text>
+  <text x="648" y="737" font-size="11.5" font-weight="bold" fill="#C62828">Interne + NAT = chacun son lab isole, avec quand meme Internet.</text>
+</svg>

@@ -1,0 +1,250 @@
+{
+  "id": "bash-01-shell-et-environnement",
+  "title": "Chapitre 01 — Le shell et son environnement",
+  "chapter": "Bash — Chapitre 01",
+  "track": "Bash",
+  "intro": "Vérifie les notions du cours. Chaque réponse est expliquée.",
+  "questions": [
+    {
+      "theme": "Bash — 01",
+      "question": "Quel programme interprète nos commandes dans cette formation ?",
+      "choices": [
+        "Bash",
+        "Le terminal",
+        "SSH",
+        "Le noyau uniquement"
+      ],
+      "answer": 0,
+      "explanation": "Le terminal affiche les échanges ; Bash interprète les commandes sur Debian."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Quel est le rôle de SSH ici ?",
+      "choices": [
+        "Créer automatiquement tous les scripts",
+        "Transporter les échanges avec la VM",
+        "Remplacer Bash",
+        "Afficher seulement des images"
+      ],
+      "answer": 1,
+      "explanation": "SSH relie le poste Windows à la VM distante."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que faut-il recopier depuis une ligne commençant par stagiaire@debian:~$ ?",
+      "choices": [
+        "Toute la ligne avec le signe $",
+        "Seulement le signe $",
+        "Seulement la commande après l'invite",
+        "Le nom de la machine uniquement"
+      ],
+      "answer": 2,
+      "explanation": "L'invite indique que le shell attend ; elle ne fait pas partie de la commande."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Sur la VM Debian du cours, quel programme lance /bin/sh ?",
+      "choices": [
+        "Bash dans tous les cas",
+        "PowerShell",
+        "nano",
+        "dash"
+      ],
+      "answer": 3,
+      "explanation": "Sur cette VM, /bin/sh est un lien vers dash. Ce choix peut varier selon le système."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Quelle commande identifie la cible réelle de /bin/sh ?",
+      "choices": [
+        "readlink -f /bin/sh",
+        "cat /bin/sh",
+        "mkdir /bin/sh",
+        "echo sh"
+      ],
+      "answer": 0,
+      "explanation": "readlink -f suit le lien symbolique jusqu'au programme réel."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que renseigne normalement $SHELL ?",
+      "choices": [
+        "Toujours le processus courant",
+        "Le shell de connexion configuré",
+        "Le dossier courant",
+        "La dernière commande lancée"
+      ],
+      "answer": 1,
+      "explanation": "$SHELL n'est pas automatiquement mise à jour quand on lance un autre interpréteur."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que fait bash -c 'echo Bonjour' ?",
+      "choices": [
+        "Il modifie définitivement le shell de connexion",
+        "Il ouvre nano",
+        "Un Bash enfant exécute la commande puis se termine",
+        "Il installe Bash"
+      ],
+      "answer": 2,
+      "explanation": "-c fournit une chaîne de commandes à un nouveau Bash."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Le parent est dans /home/stagiaire. Après ( cd /tmp ), où reste-t-il ?",
+      "choices": [
+        "/tmp",
+        "/",
+        "Dans aucun dossier",
+        "/home/stagiaire"
+      ],
+      "answer": 3,
+      "explanation": "Le cd agit dans le sous-shell créé par les parenthèses ; le parent conserve son dossier."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Un fichier créé dans un sous-shell disparaît-il à sa fin ?",
+      "choices": [
+        "Non, l'écriture reste sur le disque",
+        "Oui, tous les fichiers sont temporaires",
+        "Oui, sauf s'il est exécutable",
+        "Oui, sauf avec export"
+      ],
+      "answer": 0,
+      "explanation": "Le sous-shell isole notamment ses variables et son dossier courant, pas le disque."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Quel élément est une option dans ls -l /tmp ?",
+      "choices": [
+        "ls",
+        "-l",
+        "/tmp",
+        "Toute la ligne est une seule option"
+      ],
+      "answer": 1,
+      "explanation": "-l demande l'affichage détaillé ; /tmp est l'argument désignant le dossier."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que montre pwd ?",
+      "choices": [
+        "Le mot de passe",
+        "Les droits de tous les fichiers",
+        "Le dossier courant",
+        "La version de Bash"
+      ],
+      "answer": 2,
+      "explanation": "pwd affiche le chemin du dossier où le shell travaille."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que désigne ~ dans nos commandes Bash ?",
+      "choices": [
+        "La racine /",
+        "Le dossier /tmp",
+        "Le dernier fichier lu",
+        "Le dossier personnel"
+      ],
+      "answer": 3,
+      "explanation": "Le tilde est développé par le shell vers le dossier personnel dans ces usages."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Quel chemin est absolu ?",
+      "choices": [
+        "/home/stagiaire",
+        "messages",
+        "../messages",
+        "./journal.txt"
+      ],
+      "answer": 0,
+      "explanation": "Un chemin absolu commence par / ; les autres dépendent du dossier courant."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que fait cd .. ?",
+      "choices": [
+        "Il va toujours dans le dossier personnel",
+        "Il remonte au dossier parent",
+        "Il efface le dossier courant",
+        "Il ferme SSH"
+      ],
+      "answer": 1,
+      "explanation": ".. désigne le parent du dossier courant."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Pourquoi utiliser mkdir -p ~/atelier-bash/decouverte ?",
+      "choices": [
+        "Demander un mot de passe",
+        "Créer obligatoirement un fichier",
+        "Créer les parents manquants et accepter un dossier déjà présent",
+        "Effacer l'ancien atelier"
+      ],
+      "answer": 2,
+      "explanation": "-p facilite la préparation d'une arborescence, y compris lors d'une relance."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que fait echo Bonjour > journal.txt si le fichier existe ?",
+      "choices": [
+        "Il ajoute une ligne à la fin",
+        "Il refuse toujours d'écrire",
+        "Il renomme le fichier",
+        "Il remplace son contenu"
+      ],
+      "answer": 3,
+      "explanation": "> ouvre le fichier en remplacement avant l'exécution de la commande."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Quel opérateur ajoute du texte sans remplacer les lignes existantes ?",
+      "choices": [
+        ">>",
+        ">",
+        "|",
+        "<"
+      ],
+      "answer": 0,
+      "explanation": ">> ouvre la destination en ajout."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que fait le tube dans cat journal.txt | grep Radio ?",
+      "choices": [
+        "Il ajoute Radio au fichier",
+        "Il transmet la sortie de cat à grep",
+        "Il déplace le fichier",
+        "Il lance grep sur Windows"
+      ],
+      "answer": 1,
+      "explanation": "Le tube relie la sortie d'une commande à l'entrée de la suivante."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Que fait Ctrl+C dans le terminal ?",
+      "choices": [
+        "Il copie toujours un fichier",
+        "Il ferme forcément la VM",
+        "Il interrompt normalement la commande en cours",
+        "Il efface l'historique"
+      ],
+      "answer": 2,
+      "explanation": "Ctrl+C demande l'interruption du programme au premier plan."
+    },
+    {
+      "theme": "Bash — 01",
+      "question": "Quelle aide convient à la commande intégrée cd ?",
+      "choices": [
+        "cd --install",
+        "man --delete cd",
+        "echo help > cd",
+        "help cd"
+      ],
+      "answer": 3,
+      "explanation": "help explique les commandes intégrées à Bash, comme cd."
+    }
+  ],
+  "chapterLink": "../../01-shell-et-environnement/"
+}

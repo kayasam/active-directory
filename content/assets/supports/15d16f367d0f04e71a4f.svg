@@ -1,0 +1,310 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1400" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF8F0"/>
+      <stop offset="100%" style="stop-color:#F5E6D3"/>
+    </linearGradient>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8B4513"/>
+      <stop offset="100%" style="stop-color:#A0522D"/>
+    </linearGradient>
+    <linearGradient id="laboGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8D5B7"/>
+      <stop offset="100%" style="stop-color:#D4B896"/>
+    </linearGradient>
+    <linearGradient id="venteGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#C9E4CA"/>
+      <stop offset="100%" style="stop-color:#A8D5A9"/>
+    </linearGradient>
+    <linearGradient id="serviceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#FDF6EE"/>
+    </linearGradient>
+    <linearGradient id="serviceGradV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#F0F8F0"/>
+    </linearGradient>
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="112%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#00000022"/>
+    </filter>
+    <filter id="shadowLight" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#00000015"/>
+    </filter>
+  </defs>
+
+  <!-- Fond -->
+  <rect width="1800" height="1400" fill="url(#bgGrad)" rx="20"/>
+
+  <!-- Bordure décorative -->
+  <rect x="10" y="10" width="1780" height="1380" fill="none" stroke="#D2B48C" stroke-width="2" rx="15" stroke-dasharray="8,4"/>
+
+  <!-- Motif blé décoratif en haut -->
+  <text x="900" y="45" text-anchor="middle" font-size="22" fill="#C4A882" letter-spacing="8">&#127838; &#127858; &#129360; &#127856; &#127838; &#127858; &#129360; &#127856; &#127838; &#127858; &#129360; &#127856; &#127838;</text>
+
+  <!-- HEADER ENTREPRISE -->
+  <rect x="600" y="60" width="600" height="70" rx="35" fill="url(#headerGrad)" filter="url(#shadow)"/>
+  <text x="900" y="100" text-anchor="middle" font-size="28" font-weight="bold" fill="#FFF8F0" letter-spacing="2">&#127838; LE FOURNIL</text>
+  <text x="900" y="120" text-anchor="middle" font-size="11" fill="#F5DEB3">ad.fournil.lab</text>
+
+  <!-- Ligne vers entités -->
+  <line x1="900" y1="130" x2="900" y2="155" stroke="#8B4513" stroke-width="3"/>
+  <line x1="450" y1="155" x2="1350" y2="155" stroke="#8B4513" stroke-width="3"/>
+  <line x1="450" y1="155" x2="450" y2="175" stroke="#8B4513" stroke-width="3"/>
+  <line x1="1350" y1="155" x2="1350" y2="175" stroke="#8B4513" stroke-width="3"/>
+
+  <!-- ================================================================== -->
+  <!-- ENTITÉ LABORATOIRE (gauche) -->
+  <!-- ================================================================== -->
+  <rect x="30" y="175" width="850" height="1190" rx="15" fill="url(#laboGrad)" filter="url(#shadow)" stroke="#C4A070" stroke-width="1.5"/>
+  <rect x="30" y="175" width="850" height="45" rx="15" fill="#8B6914"/>
+  <rect x="30" y="200" width="850" height="20" fill="#8B6914"/>
+  <text x="455" y="202" text-anchor="middle" font-size="20" font-weight="bold" fill="white">&#129360; LABORATOIRE</text>
+
+  <!-- Direction Laboratoire -->
+  <rect x="300" y="235" width="310" height="50" rx="12" fill="url(#serviceGrad)" filter="url(#shadowLight)" stroke="#C4A070"/>
+  <text x="455" y="255" text-anchor="middle" font-size="12" font-weight="bold" fill="#8B4513">Direction Laboratoire</text>
+  <text x="455" y="272" text-anchor="middle" font-size="10" fill="#666">Claire Fontaine — Directrice</text>
+
+  <!-- Ligne direction vers pôles -->
+  <line x1="455" y1="285" x2="455" y2="305" stroke="#8B6914" stroke-width="2"/>
+  <line x1="115" y1="305" x2="795" y2="305" stroke="#8B6914" stroke-width="2"/>
+
+  <!-- ====== PÔLE FABRICATION ====== -->
+  <line x1="185" y1="305" x2="185" y2="320" stroke="#8B6914" stroke-width="2"/>
+  <rect x="50" y="320" width="280" height="415" rx="12" fill="#FFF8F0" filter="url(#shadowLight)" stroke="#D2B48C"/>
+  <rect x="50" y="320" width="280" height="30" rx="12" fill="#A0522D"/>
+  <rect x="50" y="340" width="280" height="10" fill="#A0522D"/>
+  <text x="190" y="342" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Fabrication</text>
+
+  <!-- Direction fabrication -->
+  <rect x="62" y="360" width="256" height="38" rx="8" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="190" y="376" text-anchor="middle" font-size="10" font-weight="bold" fill="#8B4513">&#128188; Direction</text>
+  <text x="190" y="390" text-anchor="middle" font-size="9" fill="#666">Kevin Garnier — Resp. Fabrication</text>
+
+  <!-- Boulangerie -->
+  <rect x="62" y="405" width="256" height="75" rx="8" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="190" y="422" text-anchor="middle" font-size="10" font-weight="bold" fill="#8B4513">&#127838; Boulangerie</text>
+  <text x="190" y="437" text-anchor="middle" font-size="9" fill="#666">Marc Lebrun — Chef Boulanger</text>
+  <text x="190" y="450" text-anchor="middle" font-size="9" fill="#888">Romain Dubois — Boulanger</text>
+  <text x="190" y="463" text-anchor="middle" font-size="9" fill="#888">Lucie Martin — Boulangere</text>
+
+  <!-- Pâtisserie -->
+  <rect x="62" y="487" width="256" height="60" rx="8" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="190" y="504" text-anchor="middle" font-size="10" font-weight="bold" fill="#8B4513">&#127856; Patisserie</text>
+  <text x="190" y="519" text-anchor="middle" font-size="9" fill="#666">Sophie Dupont — Chef Patissiere</text>
+  <text x="190" y="532" text-anchor="middle" font-size="9" fill="#888">Emilie Bernard — Patissiere</text>
+
+  <!-- Viennoiserie -->
+  <rect x="62" y="554" width="256" height="45" rx="8" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="190" y="571" text-anchor="middle" font-size="10" font-weight="bold" fill="#8B4513">&#129360; Viennoiserie</text>
+  <text x="190" y="586" text-anchor="middle" font-size="9" fill="#666">Paul Thomas — Viennoisier</text>
+
+  <!-- Communs fabrication -->
+  <rect x="62" y="606" width="256" height="35" rx="8" fill="#F5EDE0" stroke="#E8D5B7" stroke-dasharray="4,2"/>
+  <text x="190" y="628" text-anchor="middle" font-size="9" fill="#999" font-style="italic">Communs fabrication</text>
+
+  <!-- ====== PÔLE APPROVISIONNEMENT ====== -->
+  <line x1="455" y1="305" x2="455" y2="320" stroke="#8B6914" stroke-width="2"/>
+  <rect x="345" y="320" width="230" height="155" rx="12" fill="#FFF8F0" filter="url(#shadowLight)" stroke="#D2B48C"/>
+  <rect x="345" y="320" width="230" height="30" rx="12" fill="#A0522D"/>
+  <rect x="345" y="340" width="230" height="10" fill="#A0522D"/>
+  <text x="460" y="342" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Approvisionnement</text>
+
+  <!-- Achats -->
+  <rect x="357" y="360" width="206" height="42" rx="8" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="460" y="377" text-anchor="middle" font-size="10" font-weight="bold" fill="#8B4513">&#128722; Achats</text>
+  <text x="460" y="393" text-anchor="middle" font-size="9" fill="#666">Olivier Leroy — Resp. Achats</text>
+
+  <!-- Stock -->
+  <rect x="357" y="409" width="206" height="42" rx="8" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="460" y="426" text-anchor="middle" font-size="10" font-weight="bold" fill="#8B4513">&#128230; Stock</text>
+  <text x="460" y="442" text-anchor="middle" font-size="9" fill="#666">Mathieu Blanc — Magasinier</text>
+
+  <!-- ====== PÔLE CONDITIONNEMENT ====== -->
+  <line x1="455" y1="475" x2="455" y2="490" stroke="#8B6914" stroke-width="1" stroke-dasharray="4,2"/>
+  <rect x="345" y="490" width="230" height="155" rx="12" fill="#FFF8F0" filter="url(#shadowLight)" stroke="#D2B48C"/>
+  <rect x="345" y="490" width="230" height="30" rx="12" fill="#A0522D"/>
+  <rect x="345" y="510" width="230" height="10" fill="#A0522D"/>
+  <text x="460" y="512" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Conditionnement</text>
+
+  <!-- Emballage -->
+  <rect x="357" y="530" width="206" height="42" rx="8" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="460" y="547" text-anchor="middle" font-size="10" font-weight="bold" fill="#8B4513">&#128230; Emballage</text>
+  <text x="460" y="563" text-anchor="middle" font-size="9" fill="#666">Nadine Richard — Op. Emballage</text>
+
+  <!-- Expédition -->
+  <rect x="357" y="579" width="206" height="42" rx="8" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="460" y="596" text-anchor="middle" font-size="10" font-weight="bold" fill="#8B4513">&#128666; Expedition</text>
+  <text x="460" y="612" text-anchor="middle" font-size="9" fill="#666">Celine Simon — Resp. Expedition</text>
+
+  <!-- ====== QUALITÉ-HYGIÈNE ====== -->
+  <line x1="725" y1="305" x2="725" y2="320" stroke="#8B6914" stroke-width="2"/>
+  <rect x="595" y="320" width="270" height="85" rx="12" fill="#FFF8F0" filter="url(#shadowLight)" stroke="#D2B48C"/>
+  <rect x="595" y="320" width="270" height="30" rx="12" fill="#A0522D"/>
+  <rect x="595" y="340" width="270" height="10" fill="#A0522D"/>
+  <text x="730" y="342" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Qualite-Hygiene</text>
+  <text x="730" y="375" text-anchor="middle" font-size="10" fill="#666">&#128300; Jerome Duval</text>
+  <text x="730" y="392" text-anchor="middle" font-size="9" fill="#888">Responsable Qualite</text>
+
+  <!-- ====== MAINTENANCE ====== -->
+  <rect x="595" y="420" width="270" height="85" rx="12" fill="#FFF8F0" filter="url(#shadowLight)" stroke="#D2B48C"/>
+  <rect x="595" y="420" width="270" height="30" rx="12" fill="#A0522D"/>
+  <rect x="595" y="440" width="270" height="10" fill="#A0522D"/>
+  <text x="730" y="442" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Maintenance</text>
+  <text x="730" y="475" text-anchor="middle" font-size="10" fill="#666">&#128295; Florian Petit</text>
+  <text x="730" y="492" text-anchor="middle" font-size="9" fill="#888">Technicien Maintenance</text>
+
+  <!-- Communs Laboratoire -->
+  <rect x="595" y="520" width="270" height="35" rx="8" fill="#F5EDE0" stroke="#D2B48C" stroke-dasharray="4,2"/>
+  <text x="730" y="542" text-anchor="middle" font-size="9" fill="#999" font-style="italic">Communs Laboratoire</text>
+
+  <!-- ================================================================== -->
+  <!-- ENTITÉ VENTE (droite) -->
+  <!-- ================================================================== -->
+  <rect x="920" y="175" width="850" height="1190" rx="15" fill="url(#venteGrad)" filter="url(#shadow)" stroke="#7BA87C" stroke-width="1.5"/>
+  <rect x="920" y="175" width="850" height="45" rx="15" fill="#2E7D32"/>
+  <rect x="920" y="200" width="850" height="20" fill="#2E7D32"/>
+  <text x="1345" y="202" text-anchor="middle" font-size="20" font-weight="bold" fill="white">&#128176; VENTE</text>
+
+  <!-- Direction Vente -->
+  <rect x="1190" y="235" width="310" height="50" rx="12" fill="url(#serviceGradV)" filter="url(#shadowLight)" stroke="#7BA87C"/>
+  <text x="1345" y="255" text-anchor="middle" font-size="12" font-weight="bold" fill="#2E7D32">Direction Vente</text>
+  <text x="1345" y="272" text-anchor="middle" font-size="10" fill="#666">Gaelle Renaud — Directrice</text>
+
+  <!-- Ligne direction vers pôles -->
+  <line x1="1345" y1="285" x2="1345" y2="305" stroke="#2E7D32" stroke-width="2"/>
+  <line x1="1010" y1="305" x2="1685" y2="305" stroke="#2E7D32" stroke-width="2"/>
+
+  <!-- ====== PÔLE BOUTIQUE ====== -->
+  <line x1="1060" y1="305" x2="1060" y2="320" stroke="#2E7D32" stroke-width="2"/>
+  <rect x="940" y="320" width="245" height="210" rx="12" fill="#F0F8F0" filter="url(#shadowLight)" stroke="#A8D5A9"/>
+  <rect x="940" y="320" width="245" height="30" rx="12" fill="#388E3C"/>
+  <rect x="940" y="340" width="245" height="10" fill="#388E3C"/>
+  <text x="1062" y="342" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Boutique</text>
+
+  <!-- Direction boutique -->
+  <rect x="952" y="360" width="221" height="38" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1062" y="376" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128188; Direction</text>
+  <text x="1062" y="390" text-anchor="middle" font-size="9" fill="#666">Isabelle Faure — Resp. Boutique</text>
+
+  <!-- Accueil -->
+  <rect x="952" y="405" width="221" height="38" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1062" y="421" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128075; Accueil</text>
+  <text x="1062" y="435" text-anchor="middle" font-size="9" fill="#666">Amelie Girard — Vendeuse</text>
+
+  <!-- Caisse -->
+  <rect x="952" y="450" width="221" height="38" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1062" y="466" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128179; Caisse</text>
+  <text x="1062" y="480" text-anchor="middle" font-size="9" fill="#666">Camille Perrin — Caissiere</text>
+
+  <!-- Communs boutique -->
+  <rect x="952" y="495" width="221" height="25" rx="6" fill="#E8F5E9" stroke="#C9E4CA" stroke-dasharray="4,2"/>
+  <text x="1062" y="512" text-anchor="middle" font-size="9" fill="#999" font-style="italic">Communs boutique</text>
+
+  <!-- ====== PÔLE COMMERCIAL ====== -->
+  <line x1="1345" y1="305" x2="1345" y2="320" stroke="#2E7D32" stroke-width="2"/>
+  <rect x="1205" y="320" width="280" height="250" rx="12" fill="#F0F8F0" filter="url(#shadowLight)" stroke="#A8D5A9"/>
+  <rect x="1205" y="320" width="280" height="30" rx="12" fill="#388E3C"/>
+  <rect x="1205" y="340" width="280" height="10" fill="#388E3C"/>
+  <text x="1345" y="342" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Commercial</text>
+
+  <!-- Direction commercial -->
+  <rect x="1217" y="360" width="256" height="38" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1345" y="376" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128188; Direction</text>
+  <text x="1345" y="390" text-anchor="middle" font-size="9" fill="#666">Pierre Aubert — Dir. Commercial</text>
+
+  <!-- Ventes pro -->
+  <rect x="1217" y="405" width="256" height="55" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1345" y="422" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128188; Ventes Pro</text>
+  <text x="1345" y="437" text-anchor="middle" font-size="9" fill="#666">Thomas Vidal — Resp. Commercial</text>
+  <text x="1345" y="450" text-anchor="middle" font-size="9" fill="#888">David Meyer — Commercial</text>
+
+  <!-- Marketing -->
+  <rect x="1217" y="467" width="256" height="42" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1345" y="484" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128227; Marketing</text>
+  <text x="1345" y="500" text-anchor="middle" font-size="9" fill="#666">Hugo Lopez — Charge de Marketing</text>
+
+  <!-- ====== PÔLE LIVRAISONS ====== -->
+  <line x1="1060" y1="545" x2="1060" y2="560" stroke="#2E7D32" stroke-width="1" stroke-dasharray="4,2"/>
+  <rect x="940" y="560" width="245" height="175" rx="12" fill="#F0F8F0" filter="url(#shadowLight)" stroke="#A8D5A9"/>
+  <rect x="940" y="560" width="245" height="30" rx="12" fill="#388E3C"/>
+  <rect x="940" y="580" width="245" height="10" fill="#388E3C"/>
+  <text x="1062" y="582" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Livraisons</text>
+
+  <!-- Tournées -->
+  <rect x="952" y="600" width="221" height="55" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1062" y="617" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128666; Tournees</text>
+  <text x="1062" y="632" text-anchor="middle" font-size="9" fill="#666">Baptiste Moreau — Chauffeur</text>
+  <text x="1062" y="645" text-anchor="middle" font-size="9" fill="#888">Thierry Roux — Chauffeur</text>
+
+  <!-- Planning -->
+  <rect x="952" y="662" width="221" height="42" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1062" y="679" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128197; Planning</text>
+  <text x="1062" y="695" text-anchor="middle" font-size="9" fill="#666">Victor Noel — Resp. Planning</text>
+
+  <!-- ====== PÔLE RESSOURCES ====== -->
+  <line x1="1630" y1="305" x2="1630" y2="320" stroke="#2E7D32" stroke-width="2"/>
+  <rect x="1505" y="320" width="260" height="415" rx="12" fill="#F0F8F0" filter="url(#shadowLight)" stroke="#A8D5A9"/>
+  <rect x="1505" y="320" width="260" height="30" rx="12" fill="#388E3C"/>
+  <rect x="1505" y="340" width="260" height="10" fill="#388E3C"/>
+  <text x="1635" y="342" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Ressources</text>
+
+  <!-- Direction ressources -->
+  <rect x="1517" y="360" width="236" height="38" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1635" y="376" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128188; Direction</text>
+  <text x="1635" y="390" text-anchor="middle" font-size="9" fill="#666">Laura Morin — Dir. Ressources</text>
+
+  <!-- Secrétariat -->
+  <rect x="1517" y="405" width="236" height="42" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1635" y="422" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128221; Secretariat</text>
+  <text x="1635" y="438" text-anchor="middle" font-size="9" fill="#666">Adele Mercier — Secretaire</text>
+
+  <!-- Comptabilité -->
+  <rect x="1517" y="454" width="236" height="42" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1635" y="471" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128178; Comptabilite</text>
+  <text x="1635" y="487" text-anchor="middle" font-size="9" fill="#666">Nathalie Bouchard — Comptable</text>
+
+  <!-- RH -->
+  <rect x="1517" y="503" width="236" height="42" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1635" y="520" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128101; RH</text>
+  <text x="1635" y="536" text-anchor="middle" font-size="9" fill="#666">Julie Renard — Gestionnaire RH</text>
+
+  <!-- Informatique -->
+  <rect x="1517" y="552" width="236" height="42" rx="8" fill="url(#serviceGradV)" stroke="#C9E4CA"/>
+  <text x="1635" y="569" text-anchor="middle" font-size="10" font-weight="bold" fill="#2E7D32">&#128187; Informatique</text>
+  <text x="1635" y="585" text-anchor="middle" font-size="9" fill="#666">Luc Morin — Admin. Systemes</text>
+
+  <!-- Communs ressources -->
+  <rect x="1517" y="601" width="236" height="25" rx="6" fill="#E8F5E9" stroke="#C9E4CA" stroke-dasharray="4,2"/>
+  <text x="1635" y="618" text-anchor="middle" font-size="9" fill="#999" font-style="italic">Communs ressources</text>
+
+  <!-- Communs Vente -->
+  <rect x="1205" y="590" width="280" height="30" rx="8" fill="#E8F5E9" stroke="#A8D5A9" stroke-dasharray="4,2"/>
+  <text x="1345" y="610" text-anchor="middle" font-size="9" fill="#999" font-style="italic">Communs Vente</text>
+
+  <!-- ================================================================== -->
+  <!-- LÉGENDE -->
+  <!-- ================================================================== -->
+  <rect x="50" y="780" width="820" height="120" rx="12" fill="#FFFEF8" stroke="#D2B48C" filter="url(#shadowLight)"/>
+  <text x="70" y="805" font-size="14" font-weight="bold" fill="#8B4513">Legende</text>
+
+  <rect x="70" y="815" width="16" height="16" rx="4" fill="#A0522D"/>
+  <text x="95" y="828" font-size="11" fill="#555">Pole (sous-division d'une entite)</text>
+
+  <rect x="70" y="838" width="16" height="16" rx="4" fill="url(#serviceGrad)" stroke="#E8D5B7"/>
+  <text x="95" y="851" font-size="11" fill="#555">Service (equipe de travail avec employes)</text>
+
+  <rect x="350" y="815" width="16" height="16" rx="4" fill="#F5EDE0" stroke="#D2B48C" stroke-dasharray="3,2"/>
+  <text x="375" y="828" font-size="11" fill="#555">Dossier commun (partage entre services)</text>
+
+  <rect x="350" y="838" width="16" height="16" rx="4" fill="#8B6914"/>
+  <text x="375" y="851" font-size="11" fill="#555">Laboratoire (production)</text>
+
+  <rect x="600" y="815" width="16" height="16" rx="4" fill="#388E3C"/>
+  <text x="625" y="828" font-size="11" fill="#555">Vente (commercial + admin)</text>
+
+  <text x="600" y="852" font-size="11" fill="#555">&#128100; 30 employes | &#128193; 39 dossiers | &#128101; 120 groupes AD</text>
+
+  <!-- Motif blé décoratif en bas -->
+  <text x="900" y="1380" text-anchor="middle" font-size="22" fill="#C4A882" letter-spacing="8">&#127838; &#127858; &#129360; &#127856; &#127838; &#127858; &#129360; &#127856; &#127838; &#127858; &#129360; &#127856; &#127838;</text>
+</svg>

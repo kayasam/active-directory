@@ -1,0 +1,37 @@
+name: Publier Active Directory sur cours.kaya.ovh
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: deploy-active-directory
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: npm ci
+      - run: python -m pip install --target .pdf-tools -r scripts/requirements-pdf.txt
+      # Build the reviewed content committed locally, without requiring the author's vault.
+      - run: node quartz/bootstrap-cli.mjs build
+      - run: python scripts/check-site.py
+      - name: Envoyer sur cours.kaya.ovh
+        env:
+          SSH_KEY: ${{ secrets.COURS_DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.COURS_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          rsync -rlt --delete --chmod=D755,F644 public/ cours-deploy@cours.kaya.ovh:./

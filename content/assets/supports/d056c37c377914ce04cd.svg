@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAFAFA"/><stop offset="100%" style="stop-color:#F0F0F0"/>
+    </linearGradient>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#00000018"/></filter>
+    <marker id="ad" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#555"/></marker>
+  </defs>
+
+  <rect width="1180" height="700" fill="url(#bg)" rx="15"/>
+
+  <text x="590" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#333">Le DNS change 3 fois pendant le montage &#8212; et c'est normal</text>
+  <text x="590" y="62" text-anchor="middle" font-size="13" fill="#888">90 % des labs AD qui plantent, c'est un DNS mal pointe. Gardez ce tableau sous les yeux.</text>
+
+  <!-- COLONNES -->
+  <rect x="40" y="95" width="1100" height="38" rx="10" fill="#37474F"/>
+  <text x="140" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">MOMENT</text>
+  <text x="440" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">DNS DE DC01</text>
+  <text x="740" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">DNS DE DC02</text>
+  <text x="990" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">POURQUOI</text>
+
+  <!-- LIGNE 1 -->
+  <rect x="40" y="145" width="1100" height="90" rx="10" fill="#fff" stroke="#BDBDBD" stroke-width="1.5" filter="url(#sh)"/>
+  <circle cx="72" cy="175" r="15" fill="#607D8B"/><text x="72" y="181" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">1</text>
+  <text x="95" y="172" font-size="12.5" font-weight="bold" fill="#333">Etape 00.2</text>
+  <text x="95" y="191" font-size="11" fill="#666">Preparation</text>
+  <text x="95" y="209" font-size="11" fill="#666">des serveurs</text>
+  <rect x="300" y="162" width="270" height="30" rx="6" fill="#ECEFF1" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="435" y="182" text-anchor="middle" font-size="12" font-weight="bold" fill="#455A64">8.8.8.8</text>
+  <text x="435" y="211" text-anchor="middle" font-size="10.5" fill="#888">resolveur public</text>
+  <rect x="605" y="162" width="270" height="30" rx="6" fill="#ECEFF1" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="740" y="182" text-anchor="middle" font-size="12" font-weight="bold" fill="#455A64">8.8.8.8</text>
+  <text x="740" y="211" text-anchor="middle" font-size="10.5" fill="#888">resolveur public</text>
+  <text x="900" y="176" font-size="11" fill="#333">Le domaine n'existe pas encore.</text>
+  <text x="900" y="194" font-size="11" fill="#333">On a juste besoin d'Internet pour</text>
+  <text x="900" y="212" font-size="11" fill="#333">faire les mises a jour Windows.</text>
+
+  <!-- LIGNE 2 -->
+  <rect x="40" y="248" width="1100" height="90" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="2" filter="url(#sh)"/>
+  <circle cx="72" cy="278" r="15" fill="#1565C0"/><text x="72" y="284" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">2</text>
+  <text x="95" y="275" font-size="12.5" font-weight="bold" fill="#1565C0">Etape 00.3</text>
+  <text x="95" y="294" font-size="11" fill="#666">Promotion de</text>
+  <text x="95" y="312" font-size="11" fill="#666">DC01</text>
+  <rect x="300" y="265" width="270" height="30" rx="6" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+  <text x="435" y="285" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565C0">127.0.0.1</text>
+  <text x="435" y="314" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1565C0">change ! (automatique)</text>
+  <rect x="605" y="265" width="270" height="30" rx="6" fill="#ECEFF1" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="740" y="285" text-anchor="middle" font-size="12" fill="#455A64">inchange</text>
+  <text x="900" y="279" font-size="11" fill="#333">DC01 devient lui-meme serveur DNS :</text>
+  <text x="900" y="297" font-size="11" fill="#333">il s'interroge donc lui-meme. On ajoute</text>
+  <text x="900" y="315" font-size="11" fill="#333">un <tspan font-weight="bold">redirecteur</tspan> pour garder Internet.</text>
+
+  <!-- LIGNE 3 -->
+  <rect x="40" y="351" width="1100" height="90" rx="10" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#sh)"/>
+  <circle cx="72" cy="381" r="15" fill="#2E7D32"/><text x="72" y="387" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">3</text>
+  <text x="95" y="378" font-size="12.5" font-weight="bold" fill="#2E7D32">Etape 00.4</text>
+  <text x="95" y="397" font-size="11" fill="#666">DC02 rejoint</text>
+  <text x="95" y="415" font-size="11" fill="#666">le domaine</text>
+  <rect x="300" y="368" width="270" height="30" rx="6" fill="#ECEFF1" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="435" y="388" text-anchor="middle" font-size="12" fill="#455A64">127.0.0.1 (inchange)</text>
+  <rect x="605" y="368" width="270" height="30" rx="6" fill="#fff" stroke="#2E7D32" stroke-width="2.5"/>
+  <text x="740" y="388" text-anchor="middle" font-size="12" font-weight="bold" fill="#2E7D32">192.168.3.10</text>
+  <text x="740" y="417" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#C62828">A FAIRE A LA MAIN</text>
+  <text x="900" y="382" font-size="11" fill="#333">Pour rejoindre un domaine, il faut</text>
+  <text x="900" y="400" font-size="11" fill="#333">d'abord le <tspan font-weight="bold">trouver</tspan>. Seul DC01 sait</text>
+  <text x="900" y="418" font-size="11" fill="#333">resoudre <tspan font-style="italic">ad.fournil.lab</tspan>.</text>
+
+  <!-- LIGNE 4 -->
+  <rect x="40" y="454" width="1100" height="90" rx="10" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2" filter="url(#sh)"/>
+  <circle cx="72" cy="484" r="15" fill="#6A1B9A"/><text x="72" y="490" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">4</text>
+  <text x="95" y="481" font-size="12.5" font-weight="bold" fill="#6A1B9A">Apres promo</text>
+  <text x="95" y="500" font-size="11" fill="#666">de DC02 en DC</text>
+  <text x="95" y="518" font-size="11" fill="#666">additionnel</text>
+  <rect x="300" y="471" width="270" height="30" rx="6" fill="#fff" stroke="#6A1B9A" stroke-width="2"/>
+  <text x="435" y="491" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6A1B9A">127.0.0.1 puis 192.168.3.2</text>
+  <rect x="605" y="471" width="270" height="30" rx="6" fill="#fff" stroke="#6A1B9A" stroke-width="2"/>
+  <text x="740" y="491" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6A1B9A">127.0.0.1 puis 192.168.3.10</text>
+  <text x="900" y="485" font-size="11" fill="#333">Chaque DC s'interroge lui-meme</text>
+  <text x="900" y="503" font-size="11" fill="#333">en premier, et prend l'autre DC en</text>
+  <text x="900" y="521" font-size="11" fill="#333">secours. C'est la config finale.</text>
+
+  <!-- REGLE D'OR -->
+  <rect x="40" y="565" width="555" height="120" rx="12" fill="#FFF3E0" stroke="#EF6C00" stroke-width="2.5" filter="url(#sh)"/>
+  <text x="317" y="593" text-anchor="middle" font-size="14" font-weight="bold" fill="#EF6C00">La regle d'or a retenir</text>
+  <text x="62" y="619" font-size="12" fill="#333">Un membre d'un domaine Active Directory ne doit</text>
+  <text x="62" y="639" font-size="12" fill="#333"><tspan font-weight="bold">JAMAIS</tspan> avoir une box, un 8.8.8.8 ou une passerelle</text>
+  <text x="62" y="659" font-size="12" fill="#333">comme serveur DNS. Toujours un DC du domaine.</text>
+  <text x="62" y="678" font-size="11" font-style="italic" fill="#EF6C00">L'acces Internet passe par le redirecteur, pas par le client.</text>
+
+  <!-- DIAGNOSTIC -->
+  <rect x="625" y="565" width="515" height="120" rx="12" fill="#FFEBEE" stroke="#C62828" stroke-width="2.5" filter="url(#sh)"/>
+  <text x="882" y="593" text-anchor="middle" font-size="14" font-weight="bold" fill="#C62828">Les 3 symptomes d'un DNS mal pointe</text>
+  <text x="648" y="618" font-size="11.5" fill="#333">&#8226; <tspan font-weight="bold">Get-NetConnectionProfile</tspan> affiche Private ou Public</text>
+  <text x="648" y="638" font-size="11.5" fill="#333">&#8226; <tspan font-weight="bold">Add-Computer</tspan> : domaine introuvable</text>
+  <text x="648" y="658" font-size="11.5" fill="#333">&#8226; <tspan font-weight="bold">Resolve-DnsName ad.fournil.lab</tspan> ne renvoie rien</text>
+  <text x="648" y="678" font-size="11" font-style="italic" fill="#C62828">Dans les 3 cas : verifiez d'abord cette colonne DNS.</text>
+</svg>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAFAFA"/><stop offset="100%" style="stop-color:#F0F0F0"/>
+    </linearGradient>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#00000018"/></filter>
+  </defs>
+
+  <rect width="1100" height="700" fill="url(#bg)" rx="15"/>
+
+  <text x="550" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#333">La maquette du TP — qui est qui, qui parle a qui</text>
+  <text x="550" y="62" text-anchor="middle" font-size="13" fill="#888">3 machines, 1 seul reseau local, aucun routeur : tout le monde se voit directement</text>
+
+  <!-- ===== POSTE ELEVE ===== -->
+  <rect x="45" y="105" width="280" height="185" rx="15" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2" filter="url(#sh)"/>
+  <text x="185" y="133" text-anchor="middle" font-size="15" font-weight="bold" fill="#6A1B9A">VOTRE POSTE</text>
+  <text x="185" y="152" text-anchor="middle" font-size="11" fill="#555">Windows 10 / 11</text>
+  <line x1="70" y1="164" x2="300" y2="164" stroke="#6A1B9A" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="70" y="184" font-size="11.5" fill="#333">VSCode + Remote-SSH</text>
+  <text x="70" y="204" font-size="11.5" fill="#333">Cle SSH (id_ed25519)</text>
+  <text x="70" y="224" font-size="11.5" fill="#333">Hors domaine</text>
+  <rect x="70" y="238" width="230" height="32" rx="6" fill="#fff" stroke="#6A1B9A" stroke-width="1"/>
+  <text x="185" y="259" text-anchor="middle" font-size="12" font-weight="bold" fill="#6A1B9A">192.168.3.50</text>
+  <text x="185" y="285" text-anchor="middle" font-size="10" fill="#888">C'est d'ici que vous pilotez tout</text>
+
+  <!-- ===== DC01 ===== -->
+  <rect x="410" y="105" width="280" height="185" rx="15" fill="#E3F2FD" stroke="#1565C0" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="410" y="105" width="280" height="26" rx="15" fill="#1565C0"/>
+  <rect x="410" y="120" width="280" height="11" fill="#1565C0"/>
+  <text x="550" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">SERVEUR PRINCIPAL</text>
+  <text x="550" y="156" text-anchor="middle" font-size="17" font-weight="bold" fill="#1565C0">DC01</text>
+  <text x="550" y="174" text-anchor="middle" font-size="11" fill="#555">Windows Server 2025</text>
+  <line x1="435" y1="184" x2="665" y2="184" stroke="#1565C0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="435" y="203" font-size="11.5" fill="#333">AD DS (controleur de domaine)</text>
+  <text x="435" y="221" font-size="11.5" fill="#333">DNS du domaine</text>
+  <text x="435" y="239" font-size="11.5" fill="#333">DFS-N + DFS-R &#183; SSH</text>
+  <rect x="435" y="250" width="230" height="30" rx="6" fill="#fff" stroke="#1565C0" stroke-width="1"/>
+  <text x="550" y="270" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565C0">192.168.3.10</text>
+
+  <!-- ===== DC02 ===== -->
+  <rect x="775" y="105" width="280" height="185" rx="15" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="775" y="105" width="280" height="26" rx="15" fill="#2E7D32"/>
+  <rect x="775" y="120" width="280" height="11" fill="#2E7D32"/>
+  <text x="915" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">SERVEUR SECONDAIRE</text>
+  <text x="915" y="156" text-anchor="middle" font-size="17" font-weight="bold" fill="#2E7D32">DC02</text>
+  <text x="915" y="174" text-anchor="middle" font-size="11" fill="#555">Windows Server 2025</text>
+  <line x1="800" y1="184" x2="1030" y2="184" stroke="#2E7D32" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="800" y="203" font-size="11.5" fill="#333">Membre du domaine</text>
+  <text x="800" y="221" font-size="11.5" fill="#333">DFS-N + DFS-R (replique)</text>
+  <text x="800" y="239" font-size="11.5" fill="#333">Partages caches (Labo$...)</text>
+  <rect x="800" y="250" width="230" height="30" rx="6" fill="#fff" stroke="#2E7D32" stroke-width="1"/>
+  <text x="915" y="270" text-anchor="middle" font-size="12" font-weight="bold" fill="#2E7D32">192.168.3.2</text>
+
+  <!-- ===== DESCENTES VERS LE LAN ===== -->
+  <line x1="185" y1="290" x2="185" y2="360" stroke="#6A1B9A" stroke-width="2.5"/>
+  <line x1="550" y1="290" x2="550" y2="360" stroke="#1565C0" stroke-width="2.5"/>
+  <line x1="915" y1="290" x2="915" y2="360" stroke="#2E7D32" stroke-width="2.5"/>
+
+  <!-- ===== LE LAN ===== -->
+  <rect x="45" y="360" width="1010" height="56" rx="10" fill="#37474F" filter="url(#sh)"/>
+  <text x="550" y="383" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">RESEAU LOCAL DU LAB &#8212; 192.168.3.0/24</text>
+  <text x="550" y="401" text-anchor="middle" font-size="11" fill="#B0BEC5">vSwitch-Rennes (interne) &#183; passerelle NAT 192.168.3.254 &#183; profil attendu : DomainAuthenticated</text>
+
+  <!-- ===== BANDEAU DOMAINE ===== -->
+  <rect x="45" y="450" width="490" height="105" rx="12" fill="#FFF3E0" stroke="#EF6C00" stroke-width="2" filter="url(#sh)"/>
+  <text x="290" y="476" text-anchor="middle" font-size="14" font-weight="bold" fill="#EF6C00">Le domaine : ad.fournil.lab</text>
+  <text x="70" y="500" font-size="11.5" fill="#333">DC01 = le chef : il heberge l'annuaire AD et le DNS.</text>
+  <text x="70" y="520" font-size="11.5" fill="#333">DC02 = le second : il stocke et replique les donnees.</text>
+  <text x="70" y="540" font-size="11.5" fill="#333">Votre poste n'est PAS dans le domaine : il pilote via SSH.</text>
+
+  <rect x="565" y="450" width="490" height="105" rx="12" fill="#FFEBEE" stroke="#C62828" stroke-width="2" filter="url(#sh)"/>
+  <text x="810" y="476" text-anchor="middle" font-size="14" font-weight="bold" fill="#C62828">Le piege n&#176;1 du TP</text>
+  <text x="590" y="500" font-size="11.5" fill="#333">Si le DNS de DC02 ne pointe pas vers 192.168.3.10,</text>
+  <text x="590" y="520" font-size="11.5" fill="#333">DC02 ne trouve plus le domaine : le profil reseau bascule</text>
+  <text x="590" y="540" font-size="11.5" fill="#333">en Prive &#8594; les regles Domaine ne s'appliquent plus.</text>
+
+  <!-- ===== ORDRE DE TRAVAIL ===== -->
+  <rect x="45" y="585" width="1010" height="80" rx="12" fill="#fff" stroke="#BDBDBD" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="70" y="612" font-size="13" font-weight="bold" fill="#333">Ou est-ce que je tape mes commandes ?</text>
+  <circle cx="90" cy="640" r="11" fill="#6A1B9A"/><text x="90" y="644" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">1</text>
+  <text x="108" y="644" font-size="11.5" fill="#333">Sur votre poste : seulement l'install VSCode + la cle SSH.</text>
+  <circle cx="530" cy="640" r="11" fill="#1565C0"/><text x="530" y="644" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">2</text>
+  <text x="548" y="644" font-size="11.5" fill="#333">Sur DC01 (via VSCode) : 95% du TP. DC02 se pilote a distance depuis DC01.</text>
+</svg>

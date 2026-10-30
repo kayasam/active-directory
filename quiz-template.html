@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Quiz de 20 questions — Linux — Initiation" />
+    <title>Quiz — Linux — Initiation</title>
+    <link rel="stylesheet" href="../../assets/quiz/quiz.css" />
+    <script defer src="../../assets/quiz/quiz-banks.js"></script>
+    <script defer src="../../assets/quiz/quiz-engine.js"></script>
+    <link rel="stylesheet" href="../../assets/themes/theme.css" />
+    <script src="../../assets/themes/theme.js"></script>
+  </head>
+  <body>
+    <main class="quiz-shell" data-quiz="__CHAPTER__">
+      <nav class="quiz-topbar" aria-label="Navigation du quiz">
+        <a class="quiz-back" id="chapter-link" href="../__CHAPTER__">← Retour au chapitre</a
+        ><span class="quiz-brand">Linux — Initiation</span>
+      </nav>
+      <header class="quiz-hero">
+        <span class="quiz-kicker" id="quiz-kicker"></span>
+        <h1 id="quiz-title">Quiz</h1>
+        <p class="quiz-intro" id="quiz-intro"></p>
+        <div class="quiz-meta">
+          <span>20 questions</span><span>1 seule bonne réponse</span><span>Réponse expliquée</span>
+        </div>
+      </header>
+      <section class="quiz-panel" id="question-panel" aria-live="polite">
+        <div class="quiz-status">
+          <span id="current-question">Question 1 sur 20</span>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+          <span>Objectif : 16/20</span>
+        </div>
+        <p class="question-theme" id="question-theme"></p>
+        <h2 class="question-title" id="question-title"></h2>
+        <div class="answers" id="answers"></div>
+        <div class="feedback" id="feedback" role="status"></div>
+        <div class="quiz-actions">
+          <button class="primary-button" id="next-question" type="button" disabled>
+            Question suivante →
+          </button>
+        </div>
+      </section>
+      <section class="quiz-panel result" id="result-panel" aria-live="polite">
+        <div class="result-score">
+          <strong id="result-score">0/20</strong><span id="result-percent">0 %</span>
+        </div>
+        <h2 id="result-title"></h2>
+        <p class="result-message" id="result-message"></p>
+        <div class="result-grid">
+          <div class="result-stat">
+            <strong id="correct-count">0</strong><span>bonnes réponses</span>
+          </div>
+          <div class="result-stat">
+            <strong id="wrong-count">0</strong><span>réponses à revoir</span>
+          </div>
+          <div class="result-stat">
+            <strong id="best-score">0</strong><span>meilleur score /20</span>
+          </div>
+        </div>
+        <div class="result-actions">
+          <button class="primary-button" id="restart-quiz" type="button">Recommencer</button
+          ><a class="secondary-button" id="result-course-link" href="../__CHAPTER__"
+            >Revoir le chapitre</a
+          >
+        </div>
+      </section>
+      <noscript
+        ><p class="quiz-error">
+          JavaScript doit être activé pour utiliser ce quiz interactif.
+        </p></noscript
+      >
+    </main>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#07151d"/>
+      <stop offset="1" stop-color="#164b56"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="36" fill="url(#bg)"/>
+  <circle cx="1050" cy="90" r="230" fill="#52d2dd" opacity=".09"/>
+  <rect x="78" y="78" width="132" height="64" rx="14" fill="#52d2dd"/>
+  <text x="144" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#07151d">Linux</text>
+  <text x="78" y="284" font-family="Arial, sans-serif" font-size="82" font-weight="700" fill="#effaff">Linux — Initiation</text>
+  <text x="82" y="354" font-family="Arial, sans-serif" font-size="34" fill="#b7ced8">Découvrir Debian. Prendre en main le terminal.</text>
+  <text x="82" y="510" font-family="Arial, sans-serif" font-size="26" fill="#52d2dd">10 chapitres · Cours · TP · Quiz</text>
+</svg>

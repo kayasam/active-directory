@@ -1,0 +1,218 @@
+{
+  "chapters": [
+    {
+      "key": "ad/01-infrastructure-ad",
+      "title": "01 — Infrastructure Active Directory",
+      "tp": true,
+      "correction": true
+    },
+    {
+      "key": "ad/02-structure-logique",
+      "title": "02 — Structure logique : OUs, outils, délégation",
+      "tp": true,
+      "correction": true
+    },
+    {
+      "key": "ad/03-objets-ad",
+      "title": "03 — Objets AD : utilisateurs, ordinateurs, groupes",
+      "tp": true,
+      "correction": true
+    },
+    {
+      "key": "ad/04-sites-replication",
+      "title": "04 — Sites AD et réplication",
+      "tp": true,
+      "correction": true
+    },
+    {
+      "key": "ad/05-gpo",
+      "title": "05 — Stratégies de groupe (GPO)",
+      "tp": true,
+      "correction": true
+    },
+    {
+      "key": "ad/06-securite-ad",
+      "title": "06 — Sécurité Active Directory",
+      "tp": true,
+      "correction": true
+    },
+    {
+      "key": "ad/07-maintenance-depannage",
+      "title": "07 — Maintenance et dépannage",
+      "tp": true,
+      "correction": true
+    },
+    {
+      "key": "ad/08-tp-final",
+      "title": "Le Fournil — Infrastructure Active Directory",
+      "tp": true,
+      "correction": false
+    }
+  ],
+  "exercises": [
+    {
+      "key": "ad/01-infrastructure-ad/tp",
+      "correctionKey": "ad/01-infrastructure-ad/tp-corrigev2",
+      "downloadStem": "01-infrastructure-ad",
+      "track": "ad",
+      "correction": true
+    },
+    {
+      "key": "ad/02-structure-logique/tp",
+      "correctionKey": "ad/02-structure-logique/tp-corrigev2",
+      "downloadStem": "02-structure-logique",
+      "track": "ad",
+      "correction": true
+    },
+    {
+      "key": "ad/03-objets-ad/tp",
+      "correctionKey": "ad/03-objets-ad/tp-corrigev2",
+      "downloadStem": "03-objets-ad",
+      "track": "ad",
+      "correction": true
+    },
+    {
+      "key": "ad/04-sites-replication/tp",
+      "correctionKey": "ad/04-sites-replication/tp-corrigev2",
+      "downloadStem": "04-sites-replication",
+      "track": "ad",
+      "correction": true
+    },
+    {
+      "key": "ad/05-gpo/tp",
+      "correctionKey": "ad/05-gpo/tp-corrigev2",
+      "downloadStem": "05-gpo",
+      "track": "ad",
+      "correction": true
+    },
+    {
+      "key": "ad/06-securite-ad/tp",
+      "correctionKey": "ad/06-securite-ad/tp-corrigev2",
+      "downloadStem": "06-securite-ad",
+      "track": "ad",
+      "correction": true
+    },
+    {
+      "key": "ad/07-maintenance-depannage/tp",
+      "correctionKey": "ad/07-maintenance-depannage/tp-corrigev2",
+      "downloadStem": "07-maintenance-depannage",
+      "track": "ad",
+      "correction": true
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-00-0-demarrer-ici",
+      "correctionKey": "ad/08-tp-final/tp/tp-00-0-demarrer-ici-corrigev2",
+      "downloadStem": "08-tp-final-tp-00-0-demarrer-ici",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-00-1-installer-les-vm",
+      "correctionKey": "ad/08-tp-final/tp/tp-00-1-installer-les-vm-corrigev2",
+      "downloadStem": "08-tp-final-tp-00-1-installer-les-vm",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-00-1-vmware-workstation",
+      "correctionKey": "ad/08-tp-final/tp/tp-00-1-vmware-workstation-corrigev2",
+      "downloadStem": "08-tp-final-tp-00-1-vmware-workstation",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-00-2-preparer-les-serveurs",
+      "correctionKey": "ad/08-tp-final/tp/tp-00-2-preparer-les-serveurs-corrigev2",
+      "downloadStem": "08-tp-final-tp-00-2-preparer-les-serveurs",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-00-3-promouvoir-dc01",
+      "correctionKey": "ad/08-tp-final/tp/tp-00-3-promouvoir-dc01-corrigev2",
+      "downloadStem": "08-tp-final-tp-00-3-promouvoir-dc01",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-00-4-joindre-dc02",
+      "correctionKey": "ad/08-tp-final/tp/tp-00-4-joindre-dc02-corrigev2",
+      "downloadStem": "08-tp-final-tp-00-4-joindre-dc02",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-00-5-poste-de-travail",
+      "correctionKey": "ad/08-tp-final/tp/tp-00-5-poste-de-travail-corrigev2",
+      "downloadStem": "08-tp-final-tp-00-5-poste-de-travail",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-01-tp-avance-ad",
+      "correctionKey": "ad/08-tp-final/tp/tp-01-tp-avance-ad-corrigev2",
+      "downloadStem": "08-tp-final-tp-01-tp-avance-ad",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-01-tp-debutant-ad",
+      "correctionKey": "ad/08-tp-final/tp/tp-01-tp-debutant-ad-corrigev2",
+      "downloadStem": "08-tp-final-tp-01-tp-debutant-ad",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-01-tp-intermediaire-ad",
+      "correctionKey": "ad/08-tp-final/tp/tp-01-tp-intermediaire-ad-corrigev2",
+      "downloadStem": "08-tp-final-tp-01-tp-intermediaire-ad",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-02-tp-avance-dfs",
+      "correctionKey": "ad/08-tp-final/tp/tp-02-tp-avance-dfs-corrigev2",
+      "downloadStem": "08-tp-final-tp-02-tp-avance-dfs",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-02-tp-debutant-dfs",
+      "correctionKey": "ad/08-tp-final/tp/tp-02-tp-debutant-dfs-corrigev2",
+      "downloadStem": "08-tp-final-tp-02-tp-debutant-dfs",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-03-tp-avance-gpo",
+      "correctionKey": "ad/08-tp-final/tp/tp-03-tp-avance-gpo-corrigev2",
+      "downloadStem": "08-tp-final-tp-03-tp-avance-gpo",
+      "track": "ad",
+      "correction": false
+    },
+    {
+      "key": "ad/08-tp-final/tp/tp-03-tp-debutant-gpo",
+      "correctionKey": "ad/08-tp-final/tp/tp-03-tp-debutant-gpo-corrigev2",
+      "downloadStem": "08-tp-final-tp-03-tp-debutant-gpo",
+      "track": "ad",
+      "correction": false
+    }
+  ],
+  "corrections": [
+    "ad/01-infrastructure-ad/tp",
+    "ad/02-structure-logique/tp",
+    "ad/03-objets-ad/tp",
+    "ad/04-sites-replication/tp",
+    "ad/05-gpo/tp",
+    "ad/06-securite-ad/tp",
+    "ad/07-maintenance-depannage/tp"
+  ],
+  "tracks": [
+    {
+      "id": "ad",
+      "title": "Active Directory — Initiation et approfondissement",
+      "href": "https://cours.kaya.ovh/active-directory/ad/"
+    }
+  ],
+  "templateVersion": 1
+}

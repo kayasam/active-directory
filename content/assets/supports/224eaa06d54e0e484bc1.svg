@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 580" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#00000018"/></filter>
+  </defs>
+
+  <rect width="900" height="580" fill="#FAFAFA" rx="15"/>
+
+  <text x="450" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#333">Structure des OUs — Separation par type d'objet</text>
+  <text x="450" y="55" text-anchor="middle" font-size="12" fill="#888">Bonne pratique Microsoft : Utilisateurs, Groupes et Ordinateurs dans des OUs separees</text>
+
+  <!-- Domaine -->
+  <rect x="350" y="75" width="200" height="40" rx="20" fill="#5D4037" filter="url(#sh)"/>
+  <text x="450" y="100" text-anchor="middle" font-size="13" font-weight="bold" fill="white">ad.fournil.lab</text>
+
+  <line x1="450" y1="115" x2="450" y2="135" stroke="#5D4037" stroke-width="2"/>
+
+  <!-- fournil -->
+  <rect x="350" y="135" width="200" height="40" rx="10" fill="#8B4513" filter="url(#sh)"/>
+  <text x="450" y="160" text-anchor="middle" font-size="13" font-weight="bold" fill="white">OU=fournil</text>
+
+  <line x1="450" y1="175" x2="450" y2="195" stroke="#8B4513" stroke-width="2"/>
+  <line x1="150" y1="195" x2="750" y2="195" stroke="#8B4513" stroke-width="2"/>
+
+  <!-- 3 branches -->
+  <line x1="150" y1="195" x2="150" y2="215" stroke="#8B4513" stroke-width="2"/>
+  <line x1="450" y1="195" x2="450" y2="215" stroke="#8B4513" stroke-width="2"/>
+  <line x1="750" y1="195" x2="750" y2="215" stroke="#8B4513" stroke-width="2"/>
+
+  <!-- Utilisateurs -->
+  <rect x="40" y="215" width="220" height="340" rx="12" fill="#E3F2FD" stroke="#1565C0" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="215" width="220" height="35" rx="12" fill="#1565C0"/>
+  <rect x="40" y="238" width="220" height="12" fill="#1565C0"/>
+  <text x="150" y="240" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Utilisateurs</text>
+  <text x="150" y="272" text-anchor="middle" font-size="10" fill="#1565C0" font-weight="bold">Comptes utilisateurs</text>
+  <text x="150" y="288" text-anchor="middle" font-size="9" fill="#666">GPO utilisateurs ici</text>
+
+  <!-- Sous-OUs Utilisateurs -->
+  <rect x="55" y="300" width="190" height="28" rx="6" fill="white" stroke="#90CAF9"/>
+  <text x="150" y="319" text-anchor="middle" font-size="10" fill="#1565C0">Laboratoire</text>
+  <rect x="70" y="332" width="160" height="24" rx="5" fill="white" stroke="#BBDEFB"/>
+  <text x="150" y="349" text-anchor="middle" font-size="9" fill="#555">fabrication</text>
+  <rect x="85" y="360" width="130" height="22" rx="4" fill="#E3F2FD" stroke="#BBDEFB"/>
+  <text x="150" y="375" text-anchor="middle" font-size="9" fill="#1565C0">boulangerie</text>
+  <text x="150" y="398" text-anchor="middle" font-size="9" fill="#888" font-style="italic">mlebrun, rdubois...</text>
+  <rect x="55" y="415" width="190" height="28" rx="6" fill="white" stroke="#90CAF9"/>
+  <text x="150" y="434" text-anchor="middle" font-size="10" fill="#1565C0">Vente</text>
+  <rect x="70" y="447" width="160" height="24" rx="5" fill="white" stroke="#BBDEFB"/>
+  <text x="150" y="464" text-anchor="middle" font-size="9" fill="#555">boutique, commercial...</text>
+  <text x="150" y="488" text-anchor="middle" font-size="9" fill="#888" font-style="italic">agirard, tvidal...</text>
+
+  <!-- Groupes -->
+  <rect x="340" y="215" width="220" height="340" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" filter="url(#sh)"/>
+  <rect x="340" y="215" width="220" height="35" rx="12" fill="#2E7D32"/>
+  <rect x="340" y="238" width="220" height="12" fill="#2E7D32"/>
+  <text x="450" y="240" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Groupes</text>
+  <text x="450" y="272" text-anchor="middle" font-size="10" fill="#2E7D32" font-weight="bold">Groupes de securite</text>
+  <text x="450" y="288" text-anchor="middle" font-size="9" fill="#666">G_ et DL_ ranges ici</text>
+
+  <!-- Sous-OUs Groupes -->
+  <rect x="355" y="300" width="190" height="28" rx="6" fill="white" stroke="#A5D6A7"/>
+  <text x="450" y="319" text-anchor="middle" font-size="10" fill="#2E7D32">Laboratoire</text>
+  <rect x="370" y="332" width="160" height="24" rx="5" fill="white" stroke="#C8E6C9"/>
+  <text x="450" y="349" text-anchor="middle" font-size="9" fill="#555">fabrication</text>
+  <rect x="385" y="360" width="130" height="22" rx="4" fill="#E8F5E9" stroke="#C8E6C9"/>
+  <text x="450" y="375" text-anchor="middle" font-size="9" fill="#2E7D32">boulangerie</text>
+  <text x="450" y="398" text-anchor="middle" font-size="8" fill="#888" font-style="italic">G_..._boulangerie</text>
+  <text x="450" y="412" text-anchor="middle" font-size="8" fill="#888" font-style="italic">DL_..._boulangerie_L</text>
+  <text x="450" y="426" text-anchor="middle" font-size="8" fill="#888" font-style="italic">DL_..._boulangerie_M</text>
+
+  <rect x="355" y="440" width="190" height="28" rx="6" fill="white" stroke="#A5D6A7"/>
+  <text x="450" y="459" text-anchor="middle" font-size="10" fill="#2E7D32">Vente</text>
+  <text x="450" y="488" text-anchor="middle" font-size="9" fill="#888" font-style="italic">G_Vente_..., DL_Vente_...</text>
+
+  <!-- Ordinateurs -->
+  <rect x="640" y="215" width="220" height="340" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="2" filter="url(#sh)"/>
+  <rect x="640" y="215" width="220" height="35" rx="12" fill="#E65100"/>
+  <rect x="640" y="238" width="220" height="12" fill="#E65100"/>
+  <text x="750" y="240" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Ordinateurs</text>
+  <text x="750" y="272" text-anchor="middle" font-size="10" fill="#E65100" font-weight="bold">Comptes machines</text>
+  <text x="750" y="288" text-anchor="middle" font-size="9" fill="#666">GPO machines ici</text>
+
+  <rect x="655" y="300" width="190" height="28" rx="6" fill="white" stroke="#FFCC80"/>
+  <text x="750" y="319" text-anchor="middle" font-size="10" fill="#E65100">Laboratoire</text>
+  <text x="750" y="348" text-anchor="middle" font-size="9" fill="#888" font-style="italic">PC de production...</text>
+
+  <rect x="655" y="365" width="190" height="28" rx="6" fill="white" stroke="#FFCC80"/>
+  <text x="750" y="384" text-anchor="middle" font-size="10" fill="#E65100">Vente</text>
+  <text x="750" y="413" text-anchor="middle" font-size="9" fill="#888" font-style="italic">PC de vente, caisses...</text>
+
+  <text x="750" y="465" text-anchor="middle" font-size="10" fill="#E65100" font-weight="bold">Pret pour les GPO</text>
+  <text x="750" y="482" text-anchor="middle" font-size="9" fill="#888">pare-feu, mises a jour...</text>
+</svg>

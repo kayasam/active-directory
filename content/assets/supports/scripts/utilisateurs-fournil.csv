@@ -1,0 +1,31 @@
+Prenom,Nom,Entite,Pole,Service,Fonction,Login,MotDePasse,Email
+Claire,Fontaine,Laboratoire,direction-laboratoire,,Directrice Laboratoire,cfontaine,a12345!,cfontaine@ad.fournil.lab
+Marc,Lebrun,Laboratoire,fabrication,boulangerie,Chef Boulanger,mlebrun,a12345!,mlebrun@ad.fournil.lab
+Romain,Dubois,Laboratoire,fabrication,boulangerie,Boulanger,rdubois,a12345!,rdubois@ad.fournil.lab
+Lucie,Martin,Laboratoire,fabrication,boulangerie,Boulangere,lmartin,a12345!,lmartin@ad.fournil.lab
+Sophie,Dupont,Laboratoire,fabrication,patisserie,Chef Patissiere,sdupont,a12345!,sdupont@ad.fournil.lab
+Emilie,Bernard,Laboratoire,fabrication,patisserie,Patissiere,ebernard,a12345!,ebernard@ad.fournil.lab
+Paul,Thomas,Laboratoire,fabrication,viennoiserie,Viennoisier,pthomas,a12345!,pthomas@ad.fournil.lab
+Kevin,Garnier,Laboratoire,fabrication,direction-fabrication,Responsable Fabrication,kgarnier,a12345!,kgarnier@ad.fournil.lab
+Olivier,Leroy,Laboratoire,approvisionnement,achats,Responsable Achats,oleroy,a12345!,oleroy@ad.fournil.lab
+Mathieu,Blanc,Laboratoire,approvisionnement,stock,Magasinier,mblanc,a12345!,mblanc@ad.fournil.lab
+Nadine,Richard,Laboratoire,conditionnement,emballage,Operatrice Emballage,nrichard,a12345!,nrichard@ad.fournil.lab
+Celine,Simon,Laboratoire,conditionnement,expedition,Responsable Expedition,csimon,a12345!,csimon@ad.fournil.lab
+Jerome,Duval,Laboratoire,qualite-hygiene,,Responsable Qualite,jduval,a12345!,jduval@ad.fournil.lab
+Florian,Petit,Laboratoire,maintenance,,Technicien Maintenance,fpetit,a12345!,fpetit@ad.fournil.lab
+Gaelle,Renaud,Vente,direction-vente,,Directrice Vente,grenaud,a12345!,grenaud@ad.fournil.lab
+Amelie,Girard,Vente,boutique,accueil-boutique,Vendeuse,agirard,a12345!,agirard@ad.fournil.lab
+Camille,Perrin,Vente,boutique,caisse,Caissiere,cperrin,a12345!,cperrin@ad.fournil.lab
+Isabelle,Faure,Vente,boutique,direction-boutique,Responsable Boutique,ifaure,a12345!,ifaure@ad.fournil.lab
+Thomas,Vidal,Vente,commercial,ventes-pro,Responsable Commercial,tvidal,a12345!,tvidal@ad.fournil.lab
+David,Meyer,Vente,commercial,ventes-pro,Commercial,dmeyer,a12345!,dmeyer@ad.fournil.lab
+Hugo,Lopez,Vente,commercial,marketing,Charge de Marketing,hlopez,a12345!,hlopez@ad.fournil.lab
+Pierre,Aubert,Vente,commercial,direction-commercial,Directeur Commercial,paubert,a12345!,paubert@ad.fournil.lab
+Baptiste,Moreau,Vente,livraisons,tournees,Chauffeur-Livreur,bmoreau,a12345!,bmoreau@ad.fournil.lab
+Thierry,Roux,Vente,livraisons,tournees,Chauffeur-Livreur,troux,a12345!,troux@ad.fournil.lab
+Victor,Noel,Vente,livraisons,planning,Responsable Planning,vnoel,a12345!,vnoel@ad.fournil.lab
+Adele,Mercier,Vente,ressources,secretariat,Secretaire,amercier,a12345!,amercier@ad.fournil.lab
+Nathalie,Bouchard,Vente,ressources,comptabilite,Comptable,nbouchard,a12345!,nbouchard@ad.fournil.lab
+Julie,Renard,Vente,ressources,rh,Gestionnaire RH,jrenard,a12345!,jrenard@ad.fournil.lab
+Luc,Morin,Vente,ressources,informatique,Administrateur Systemes,lmorin,a12345!,lmorin@ad.fournil.lab
+Laura,Morin,Vente,ressources,direction-ressources,Directrice Ressources,lmorin2,a12345!,lmorin2@ad.fournil.lab

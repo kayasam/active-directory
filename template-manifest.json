@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "created": "2026-10-16",
+  "sourceCommit": "92ef419a146189f3fe7925e1876d8050a588678a",
+  "referenceArchive": "reference/site-linux-bash-92ef419.zip",
+  "referenceSha256": "bf15512439467aa771c9e26e0fbf3f6e3ef620845806e22b48b86e2f758f1438",
+  "visualFiles": {
+    "quartz/components/Head.tsx": "d2144879f78068f3ff9c28adff77e65d680d235c357ab3ef0bbab07c9b9a844c",
+    "quartz/components/scripts/course-navigation.inline.ts": "db465d9971ec444de758a39e6469d692cdb99c27ac4ccafd988bf51590d4d9b6",
+    "quartz/components/scripts/course-resources.inline.ts": "d98c1a8a94d480d6671957f71283c17acb2073c77ea65779c957d4f8bc7c12cd",
+    "quartz/components/scripts/site-experience.inline.ts": "281e99367d4ea3bf60e66c950483362f7c195b8678d2f7678bd3a5005f777b6a",
+    "quartz/components/scripts/support-viewer.inline.ts": "0b9870b2e4e5a25eb5342192eee7f778b5f042335a5e08d76458802fbe3bbaa6",
+    "quartz/styles/base.scss": "0dbbe20680bb5fc4a009d92cbcb9b017b947d1760feabf0e5721cc2926c9adfa",
+    "quartz/styles/callouts.scss": "a401f9d27da77cb34215d9497c23c78cdbcd76f09315b4235db0d5778b739727",
+    "quartz/styles/course-navigation.scss": "1a8f47aa49c3661751fc1eeda3ef0798cbe5062ae9ea3cb55875ac648c95350a",
+    "quartz/styles/course-resources.scss": "68b6c09696aaa1db4aa5a90d4b8ff0b3e4c07a2243e703df82e37e4004fd50d2",
+    "quartz/styles/custom.scss": "dbb93a37c05988a16ba3841e070f286835621347147019d41f67b0ecd08c9e93",
+    "quartz/styles/explorer-pc.scss": "b389ef5dfb9f093fd8ad9538825f88f40a4c7640f7fd350ef6eedd99c921c6ac",
+    "quartz/styles/pc.scss": "18a78cf027d965f4e5a6470dd1740472bdf8a90d76af7fc8887a5b5fa6b2da85",
+    "quartz/styles/site-refresh.scss": "d83fd3b463fec823fdefbbebbd59691a15695371b3401cda142dc273fd3f8bbb",
+    "quartz/styles/support-viewer.scss": "0b925fa5970135c8b79c8791ab2e008c9759c8f9f2468b7bfce2e7a4c6249dc2",
+    "quartz/styles/syntax.scss": "f76569760f857fe72c23d74c89e8ab83bc3f0db24b453a4d15842a1435bfb66a",
+    "quartz/styles/variables.scss": "365594b1baf3194f01a4c0bd6763dd5f0f10703346b7207b3613ccc7669f9436"
+  },
+  "visualHashNormalization": "utf8-lf"
+}

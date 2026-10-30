@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAFAFA"/><stop offset="100%" style="stop-color:#F0F0F0"/>
+    </linearGradient>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#00000018"/></filter>
+    <marker id="ar" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#555"/></marker>
+  </defs>
+
+  <rect width="1180" height="640" fill="url(#bg)" rx="15"/>
+
+  <text x="590" y="42" text-anchor="middle" font-size="23" font-weight="bold" fill="#333">TP AD &#8212; ce que vous construisez, exercice par exercice</text>
+  <text x="590" y="65" text-anchor="middle" font-size="13" fill="#888">Chaque exercice a besoin du precedent. Objectif final : Marc Lebrun ouvre son dossier et peut ecrire dedans.</text>
+
+  <!-- EX 1 -->
+  <rect x="35" y="110" width="200" height="215" rx="14" fill="#E3F2FD" stroke="#1565C0" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="65" cy="140" r="17" fill="#1565C0"/><text x="65" y="147" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">1</text>
+  <text x="92" y="146" font-size="14" font-weight="bold" fill="#1565C0">LES OUs</text>
+  <text x="135" y="172" text-anchor="middle" font-size="11" font-style="italic" fill="#666">les tiroirs du meuble</text>
+  <rect x="55" y="186" width="160" height="118" rx="8" fill="#fff" stroke="#1565C0" stroke-width="1"/>
+  <text x="68" y="206" font-size="10.5" fill="#333">fournil/</text>
+  <text x="78" y="224" font-size="10.5" fill="#333">Utilisateurs/</text>
+  <text x="88" y="242" font-size="10.5" fill="#333">Laboratoire/</text>
+  <text x="98" y="260" font-size="10.5" fill="#333">fabrication/</text>
+  <text x="108" y="278" font-size="10.5" font-weight="bold" fill="#1565C0">boulangerie</text>
+  <text x="68" y="296" font-size="10.5" fill="#333">Groupes/ Ordinateurs/</text>
+
+  <!-- EX 2 -->
+  <rect x="280" y="110" width="200" height="215" rx="14" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="310" cy="140" r="17" fill="#2E7D32"/><text x="310" y="147" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">2</text>
+  <text x="337" y="146" font-size="14" font-weight="bold" fill="#2E7D32">LES GROUPES</text>
+  <text x="380" y="172" text-anchor="middle" font-size="11" font-style="italic" fill="#666">les etiquettes</text>
+  <rect x="300" y="186" width="160" height="34" rx="6" fill="#fff" stroke="#2E7D32" stroke-width="1"/>
+  <text x="380" y="201" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2E7D32">G_..._boulangerie</text>
+  <text x="380" y="215" text-anchor="middle" font-size="9.5" fill="#888">Global = qui sont-ils</text>
+  <rect x="300" y="228" width="160" height="34" rx="6" fill="#fff" stroke="#2E7D32" stroke-width="1"/>
+  <text x="380" y="243" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2E7D32">DL_..._L</text>
+  <text x="380" y="257" text-anchor="middle" font-size="9.5" fill="#888">DomainLocal = lecture</text>
+  <rect x="300" y="270" width="160" height="34" rx="6" fill="#fff" stroke="#2E7D32" stroke-width="1"/>
+  <text x="380" y="285" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2E7D32">DL_..._M</text>
+  <text x="380" y="299" text-anchor="middle" font-size="9.5" fill="#888">DomainLocal = modif</text>
+
+  <!-- EX 3 -->
+  <rect x="525" y="110" width="200" height="215" rx="14" fill="#FFF3E0" stroke="#EF6C00" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="555" cy="140" r="17" fill="#EF6C00"/><text x="555" y="147" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">3</text>
+  <text x="582" y="146" font-size="14" font-weight="bold" fill="#EF6C00">L'AGDLP</text>
+  <text x="625" y="172" text-anchor="middle" font-size="11" font-style="italic" fill="#666">on relie les etiquettes</text>
+  <rect x="545" y="186" width="160" height="118" rx="8" fill="#fff" stroke="#EF6C00" stroke-width="1"/>
+  <text x="625" y="208" text-anchor="middle" font-size="10.5" fill="#333">mlebrun</text>
+  <text x="625" y="224" text-anchor="middle" font-size="12" fill="#EF6C00">&#8595;</text>
+  <text x="625" y="240" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#333">G_ (le metier)</text>
+  <text x="625" y="256" text-anchor="middle" font-size="12" fill="#EF6C00">&#8595;</text>
+  <text x="625" y="272" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#333">DL_ (le droit)</text>
+  <text x="625" y="288" text-anchor="middle" font-size="12" fill="#EF6C00">&#8595;</text>
+  <text x="625" y="300" text-anchor="middle" font-size="10" fill="#888">le dossier</text>
+
+  <!-- EX 4 -->
+  <rect x="770" y="110" width="200" height="215" rx="14" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="800" cy="140" r="17" fill="#6A1B9A"/><text x="800" y="147" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">4</text>
+  <text x="827" y="146" font-size="14" font-weight="bold" fill="#6A1B9A">LE NTFS</text>
+  <text x="870" y="172" text-anchor="middle" font-size="11" font-style="italic" fill="#666">on pose la serrure</text>
+  <rect x="790" y="186" width="160" height="118" rx="8" fill="#fff" stroke="#6A1B9A" stroke-width="1"/>
+  <text x="870" y="206" text-anchor="middle" font-size="9.5" fill="#333">C:\fournil\...\boulangerie</text>
+  <line x1="805" y1="214" x2="935" y2="214" stroke="#6A1B9A" stroke-width="1" stroke-dasharray="2 2"/>
+  <text x="805" y="232" font-size="10" fill="#333">Administrateurs : total</text>
+  <text x="805" y="250" font-size="10" fill="#333">SYSTEM : total</text>
+  <text x="805" y="268" font-size="10" fill="#333">DL_..._L : lecture</text>
+  <text x="805" y="286" font-size="10" fill="#333">DL_..._M : modification</text>
+  <text x="870" y="300" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#6A1B9A">heritage coupe</text>
+
+  <!-- EX 5 -->
+  <rect x="1010" y="110" width="140" height="215" rx="14" fill="#FFEBEE" stroke="#C62828" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="1040" cy="140" r="17" fill="#C62828"/><text x="1040" y="147" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">5</text>
+  <text x="1067" y="146" font-size="14" font-weight="bold" fill="#C62828">L'USER</text>
+  <text x="1080" y="172" text-anchor="middle" font-size="11" font-style="italic" fill="#666">on branche</text>
+  <rect x="1025" y="186" width="110" height="118" rx="8" fill="#fff" stroke="#C62828" stroke-width="1"/>
+  <text x="1080" y="212" text-anchor="middle" font-size="11" font-weight="bold" fill="#C62828">mlebrun</text>
+  <text x="1080" y="232" text-anchor="middle" font-size="9.5" fill="#666">Marc Lebrun</text>
+  <text x="1080" y="250" text-anchor="middle" font-size="9.5" fill="#666">Chef Boulanger</text>
+  <line x1="1040" y1="260" x2="1120" y2="260" stroke="#C62828" stroke-width="1" stroke-dasharray="2 2"/>
+  <text x="1080" y="278" text-anchor="middle" font-size="9.5" fill="#333">place dans l'OU</text>
+  <text x="1080" y="294" text-anchor="middle" font-size="9.5" fill="#333">ajoute au G_</text>
+
+  <!-- FLECHES -->
+  <line x1="236" y1="215" x2="275" y2="215" stroke="#555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <line x1="481" y1="215" x2="520" y2="215" stroke="#555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <line x1="726" y1="215" x2="765" y2="215" stroke="#555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <line x1="971" y1="215" x2="1005" y2="215" stroke="#555" stroke-width="2.5" marker-end="url(#ar)"/>
+
+  <!-- ANALOGIE -->
+  <rect x="35" y="360" width="1115" height="105" rx="14" fill="#fff" stroke="#BDBDBD" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="60" y="388" font-size="14" font-weight="bold" fill="#333">L'analogie : vous amenagez un immeuble de bureaux</text>
+  <text x="60" y="414" font-size="11.5" fill="#333"><tspan font-weight="bold" fill="#1565C0">1.</tspan> Je construis les pieces et les couloirs (OUs) &#8212; <tspan font-weight="bold" fill="#2E7D32">2.</tspan> Je fabrique des badges metier (G_) et des badges d'acces (DL_)</text>
+  <text x="60" y="438" font-size="11.5" fill="#333"><tspan font-weight="bold" fill="#EF6C00">3.</tspan> Je decide quel badge metier ouvre quelle porte (AGDLP) &#8212; <tspan font-weight="bold" fill="#6A1B9A">4.</tspan> Je pose le lecteur de badge sur la porte (NTFS)</text>
+  <text x="60" y="458" font-size="11.5" fill="#333"><tspan font-weight="bold" fill="#C62828">5.</tspan> J'embauche Marc et je lui donne son badge metier. Il n'a jamais de droit personnel sur un dossier : tout passe par les groupes.</text>
+
+  <!-- TEST FINAL -->
+  <rect x="35" y="490" width="1115" height="115" rx="14" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5" filter="url(#sh)"/>
+  <text x="60" y="518" font-size="14" font-weight="bold" fill="#2E7D32">Comment je sais que j'ai reussi ?</text>
+  <text x="60" y="544" font-size="11.5" fill="#333">Ouvrez une session Windows avec <tspan font-weight="bold">mlebrun</tspan>, allez dans le dossier <tspan font-weight="bold">boulangerie</tspan>, creez un fichier texte : ca doit marcher.</text>
+  <text x="60" y="566" font-size="11.5" fill="#333">Remontez d'un cran dans <tspan font-weight="bold">fabrication</tspan> : vous devez voir les fichiers mais <tspan font-weight="bold" fill="#C62828">ne pas pouvoir en creer</tspan>.</text>
+  <text x="60" y="590" font-size="11.5" font-style="italic" fill="#2E7D32">Si ces deux comportements sont corrects, les 5 exercices sont bons. Sinon, l'erreur est a l'etape 3 ou 4.</text>
+</svg>

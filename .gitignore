@@ -1,0 +1,10 @@
+node_modules/
+.pdf-tools/
+public/
+output/
+.template-stage/
+__pycache__/
+*.tsbuildinfo
+.quartz-cache/
+reference/*.zip
+/sources/

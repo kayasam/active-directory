@@ -1,0 +1,302 @@
+@use "./variables.scss" as *;
+
+.home-header {
+  margin: 0 0 2rem;
+}
+
+.home-shared-context {
+  display: grid;
+  gap: 0.35rem;
+  margin: -0.55rem 0 2rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid #e8cd9b;
+  border-left: 4px solid #c48427;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, #f6e6c8 30%, var(--light));
+}
+
+.home-shared-context strong {
+  color: var(--dark);
+}
+
+.home-shared-context span {
+  color: var(--darkgray);
+  font-size: 0.9rem;
+}
+
+.home-shared-context a {
+  justify-self: start;
+  margin-top: 0.3rem;
+  color: #905814;
+  font-weight: 750;
+}
+
+.home-header h1 {
+  margin: 0 0 1rem;
+  color: var(--dark);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  line-height: 1.08;
+}
+
+.home-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.home-shortcuts a,
+.home-shortcuts a.internal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 23%, var(--lightgray));
+  border-radius: 0.7rem;
+  color: var(--dark);
+  background: var(--light);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.home-shortcuts a:first-child {
+  border-color: color-mix(in srgb, #1769aa 42%, var(--lightgray));
+}
+
+.home-shortcuts a span {
+  color: var(--darkgray);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.home-track {
+  --home-accent: #8956ee;
+  margin: 0 0 2.8rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.home-track--glpi,
+.home-chapter-grid--glpi {
+  --home-accent: #1769aa;
+}
+
+.home-track__head {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 0.3rem 1.3rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent) 38%, var(--lightgray));
+  border-left: 4px solid var(--home-accent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--home-accent) 8%, var(--light));
+}
+
+.home-track__logo {
+  grid-row: 1 / span 2;
+  display: grid;
+  width: 8.5rem;
+  height: 5rem;
+  place-items: center;
+  border-radius: 0.75rem;
+}
+
+.home-track__logo img {
+  display: block;
+  max-width: 7.3rem;
+  max-height: 3.5rem;
+  object-fit: contain;
+}
+
+.home-track__logo--glpi {
+  background: #1769aa;
+}
+
+.home-track__logo--itil {
+  border: 1px solid #e5dcfa;
+  background: #fff;
+}
+
+.home-track__heading h2 {
+  margin: 0;
+  color: var(--dark);
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+
+.home-track__heading p {
+  margin: 0.3rem 0 0;
+  color: var(--darkgray);
+  font-size: 0.94rem;
+  line-height: 1.4;
+}
+
+.home-track__start,
+.home-track__start.internal {
+  grid-column: 2;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 0.56rem 0.82rem;
+  border-radius: 0.55rem;
+  color: #fff;
+  background: var(--home-accent);
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.home-track__start:hover {
+  color: #fff;
+  filter: brightness(1.12);
+}
+
+.home-chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 0.8rem 0 1.8rem;
+}
+
+.home-chapter,
+.home-chapter.internal {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 4.3rem;
+  padding: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent, #8956ee) 22%, var(--lightgray));
+  border-radius: 0.72rem;
+  color: var(--dark);
+  background: color-mix(in srgb, var(--home-accent, #8956ee) 4%, var(--light));
+  text-decoration: none;
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease,
+    background 150ms ease;
+}
+
+.home-chapter:hover,
+.home-chapter.internal:hover {
+  border-color: var(--home-accent, #8956ee);
+  background: color-mix(in srgb, var(--home-accent, #8956ee) 9%, var(--light));
+  transform: translateY(-2px);
+}
+
+.home-chapter__number {
+  display: grid;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: 0.55rem;
+  color: #fff;
+  background: var(--home-accent, #8956ee);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.home-chapter strong {
+  color: var(--dark);
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.home-chapter__arrow {
+  color: var(--home-accent, #8956ee);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.home-downloads {
+  margin: 2.5rem 0 1rem;
+}
+
+.home-downloads h2 {
+  margin-bottom: 0.8rem;
+}
+
+.home-downloads__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.home-downloads__grid a,
+.home-downloads__grid a.internal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 0.8rem;
+  color: var(--darkgray);
+  background: var(--light);
+  text-decoration: none;
+}
+
+.home-downloads__grid a:first-child {
+  border-top: 3px solid #1769aa;
+}
+
+.home-downloads__grid a:last-child {
+  border-top: 3px solid #8956ee;
+}
+
+.home-downloads__grid strong {
+  color: var(--dark);
+}
+
+.home-downloads__grid span {
+  font-size: 0.85rem;
+}
+
+.home-downloads__grid em {
+  margin-top: 0.25rem;
+  color: var(--secondary);
+  font-size: 0.85rem;
+  font-style: normal;
+  font-weight: 750;
+}
+
+article a[href$=".html"],
+article a[href*="/telechargements/"][href$=".md"] {
+  display: inline-flex;
+  align-items: center;
+  margin: 0.15rem 0;
+  padding: 0.38rem 0.68rem;
+  border-radius: 0.45rem;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+article a[href$=".html"] {
+  background: var(--secondary);
+}
+
+article a[href*="/telechargements/"][href$=".md"] {
+  background: #0d9668;
+}
+
+@media all and (max-width: 800px) {
+  .home-shortcuts,
+  .home-chapter-grid,
+  .home-downloads__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-track__head {
+    grid-template-columns: 1fr;
+  }
+
+  .home-track__logo {
+    grid-row: auto;
+  }
+
+  .home-track__start,
+  .home-track__start.internal {
+    grid-column: 1;
+  }
+}

@@ -1,0 +1,601 @@
+{
+  "01-comprendre-linux": [
+    {
+      "theme": "Comprendre Linux",
+      "question": "En quelle année Linux a-t-il été créé ?",
+      "choices": [
+        "1969",
+        "1991",
+        "2001",
+        "2005"
+      ],
+      "answer": 1,
+      "explanation": "Exact ! Linus Torvalds a publié le premier noyau Linux en 1991, à 21 ans."
+    },
+    {
+      "theme": "Comprendre Linux",
+      "question": "Qu'est-ce qu'\"Open Source\" signifie principalement ?",
+      "choices": [
+        "Que le logiciel est gratuit uniquement",
+        "Que le code source est librement accessible et modifiable",
+        "Que le logiciel est garanti sans bug",
+        "Que le logiciel est fabriqué par Apple"
+      ],
+      "answer": 1,
+      "explanation": "Open source associe un code accessible aux droits accordés par une licence : utiliser, modifier et redistribuer. La gratuité seule ne suffit pas."
+    },
+    {
+      "theme": "Comprendre Linux",
+      "question": "Une \"distribution\" Linux, c'est :",
+      "choices": [
+        "Uniquement le noyau Linux (kernel)",
+        "Un logiciel pour installer Windows",
+        "Le noyau + outils + interface + gestionnaire de paquets",
+        "Un antivirus pour Linux"
+      ],
+      "answer": 2,
+      "explanation": "Exact ! Une distribution = noyau Linux + outils système + interface + gestionnaire de paquets."
+    },
+    {
+      "theme": "Comprendre Linux",
+      "question": "Quelle distribution Linux utilise-t-on dans cette formation ?",
+      "choices": [
+        "Ubuntu",
+        "Kali Linux",
+        "Rocky Linux",
+        "Debian"
+      ],
+      "answer": 3,
+      "explanation": "Correct ! Dans cette formation, nous utilisons Debian, reconnue pour sa stabilité."
+    },
+    {
+      "theme": "Comprendre Linux",
+      "question": "Pourquoi les serveurs fonctionnent-ils généralement sans interface graphique ?",
+      "choices": [
+        "Parce que Linux ne sait pas afficher d'interface graphique",
+        "Pour économiser des ressources (RAM, CPU)",
+        "Parce que les écrans sont trop chers",
+        "C'est obligatoire par la loi"
+      ],
+      "answer": 1,
+      "explanation": "Exact ! Sans interface graphique, le serveur économise de la RAM et du CPU pour se consacrer uniquement à ses tâches."
+    }
+  ],
+  "02-installer-la-vm": [
+    {
+      "theme": "Installer la machine virtuelle",
+      "question": "Qu'est-ce qu'une machine virtuelle ?",
+      "choices": [
+        "Un deuxième ordinateur physique acheté en supplément",
+        "Un ordinateur simulé à l'intérieur de votre ordinateur réel",
+        "Un logiciel de traitement de texte",
+        "Une version allégée de Windows"
+      ],
+      "answer": 1,
+      "explanation": "Exact ! Une VM est un ordinateur simulé dans votre ordinateur réel — avec son propre OS, son propre disque…"
+    },
+    {
+      "theme": "Installer la machine virtuelle",
+      "question": "Quelle quantité de RAM minimum faut-il allouer à la VM Debian ?",
+      "choices": ["512 Mo", "1 Go", "2 Go", "8 Go"],
+      "answer": 2,
+      "explanation": "Correct ! 2 Go est le minimum pour faire tourner Debian avec GNOME confortablement. 4 Go est recommandé."
+    },
+    {
+      "theme": "Installer la machine virtuelle",
+      "question": "Quel type de disque virtuel doit-on choisir ?",
+      "choices": ["VMDK fixe", "VDI dynamique", "NTFS compressé", "FAT32"],
+      "answer": 1,
+      "explanation": "Exact ! VDI dynamique est le format natif VirtualBox : il grandit au besoin et n'occupe que l'espace réellement utilisé."
+    },
+    {
+      "theme": "Installer la machine virtuelle",
+      "question": "Quel mode réseau permet à la VM d'accéder à Internet ?",
+      "choices": ["Host-Only", "Internal Network", "NAT", "Déconnecté"],
+      "answer": 2,
+      "explanation": "Correct ! Le mode NAT permet à la VM d'accéder à Internet via la connexion de votre PC hôte."
+    },
+    {
+      "theme": "Installer la machine virtuelle",
+      "question": "Pourquoi ne faut-il pas travailler au quotidien avec le compte root ?",
+      "choices": [
+        "Parce que root ne peut pas ouvrir de navigateur web",
+        "Parce que root ne peut pas se connecter en SSH",
+        "Parce qu'une erreur peut détruire le système entier sans avertissement",
+        "Parce que root est réservé aux développeurs"
+      ],
+      "answer": 2,
+      "explanation": "Exact ! Root a tous les pouvoirs sans aucune confirmation. Une typo et vous pouvez supprimer des fichiers système critiques."
+    }
+  ],
+  "03-interface-graphique": [
+    {
+      "theme": "L'interface graphique",
+      "question": "Qu'est-ce qu'un \"environnement de bureau\" sous Linux ?",
+      "choices": [
+        "Le noyau Linux (kernel)",
+        "L'interface graphique, un composant séparé et remplaçable du système",
+        "Le gestionnaire de paquets apt",
+        "Un logiciel pour créer des machines virtuelles"
+      ],
+      "answer": 1,
+      "explanation": "Exact ! Sous Linux, l'interface graphique est un composant séparé — on peut choisir ou changer d'environnement de bureau."
+    },
+    {
+      "theme": "L'interface graphique",
+      "question": "Quel environnement de bureau utilise Debian par défaut ?",
+      "choices": ["KDE Plasma", "XFCE", "GNOME", "MATE"],
+      "answer": 2,
+      "explanation": "Correct ! Debian utilise GNOME par défaut. Ubuntu également."
+    },
+    {
+      "theme": "L'interface graphique",
+      "question": "Quel est l'équivalent Linux de Microsoft Office ?",
+      "choices": ["GIMP", "VLC", "LibreOffice", "Nautilus"],
+      "answer": 2,
+      "explanation": "Exact ! LibreOffice est la suite bureautique libre équivalente à Microsoft Office — Writer (Word), Calc (Excel), Impress (PowerPoint)."
+    },
+    {
+      "theme": "L'interface graphique",
+      "question": "Où se trouve le dossier personnel d'un utilisateur \"samuel\" sous Linux ?",
+      "choices": ["C:\\Users\\samuel\\", "/usr/samuel/", "/home/samuel/", "/root/samuel/"],
+      "answer": 2,
+      "explanation": "Correct ! Sous Linux, le dossier personnel est /home/nom_utilisateur/ — équivalent de C:\\Users\\Nom\\ sous Windows."
+    },
+    {
+      "theme": "L'interface graphique",
+      "question": "Comment ouvrir le terminal depuis GNOME ?",
+      "choices": [
+        "Faire un clic droit sur le bureau et choisir \"Propriétés\"",
+        "Activités → taper \"terminal\" → Entrée",
+        "Cliquer sur \"Démarrer\" puis \"Exécuter\"",
+        "Alt + F4"
+      ],
+      "answer": 1,
+      "explanation": "Exact ! La méthode la plus universelle : Activités → taper 'terminal'. Le raccourci Ctrl+Alt+T fonctionne aussi."
+    }
+  ],
+  "04-le-terminal": [
+    {
+      "theme": "Le terminal",
+      "question": "Que signifie le ~ dans le prompt stagiaire@debian:~$ ?",
+      "choices": [
+        "La racine du système (/)",
+        "Le dossier personnel de l'utilisateur",
+        "Un dossier vide",
+        "Le dossier courant quel qu'il soit"
+      ],
+      "answer": 1,
+      "explanation": "~ est un raccourci pour /home/stagiaire (ou le dossier personnel de l'utilisateur connecté)."
+    },
+    {
+      "theme": "Le terminal",
+      "question": "Quelle commande affiche le répertoire courant ?",
+      "choices": ["ls", "cd", "pwd", "dir"],
+      "answer": 2,
+      "explanation": "pwd (Print Working Directory) affiche le chemin complet du dossier où vous vous trouvez."
+    },
+    {
+      "theme": "Le terminal",
+      "question": "Comment afficher aussi les fichiers cachés avec ls ?",
+      "choices": ["ls -l", "ls -a", "ls -h", "ls --all-files"],
+      "answer": 1,
+      "explanation": "ls -a (all) affiche tous les fichiers, y compris ceux dont le nom commence par un point (.)."
+    },
+    {
+      "theme": "Le terminal",
+      "question": "Quelle commande remonte d'un niveau dans l'arborescence ?",
+      "choices": ["cd /", "cd ~", "cd ..", "cd back"],
+      "answer": 2,
+      "explanation": "cd .. remonte d'un niveau. Les deux points (..) désignent toujours le dossier parent."
+    },
+    {
+      "theme": "Le terminal",
+      "question": "Quelle est la différence entre un chemin absolu et un chemin relatif ?",
+      "choices": [
+        "Un chemin absolu est plus court",
+        "Un chemin absolu commence par / et est toujours valide ; un relatif dépend du dossier courant",
+        "Un chemin relatif commence par ~",
+        "Il n'y a aucune différence"
+      ],
+      "answer": 1,
+      "explanation": "Le chemin absolu commence par / (racine) et est valide depuis n'importe où. Le relatif dépend du dossier où vous êtes."
+    },
+    {
+      "theme": "Le terminal",
+      "question": "Quel raccourci clavier complète automatiquement un nom de fichier ou de commande ?",
+      "choices": ["Ctrl+C", "Ctrl+L", "Tab", "↑"],
+      "answer": 2,
+      "explanation": "La touche Tab déclenche la complétion automatique. Double-Tab affiche toutes les propositions possibles."
+    }
+  ],
+  "05-fichiers-et-repertoires": [
+    {
+      "theme": "Fichiers et répertoires",
+      "question": "Quelle commande crée un dossier ET tous ses parents intermédiaires ?",
+      "choices": [
+        "mkdir projets",
+        "mkdir -p projets/linux/cours",
+        "touch projets/",
+        "mkdir --all projets/linux/cours"
+      ],
+      "answer": 1,
+      "explanation": "mkdir -p crée toute la hiérarchie de dossiers d'un coup, même si les dossiers parents n'existent pas."
+    },
+    {
+      "theme": "Fichiers et répertoires",
+      "question": "touch notes.txt — que fait cette commande si le fichier existe déjà ?",
+      "choices": [
+        "Elle efface son contenu",
+        "Elle retourne une erreur",
+        "Elle met à jour la date de modification sans toucher au contenu",
+        "Elle crée un doublon notes(2).txt"
+      ],
+      "answer": 2,
+      "explanation": "touch met à jour l'horodatage du fichier mais ne modifie pas son contenu. Elle crée le fichier s'il n'existe pas."
+    },
+    {
+      "theme": "Fichiers et répertoires",
+      "question": "echo \"texte\" >> fichier — que fait l'opérateur >> ?",
+      "choices": [
+        "Écrase le contenu existant",
+        "Crée un nouveau fichier",
+        "Ajoute à la fin du fichier sans écraser",
+        "Affiche le contenu du fichier"
+      ],
+      "answer": 2,
+      "explanation": ">> (double chevron) ajoute à la fin du fichier. > (simple) écrase tout le contenu. Distinction essentielle !"
+    },
+    {
+      "theme": "Fichiers et répertoires",
+      "question": "Comment copier un dossier entier avec cp ?",
+      "choices": [
+        "cp dossier destination",
+        "cp -a dossier destination",
+        "cp -r dossier destination",
+        "cp --dir dossier destination"
+      ],
+      "answer": 2,
+      "explanation": "cp -r (récursif) copie le dossier et tout son contenu. Sans -r, cp refuse de copier un dossier."
+    },
+    {
+      "theme": "Fichiers et répertoires",
+      "question": "Pourquoi rm est-il particulièrement dangereux ?",
+      "choices": [
+        "Il est lent sur les gros dossiers",
+        "Il supprime de façon définitive sans corbeille de récupération",
+        "Il demande toujours une confirmation",
+        "Il ne fonctionne pas sur les fichiers système"
+      ],
+      "answer": 1,
+      "explanation": "Contrairement à l'interface graphique, rm supprime immédiatement et définitivement. Il n'y a pas de corbeille pour récupérer."
+    },
+    {
+      "theme": "Fichiers et répertoires",
+      "question": "Quelle wildcard représente n'importe quelle suite de caractères ?",
+      "choices": ["?", "[abc]", "*", "%"],
+      "answer": 2,
+      "explanation": "* correspond à zéro ou plusieurs caractères quelconques. Ex : *.txt correspond à tous les fichiers se terminant par .txt."
+    }
+  ],
+  "06-arborescence-linux": [
+    {
+      "theme": "L'arborescence Linux",
+      "question": "Quel symbole représente la racine de l'arborescence Linux ?",
+      "choices": ["~", "#", "/", "\\"],
+      "answer": 2,
+      "explanation": "/ est la racine de tout le système de fichiers Linux. Tous les chemins absolus commencent par /."
+    },
+    {
+      "theme": "L'arborescence Linux",
+      "question": "Où se trouvent les fichiers de configuration sous Linux ?",
+      "choices": ["/usr/", "/var/", "/etc/", "/home/"],
+      "answer": 2,
+      "explanation": "/etc/ contient tous les fichiers de configuration du système et des services. C'est l'endroit incontournable pour l'administration."
+    },
+    {
+      "theme": "L'arborescence Linux",
+      "question": "Où sont stockés les journaux système sous Linux ?",
+      "choices": ["/tmp/log/", "/var/log/", "/etc/log/", "/usr/log/"],
+      "answer": 1,
+      "explanation": "/var/log/ contient les journaux du système : syslog (activité générale), auth.log (connexions), kern.log (noyau)…"
+    },
+    {
+      "theme": "L'arborescence Linux",
+      "question": "Pourquoi ne faut-il pas stocker des données importantes dans /tmp ?",
+      "choices": [
+        "L'accès est trop lent",
+        "Son contenu est effacé à chaque redémarrage",
+        "On n'a pas le droit d'y écrire",
+        "Il n'y a pas assez de place"
+      ],
+      "answer": 1,
+      "explanation": "/tmp est une zone temporaire effacée au redémarrage (et parfois périodiquement). N'y stockez jamais de données importantes."
+    },
+    {
+      "theme": "L'arborescence Linux",
+      "question": "Que signifie ~ dans un chemin comme ~/Documents ?",
+      "choices": [
+        "La racine du système /",
+        "Un dossier caché",
+        "Le dossier personnel de l'utilisateur courant",
+        "Un dossier temporaire"
+      ],
+      "answer": 2,
+      "explanation": "~ est un raccourci pour le dossier personnel de l'utilisateur connecté, par exemple /home/stagiaire."
+    },
+    {
+      "theme": "L'arborescence Linux",
+      "question": "Quelle commande affiche l'espace disque disponible sur chaque partition ?",
+      "choices": ["du -sh /", "lsblk", "df -h", "ls -l /dev/"],
+      "answer": 2,
+      "explanation": "df -h (disk free, human readable) affiche l'espace utilisé et disponible pour chaque partition montée, dans un format lisible (Mo, Go)."
+    }
+  ],
+  "07-utilisateurs-et-permissions": [
+    {
+      "theme": "Utilisateurs et permissions",
+      "question": "Que fait la commande whoami ?",
+      "choices": [
+        "Affiche la liste des utilisateurs du système",
+        "Affiche le nom de l'utilisateur courant",
+        "Montre qui est connecté en ce moment",
+        "Affiche l'UID de root"
+      ],
+      "answer": 1,
+      "explanation": "whoami affiche simplement le nom d'utilisateur sous lequel on est connecté."
+    },
+    {
+      "theme": "Utilisateurs et permissions",
+      "question": "Pourquoi utilise-t-on sudo au lieu de se connecter en root ?",
+      "choices": [
+        "Pour aller plus vite",
+        "Pour limiter le risque : une erreur en root peut détruire le système",
+        "Parce que root n'a pas accès à Internet",
+        "Pour chiffrer les commandes"
+      ],
+      "answer": 1,
+      "explanation": "sudo limite les risques en n'accordant les droits root que pour une seule commande à la fois."
+    },
+    {
+      "theme": "Utilisateurs et permissions",
+      "question": "Dans -rw-r--r--, que signifient les 3 derniers caractères r-- ?",
+      "choices": [
+        "Les droits du propriétaire",
+        "Les droits du groupe",
+        "Les droits des autres utilisateurs : lecture seule",
+        "Le type du fichier"
+      ],
+      "answer": 2,
+      "explanation": "Les 10 caractères se lisent : type + 3 pour u + 3 pour g + 3 pour o. Les 3 derniers (r--) = autres = lecture seule."
+    },
+    {
+      "theme": "Utilisateurs et permissions",
+      "question": "Quelle valeur numérique correspond aux droits rwx ?",
+      "choices": ["6", "5", "7", "3"],
+      "answer": 2,
+      "explanation": "r=4, w=2, x=1. Donc rwx = 4+2+1 = 7."
+    },
+    {
+      "theme": "Utilisateurs et permissions",
+      "question": "chmod 644 fichier.txt donne quels droits ?",
+      "choices": ["rwxrwxrwx", "rwxr--r--", "rw-r--r--", "r--r--r--"],
+      "answer": 2,
+      "explanation": "644 : 6=rw- (propriétaire), 4=r-- (groupe), 4=r-- (autres). Fichier standard lisible par tous, modifiable par le propriétaire."
+    },
+    {
+      "theme": "Utilisateurs et permissions",
+      "question": "Quelle option de chmod modifie récursivement tout un dossier ?",
+      "choices": ["-a", "-R", "--all", "-f"],
+      "answer": 1,
+      "explanation": "chmod -R 755 dossier/ applique les permissions à tous les fichiers et sous-dossiers récursivement."
+    }
+  ],
+  "08-gestion-des-paquets": [
+    {
+      "theme": "Gestion des paquets",
+      "question": "Que fait sudo apt update ?",
+      "choices": [
+        "Met à jour tous les logiciels installés",
+        "Met à jour la LISTE des paquets disponibles (pas les logiciels)",
+        "Installe les mises à jour critiques uniquement",
+        "Télécharge les nouveaux dépôts"
+      ],
+      "answer": 1,
+      "explanation": "apt update ne touche à aucun logiciel : il actualise seulement la liste des versions disponibles dans les dépôts."
+    },
+    {
+      "theme": "Gestion des paquets",
+      "question": "Quelle commande installe curl et git en une seule fois ?",
+      "choices": [
+        "sudo apt update curl git",
+        "sudo apt install curl git",
+        "sudo apt get curl git",
+        "apt -i curl git"
+      ],
+      "answer": 1,
+      "explanation": "On peut lister plusieurs paquets à la suite : sudo apt install curl git."
+    },
+    {
+      "theme": "Gestion des paquets",
+      "question": "Différence entre apt remove et apt purge ?",
+      "choices": [
+        "remove est plus rapide que purge",
+        "remove garde la configuration, purge supprime tout",
+        "purge est pour les paquets système seulement",
+        "Il n'y a aucune différence"
+      ],
+      "answer": 1,
+      "explanation": "remove supprime le programme mais laisse les fichiers de config. purge nettoie complètement, y compris la configuration."
+    },
+    {
+      "theme": "Gestion des paquets",
+      "question": "Pourquoi faut-il faire apt update avant apt install ?",
+      "choices": [
+        "C'est obligatoire sinon apt plante",
+        "Pour avoir les informations sur les dernières versions disponibles",
+        "Pour vider le cache apt",
+        "Pour vérifier les dépendances"
+      ],
+      "answer": 1,
+      "explanation": "Sans apt update, apt peut proposer des versions anciennes ou ne pas trouver de nouveaux paquets ajoutés récemment aux dépôts."
+    },
+    {
+      "theme": "Gestion des paquets",
+      "question": "Comment installer un fichier .deb téléchargé directement ?",
+      "choices": [
+        "sudo apt install fichier.deb",
+        "sudo dpkg -i fichier.deb",
+        "sudo install fichier.deb",
+        "dpkg --add fichier.deb"
+      ],
+      "answer": 1,
+      "explanation": "dpkg -i (install) permet d'installer un fichier .deb local. Si des dépendances manquent : sudo apt -f install"
+    },
+    {
+      "theme": "Gestion des paquets",
+      "question": "Que fait sudo apt autoremove ?",
+      "choices": [
+        "Supprime automatiquement tous les paquets non utilisés depuis 30 jours",
+        "Supprime les paquets installés automatiquement qui ne sont plus nécessaires",
+        "Désinstalle apt lui-même",
+        "Supprime les anciens noyaux Linux"
+      ],
+      "answer": 1,
+      "explanation": "autoremove nettoie les dépendances qui ont été installées automatiquement pour d'autres paquets, mais qui ne sont plus utiles."
+    }
+  ],
+  "09-redirections-et-tubes": [
+    {
+      "theme": "Redirections et tubes",
+      "question": "Que signifie le > dans ls /etc > liste.txt ?",
+      "choices": [
+        "Compare la sortie à liste.txt",
+        "Redirige la sortie vers un fichier en écrasant son contenu",
+        "Ajoute la sortie à la fin de liste.txt",
+        "Lit les données depuis liste.txt"
+      ],
+      "answer": 1,
+      "explanation": "> redirige stdout vers un fichier. Si le fichier existe, il est écrasé sans avertissement."
+    },
+    {
+      "theme": "Redirections et tubes",
+      "question": "Différence entre > et >> ?",
+      "choices": [
+        ">> est plus rapide que >",
+        "> écrase le fichier, >> ajoute à la fin",
+        ">> est pour les dossiers, > pour les fichiers",
+        "Il n'y a aucune différence"
+      ],
+      "answer": 1,
+      "explanation": "> recrée le fichier à chaque fois. >> ajoute au contenu existant — idéal pour les journaux (logs)."
+    },
+    {
+      "theme": "Redirections et tubes",
+      "question": "À quoi sert /dev/null ?",
+      "choices": [
+        "Un dossier pour les fichiers temporaires",
+        "Un trou noir qui supprime tout ce qu'on lui envoie",
+        "Le périphérique null-modem pour le réseau",
+        "Un fichier de configuration système"
+      ],
+      "answer": 1,
+      "explanation": "/dev/null est un \"trou noir\" du système : tout ce qui y est redirigé disparaît. Utile pour silencer les erreurs."
+    },
+    {
+      "theme": "Redirections et tubes",
+      "question": "Le tube | connecte…",
+      "choices": [
+        "Un fichier à une commande",
+        "La sortie d'une commande à l'entrée de la suivante",
+        "Deux processus en réseau",
+        "Une commande à l'écran"
+      ],
+      "answer": 1,
+      "explanation": "Le pipe | branche stdout d'une commande sur stdin de la suivante, sans passer par un fichier temporaire."
+    },
+    {
+      "theme": "Redirections et tubes",
+      "question": "Que fait grep -v \"motif\" ?",
+      "choices": [
+        "Affiche le nombre de lignes contenant le motif",
+        "Cherche en mode verbeux",
+        "Affiche les lignes qui NE contiennent PAS le motif",
+        "Cherche le motif de façon récursive"
+      ],
+      "answer": 2,
+      "explanation": "-v (invert) inverse le filtre : grep -v affiche toutes les lignes sauf celles qui contiennent le motif."
+    },
+    {
+      "theme": "Redirections et tubes",
+      "question": "Quelle commande compte le nombre de lignes dans un fichier ?",
+      "choices": ["count fichier", "ls -c fichier", "wc -l fichier", "lines fichier"],
+      "answer": 2,
+      "explanation": "wc = word count. wc -l compte les lignes, wc -w les mots, wc -c les caractères."
+    }
+  ],
+  "10-reseau-et-services": [
+    {
+      "theme": "Réseau et services",
+      "question": "Quelle commande affiche les interfaces réseau et leurs adresses IP ?",
+      "choices": ["ifconfig", "ip address (ou ip -br address)", "netstat -i", "net show"],
+      "answer": 1,
+      "explanation": "ip address est la commande moderne sur les distributions Linux actuelles. ifconfig est l'ancienne commande (paquet net-tools)."
+    },
+    {
+      "theme": "Réseau et services",
+      "question": "Comment envoyer exactement 4 paquets ping ?",
+      "choices": [
+        "ping -n 4 adresse",
+        "ping -c 4 adresse",
+        "ping --count=4 adresse",
+        "ping4 adresse"
+      ],
+      "answer": 1,
+      "explanation": "L'option -c (count) spécifie le nombre de paquets à envoyer. Sans -c, ping tourne indéfiniment jusqu'à Ctrl+C."
+    },
+    {
+      "theme": "Réseau et services",
+      "question": "Quelle commande SSH se connecte à 192.168.1.10 avec l'utilisateur admin ?",
+      "choices": [
+        "ssh 192.168.1.10 -u admin",
+        "ssh admin@192.168.1.10",
+        "connect admin@192.168.1.10",
+        "ssh --user=admin 192.168.1.10"
+      ],
+      "answer": 1,
+      "explanation": "La syntaxe SSH est : ssh utilisateur@adresse_ip. Simple et efficace."
+    },
+    {
+      "theme": "Réseau et services",
+      "question": "Où configurer une correspondance nom ↔ IP locale sans DNS ?",
+      "choices": ["/etc/resolv.conf", "/etc/network/interfaces", "/etc/hosts", "/etc/dns.conf"],
+      "answer": 2,
+      "explanation": "/etc/hosts est consulté en priorité avant le serveur DNS. On peut y définir des alias locaux : 192.168.1.10 mon-serveur"
+    },
+    {
+      "theme": "Réseau et services",
+      "question": "Comment activer un service pour qu'il démarre automatiquement au démarrage ?",
+      "choices": [
+        "sudo systemctl start ssh",
+        "sudo systemctl autostart ssh",
+        "sudo systemctl enable ssh",
+        "sudo service ssh boot"
+      ],
+      "answer": 2,
+      "explanation": "enable crée le lien symbolique pour le démarrage automatique. start démarre seulement maintenant. Pour les deux en une fois : enable --now"
+    },
+    {
+      "theme": "Réseau et services",
+      "question": "Quelle commande affiche les logs en temps réel d'un service ?",
+      "choices": [
+        "sudo systemctl log -u ssh",
+        "sudo journalctl -u ssh -f",
+        "sudo tail -f /var/log/ssh",
+        "sudo systemctl watch ssh"
+      ],
+      "answer": 1,
+      "explanation": "journalctl -u service -f affiche les logs du service en temps réel (-f = follow). Ctrl+C pour arrêter."
+    }
+  ]
+}

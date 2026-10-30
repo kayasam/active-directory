@@ -1,0 +1,89 @@
+html body .chapter-resources {
+  container-type: inline-size;
+  margin: 1.4rem 0 1.8rem;
+  padding: 1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--secondary) 3%, var(--light));
+}
+html body .chapter-resources-title {
+  display: block;
+  margin: 0;
+  color: var(--darkgray);
+  font: 700 .8rem/1.4 var(--headerFont);
+}
+html body .resource-buttons { display: grid; grid-template-columns: repeat(var(--resource-count, 4), minmax(0, 1fr)); gap: .65rem; }
+html body .resource-buttons a.resource-button {
+  --resource-color: #46647b;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: .65rem;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  padding: .8rem .65rem;
+  border: 1px solid color-mix(in srgb, var(--resource-color) 30%, var(--lightgray));
+  border-bottom: 3px solid var(--resource-color);
+  border-radius: .75rem;
+  background: color-mix(in srgb, var(--resource-color) 7%, var(--light));
+  color: var(--dark);
+  box-shadow: none;
+  opacity: 1;
+  font: 750 .87rem/1.4 var(--bodyFont);
+  text-decoration: none;
+  transition: background-color 120ms ease, border-color 120ms ease;
+  &:hover { background: color-mix(in srgb, var(--resource-color) 14%, var(--light)); color: var(--dark); filter: none; }
+  &:focus-visible { outline: 3px solid var(--resource-color); outline-offset: 3px; }
+  .external-icon { display: none; }
+  .resource-label { min-width: 0; overflow-wrap: anywhere; }
+  .resource-label small { display: block; color: var(--darkgray); font-size: .68rem; font-weight: 500; margin-top: .2rem; }
+  .resource-icon {
+    display: grid; place-items: center; width: 2rem; height: 2rem;
+    background: #fff; border-radius: .45rem;
+    img, svg.resource-symbol { display: block; flex-shrink: 0; visibility: visible; opacity: 1; width: 1.5rem; height: 1.5rem; object-fit: contain; margin: 0; border-radius: 0; }
+  }
+}
+.resource-buttons .resource-html { --resource-color: #b64c25; }
+.resource-buttons .resource-quiz { --resource-color: #7652ad; }
+.resource-buttons .resource-tp { --resource-color: #237b60; }
+/* Override the older download/HTML colors, including their dark-mode rules. */
+.chapter-resources[data-course-key] .resource-buttons a.resource-button { color: var(--dark); }
+:root[saved-theme="dark"] .resource-buttons {
+  .resource-markdown { --resource-color: #adc6da; }
+  .resource-html { --resource-color: #ffac85; }
+  .resource-quiz { --resource-color: #c8acf0; }
+  .resource-tp { --resource-color: #91dfc2; }
+}
+.explorer-content .explorer-chapter-resources { margin: .6rem .15rem .8rem; }
+html body .resource-buttons--explorer {
+  grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem;
+  a.resource-button {
+    grid-template-columns: 1.4rem minmax(0, 1fr);
+    padding: .5rem .45rem;
+    gap: .4rem;
+    font-size: .74rem;
+    border-bottom-width: 2px;
+    border-radius: .55rem;
+    .resource-icon { width: 1.4rem; height: 1.4rem; border-radius: .3rem; img, svg.resource-symbol { width: 1.1rem; height: 1.1rem; } }
+  }
+}
+.explorer-content li[hidden] { display: none !important; }
+@container (max-width: 640px) { .chapter-resources .resource-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 500px) { .chapter-resources .resource-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { html body .resource-buttons a.resource-button { transition: none; } }
+
+/* Scope these controls above the imported Obsidian theme, in both palettes. */
+html body .chapter-resources-heading {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: .6rem; margin-bottom: .85rem;
+}
+html body .chapter-resources a.resource-download {
+  display: inline-flex; align-items: center; gap: .4rem;
+  border: 1px solid var(--lightgray); border-radius: .5rem;
+  padding: .35rem .6rem; margin: 0; background: transparent;
+  color: var(--darkgray); font: 600 .75rem/1.5 var(--bodyFont);
+  text-decoration: none; filter: none;
+  .external-icon { display: none; }
+  &:hover { background: var(--highlight); color: var(--dark); }
+  &:focus-visible { outline: 2px solid var(--secondary); outline-offset: 3px; }
+}

@@ -1,0 +1,365 @@
+@use "./variables.scss" as *;
+
+/* A closed explorer needs enough room for the label, not a 1.2rem clipped box. */
+@media (min-width: 801px) {
+  .explorer.collapsed {
+    flex: 0 0 auto;
+    min-height: 2.5rem;
+    overflow: visible;
+  }
+  .explorer.collapsed > .explorer-content { display: none; }
+  .explorer .desktop-explorer {
+    min-height: 2.5rem;
+    flex-shrink: 0;
+    padding-block: .25rem;
+  }
+  .explorer .desktop-explorer h2 { line-height: 1.4; }
+}
+
+.explorer-content { min-height: 0; scrollbar-gutter: stable; }
+
+.explorer-content {
+  --pc-explorer-01: #2f7fc4;
+  --pc-explorer-02: #d84a52;
+  --pc-explorer-03: #db7b17;
+  --pc-explorer-04: #369267;
+  --pc-explorer-05: #1693a8;
+  --pc-explorer-06: #7559db;
+  --pc-explorer-07: #bd3f7d;
+  --pc-explorer-08: #64748b;
+}
+
+.explorer-content .folder-container {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: none;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.9rem minmax(0, 1fr) 0.85rem;
+  gap: 0.5rem;
+  min-height: 2.85rem;
+  align-items: center;
+  margin: 0.35rem 0.15rem;
+  padding: 0.6rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--chapter-accent) 18%, var(--lightgray));
+  border-left: 3px solid var(--chapter-accent);
+  border-radius: 0.76rem;
+  background: color-mix(in srgb, var(--chapter-accent) 6%, var(--light));
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.explorer-content .folder-container:hover {
+  border-color: color-mix(in srgb, var(--chapter-accent) 42%, var(--lightgray));
+  background: color-mix(in srgb, var(--chapter-accent) 11%, var(--light));
+  box-shadow: 0 0.35rem 0.85rem rgb(13 38 67 / 8%);
+  transform: translateX(2px);
+}
+
+.explorer-content .folder-container::before {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  width: 1.9rem;
+  height: 1.9rem;
+  flex: 0 0 1.9rem;
+  place-items: center;
+  border-radius: 0.55rem;
+  background-color: var(--chapter-accent);
+  background-image: var(--chapter-icon);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.14rem;
+  box-shadow: 0 0.3rem 0.65rem color-mix(in srgb, var(--chapter-accent) 25%, transparent);
+  content: "";
+}
+
+.explorer-content .folder-container > div {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.explorer-content .folder-container .folder-button {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  box-sizing: border-box;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.explorer-content .folder-container .folder-title {
+  display: block;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  color: var(--dark);
+  font-size: 0.83rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.explorer-content .folder-container > .folder-icon {
+  grid-column: 3;
+  grid-row: 1;
+  order: 3;
+  width: 0.7rem;
+  height: 0.7rem;
+  flex: 0 0 0.7rem;
+  margin: 0;
+  color: color-mix(in srgb, var(--chapter-accent) 70%, var(--darkgray));
+  opacity: 0.75;
+}
+
+.explorer-content .folder-container[data-folderpath^="01-comprendre-linux/"] {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 13a8 8 0 0 1 16 0'/%3E%3Cpath d='M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 1Zm16 0v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 1ZM17 19c-1 2-3 2-5 2'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath^="02-installer-la-vm/"] {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'%3E%3Crect x='6' y='6' width='12' height='12' rx='2'/%3E%3Cpath d='M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4M10 10h4v4h-4z'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath^="03-interface-graphique/"] {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='12' rx='2'/%3E%3Cpath d='M2 20h20'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath^="04-le-terminal/"] {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2v10'/%3E%3Cpath d='M6.3 5.7a8 8 0 1 0 11.4 0'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath^="05-fichiers-et-repertoires/"] {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z'/%3E%3Cpath d='M2 12h20M6 16h.01M10 16h.01'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath^="06-arborescence-linux/"] {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22v-5M9 8V2M15 8V2M18 8v5a6 6 0 0 1-12 0V8Z'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath^="07-utilisateurs-et-permissions/"] {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m14.7 6.3 3-3a4 4 0 0 1-5 5L5 16l-2 5 5-2 7.7-7.7a4 4 0 0 1 5-5l-3 3'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath^="08-gestion-des-paquets/"] {
+  --chapter-accent: var(--secondary);
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19V9m6 10V5m6 14v-7m4 7H2'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath="ressources/index"] {
+  --chapter-accent: #8956ee;
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 5h7l2 2h7v12H4zM8 11h8m-8 4h6'/%3E%3C/svg%3E");
+}
+
+.explorer-content a.nav-file-title[href$="/tp"] {
+  --exercise-accent: var(--secondary);
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0.17rem 0;
+  padding: 0.32rem;
+  border-radius: 0.54rem;
+  color: var(--darkgray);
+  background: color-mix(in srgb, var(--exercise-accent) 4%, var(--light));
+  font-size: 0.73rem;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.explorer-content a.nav-file-title[href$="/tp"]::before {
+  display: grid;
+  width: 1.4rem;
+  height: 1.4rem;
+  place-items: center;
+  border-radius: 0.4rem;
+  color: var(--exercise-accent);
+  background: color-mix(in srgb, var(--exercise-accent) 12%, var(--light));
+  content: "✎";
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.explorer-content a.nav-file-title[href$="/tp"]:hover {
+  color: var(--dark);
+  background: color-mix(in srgb, var(--exercise-accent) 9%, var(--light));
+  transform: translateX(2px);
+}
+
+@each $slug in "01-comprendre-linux", "02-installer-la-vm", "03-interface-graphique",
+  "04-le-terminal", "05-fichiers-et-repertoires", "06-arborescence-linux",
+  "07-utilisateurs-et-permissions", "08-gestion-des-paquets", "09-redirections-et-tubes",
+  "10-reseau-et-services"
+{
+  body[data-slug^="#{$slug}/"] .explorer-content [data-folderpath^="#{$slug}/"] {
+    border-color: color-mix(in srgb, var(--chapter-accent) 48%, var(--lightgray));
+    background: color-mix(in srgb, var(--chapter-accent) 14%, var(--light));
+  }
+}
+
+@media all and ($mobile) {
+  .explorer-content ul.explorer-ul {
+    padding-inline: 0.8rem;
+  }
+
+  .explorer-content .folder-container .folder-title {
+    font-size: 0.9rem;
+  }
+}
+
+.explorer-content .folder-container[data-folderpath^="01-comprendre-linux/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="01-comprendre-linux/"]::before {
+  content: "01";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="02-installer-la-vm/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="02-installer-la-vm/"]::before {
+  content: "02";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="03-interface-graphique/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="03-interface-graphique/"]::before {
+  content: "03";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="04-le-terminal/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="04-le-terminal/"]::before {
+  content: "04";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="05-fichiers-et-repertoires/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="05-fichiers-et-repertoires/"]::before {
+  content: "05";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="06-arborescence-linux/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="06-arborescence-linux/"]::before {
+  content: "06";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="07-utilisateurs-et-permissions/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="07-utilisateurs-et-permissions/"]::before {
+  content: "07";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="08-gestion-des-paquets/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="08-gestion-des-paquets/"]::before {
+  content: "08";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="09-redirections-et-tubes/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="09-redirections-et-tubes/"]::before {
+  content: "09";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+.explorer-content .folder-container[data-folderpath^="10-reseau-et-services/"] {
+  --chapter-icon: none;
+}
+.explorer-content .folder-container[data-folderpath^="10-reseau-et-services/"]::before {
+  content: "10";
+  color: white;
+  font: 800 0.8rem var(--codeFont);
+}
+
+/* Training parents: Tux and the Bash shell prompt. */
+.explorer-content .folder-container[data-folderpath="linux-initiation/index"] {
+  --chapter-accent: #007a87;
+  --chapter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 72'%3E%3Cellipse cx='32' cy='36' rx='21' ry='30' fill='%23121b24'/%3E%3Cpath d='M17 35 5 55 16 52M47 35 59 55 48 52' fill='%23121b24'/%3E%3Cellipse cx='32' cy='45' rx='15' ry='21' fill='white'/%3E%3Cellipse cx='26' cy='21' rx='6' ry='8' fill='white'/%3E%3Cellipse cx='38' cy='21' rx='6' ry='8' fill='white'/%3E%3Cellipse cx='28' cy='22' rx='2' ry='3' fill='%23121b24'/%3E%3Cellipse cx='36' cy='22' rx='2' ry='3' fill='%23121b24'/%3E%3Cpath d='m21 30 11-5 11 5-11 7z' fill='%23ffcb39'/%3E%3Cpath d='M20 59 7 66 8 71 29 68 28 62M44 59 57 66 56 71 35 68 36 62' fill='%23ffcb39'/%3E%3C/svg%3E");
+}
+
+.explorer-content .folder-container[data-folderpath="linux-initiation/index"]::before {
+  background-color: #dff3f4;
+  background-size: 1.65rem 1.85rem;
+}
+
+.explorer-content .folder-container[data-folderpath="bash/index"] {
+  --chapter-accent: #348331;
+}
+
+.explorer-content .folder-container[data-folderpath="bash/index"]::before {
+  content: "$_";
+  color: white;
+  background-image: none;
+  font: 800 1rem var(--codeFont);
+}
+
+/* Use the same recognizable brand assets for parents, chapters and TP folders. */
+.explorer-content .folder-container[data-folderpath^="bash/"] {
+  --chapter-accent: #348331;
+  --chapter-icon: url("/linux-initiation/assets/brands/bash.png");
+}
+
+.explorer-content .folder-container[data-folderpath^="bash/"]::before {
+  content: "";
+  background-color: transparent;
+  background-image: var(--chapter-icon);
+  background-size: contain;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@each $slug in "linux-initiation", "01-comprendre-linux", "02-installer-la-vm",
+  "03-interface-graphique", "04-le-terminal", "05-fichiers-et-repertoires",
+  "06-arborescence-linux", "07-utilisateurs-et-permissions", "08-gestion-des-paquets",
+  "09-redirections-et-tubes", "10-reseau-et-services"
+{
+  .explorer-content .folder-container[data-folderpath^="#{$slug}/"] {
+    --chapter-icon: url("/linux-initiation/assets/brands/tux.svg");
+  }
+
+  .explorer-content .folder-container[data-folderpath^="#{$slug}/"]::before {
+    content: "";
+    background-color: transparent;
+    background-image: var(--chapter-icon);
+    background-size: contain;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
