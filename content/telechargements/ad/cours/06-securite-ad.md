@@ -1,4 +1,4 @@
-# 06 — Sécurité Active Directory
+# 06. Sécurité Active Directory
 
 > **Objectif** : Configurer la stratégie de mot de passe du domaine, analyser les bonnes pratiques avec le BPA, appliquer le principe de moindre privilège et sécuriser les comptes privilégiés.
 

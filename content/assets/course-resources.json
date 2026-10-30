@@ -4,7 +4,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/active-directory/ad/01-infrastructure-ad/",
       "label": "Cours",
-      "chapterTitle": "01 — Infrastructure Active Directory",
+      "chapterTitle": "01. Infrastructure Active Directory",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -12,7 +12,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/active-directory/ad/01-infrastructure-ad/tp",
       "label": "TP",
-      "chapterTitle": "01 — Infrastructure Active Directory",
+      "chapterTitle": "01. Infrastructure Active Directory",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -22,7 +22,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/active-directory/ad/02-structure-logique/",
       "label": "Cours",
-      "chapterTitle": "02 — Structure logique : OUs, outils, délégation",
+      "chapterTitle": "02. Structure logique : OUs, outils, délégation",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -30,7 +30,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/active-directory/ad/02-structure-logique/tp",
       "label": "TP",
-      "chapterTitle": "02 — Structure logique : OUs, outils, délégation",
+      "chapterTitle": "02. Structure logique : OUs, outils, délégation",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -40,7 +40,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/active-directory/ad/03-objets-ad/",
       "label": "Cours",
-      "chapterTitle": "03 — Objets AD : utilisateurs, ordinateurs, groupes",
+      "chapterTitle": "03. Objets AD : utilisateurs, ordinateurs, groupes",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -48,7 +48,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/active-directory/ad/03-objets-ad/tp",
       "label": "TP",
-      "chapterTitle": "03 — Objets AD : utilisateurs, ordinateurs, groupes",
+      "chapterTitle": "03. Objets AD : utilisateurs, ordinateurs, groupes",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -58,7 +58,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/active-directory/ad/04-sites-replication/",
       "label": "Cours",
-      "chapterTitle": "04 — Sites AD et réplication",
+      "chapterTitle": "04. Sites AD et réplication",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -66,7 +66,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/active-directory/ad/04-sites-replication/tp",
       "label": "TP",
-      "chapterTitle": "04 — Sites AD et réplication",
+      "chapterTitle": "04. Sites AD et réplication",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -76,7 +76,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/active-directory/ad/05-gpo/",
       "label": "Cours",
-      "chapterTitle": "05 — Stratégies de groupe (GPO)",
+      "chapterTitle": "05. Stratégies de groupe (GPO)",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -84,7 +84,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/active-directory/ad/05-gpo/tp",
       "label": "TP",
-      "chapterTitle": "05 — Stratégies de groupe (GPO)",
+      "chapterTitle": "05. Stratégies de groupe (GPO)",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -94,7 +94,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/active-directory/ad/06-securite-ad/",
       "label": "Cours",
-      "chapterTitle": "06 — Sécurité Active Directory",
+      "chapterTitle": "06. Sécurité Active Directory",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -102,7 +102,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/active-directory/ad/06-securite-ad/tp",
       "label": "TP",
-      "chapterTitle": "06 — Sécurité Active Directory",
+      "chapterTitle": "06. Sécurité Active Directory",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -112,7 +112,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/active-directory/ad/07-maintenance-depannage/",
       "label": "Cours",
-      "chapterTitle": "07 — Maintenance et dépannage",
+      "chapterTitle": "07. Maintenance et dépannage",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -120,7 +120,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/active-directory/ad/07-maintenance-depannage/tp",
       "label": "TP",
-      "chapterTitle": "07 — Maintenance et dépannage",
+      "chapterTitle": "07. Maintenance et dépannage",
       "track": "ad",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }

@@ -1,4 +1,4 @@
-# 03 — Objets AD : utilisateurs, ordinateurs, groupes
+# 03. Objets AD : utilisateurs, ordinateurs, groupes
 
 > **Objectif** : Créer et gérer les objets Active Directory essentiels : comptes utilisateurs, comptes ordinateurs, groupes. Appliquer le modèle AGDLP.
 

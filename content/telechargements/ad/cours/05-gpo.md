@@ -1,4 +1,4 @@
-# 05 — Stratégies de groupe (GPO)
+# 05. Stratégies de groupe (GPO)
 
 > **Objectif** : Créer, configurer et appliquer des stratégies de groupe. Comprendre l'héritage et le filtrage. Diagnostiquer une GPO qui ne s'applique pas.
 

@@ -1,61 +1,61 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "571a2f2acaed237fa05be23026c362e72d12d51c427bb7c02be64a1881d15c4a",
+  "pdfSha256": "25708a6c653d9604c8080a316ecae56c91a1890e62066e7700fb18f7ef008d0a",
   "chapters": [
     {
       "key": "ad/01-infrastructure-ad",
-      "title": "01 — Infrastructure Active Directory",
+      "title": "01. Infrastructure Active Directory",
       "href": "https://cours.kaya.ovh/active-directory/ad/01-infrastructure-ad/",
       "download": "telechargements/ad/cours/01-infrastructure-ad.md",
-      "sourceSha256": "000453a44a06313e3415e4525a8f42675ba36c653e8562f6c592431051bc8b53",
+      "sourceSha256": "8d641b4ea2abaad30657dd48af6d6738a8bde5114aa865f1015bd9b1921cce38",
       "startPage": 2
     },
     {
       "key": "ad/02-structure-logique",
-      "title": "02 — Structure logique : OUs, outils, délégation",
+      "title": "02. Structure logique : OUs, outils, délégation",
       "href": "https://cours.kaya.ovh/active-directory/ad/02-structure-logique/",
       "download": "telechargements/ad/cours/02-structure-logique.md",
-      "sourceSha256": "caeace9f5252f3cf6f376f5df561d63fbf8b3fd55e65169176fde87060a67a1f",
+      "sourceSha256": "f4fb1d98785cbe45366a566e0dd84fb04627e0d21c79f89d18148869595a6a34",
       "startPage": 10
     },
     {
       "key": "ad/03-objets-ad",
-      "title": "03 — Objets AD : utilisateurs, ordinateurs, groupes",
+      "title": "03. Objets AD : utilisateurs, ordinateurs, groupes",
       "href": "https://cours.kaya.ovh/active-directory/ad/03-objets-ad/",
       "download": "telechargements/ad/cours/03-objets-ad.md",
-      "sourceSha256": "8378ba069fc3a8aff036a2255b86d1b66d817b0a31245a3bd85ea2d1964a4079",
+      "sourceSha256": "eb2adbd1ec4eb7842aa6e29b6bfe20b4b42564c0d00df999b3291980ace002bc",
       "startPage": 17
     },
     {
       "key": "ad/04-sites-replication",
-      "title": "04 — Sites AD et réplication",
+      "title": "04. Sites AD et réplication",
       "href": "https://cours.kaya.ovh/active-directory/ad/04-sites-replication/",
       "download": "telechargements/ad/cours/04-sites-replication.md",
-      "sourceSha256": "4def44fa4f719ffe71efddcdf4e0d4b297f956f96d55433278fbfc0e082a1270",
+      "sourceSha256": "7f037621e85fb6443968c547664a4626830c1b11470b0a26902c818bfe99ef9b",
       "startPage": 26
     },
     {
       "key": "ad/05-gpo",
-      "title": "05 — Stratégies de groupe (GPO)",
+      "title": "05. Stratégies de groupe (GPO)",
       "href": "https://cours.kaya.ovh/active-directory/ad/05-gpo/",
       "download": "telechargements/ad/cours/05-gpo.md",
-      "sourceSha256": "3a5951e140db8edaeb363e5816a13645f27c17078b66b2fe1c968cd5c4bb4f58",
+      "sourceSha256": "4e79e2d325cf096cdf3b26aa1f3117fea4f51874cd4bc1af7579fd953704e4dd",
       "startPage": 33
     },
     {
       "key": "ad/06-securite-ad",
-      "title": "06 — Sécurité Active Directory",
+      "title": "06. Sécurité Active Directory",
       "href": "https://cours.kaya.ovh/active-directory/ad/06-securite-ad/",
       "download": "telechargements/ad/cours/06-securite-ad.md",
-      "sourceSha256": "0e3d1d56ed66099d89b171eef1fc3dee85ad72966ea53e16cf554cb70d4ac488",
+      "sourceSha256": "2a6fbf579580c1113e2026e474faa41df83042df4cb4f57271252a373d69c5fa",
       "startPage": 42
     },
     {
       "key": "ad/07-maintenance-depannage",
-      "title": "07 — Maintenance et dépannage",
+      "title": "07. Maintenance et dépannage",
       "href": "https://cours.kaya.ovh/active-directory/ad/07-maintenance-depannage/",
       "download": "telechargements/ad/cours/07-maintenance-depannage.md",
-      "sourceSha256": "31832e651631f1c818d03eaa2a8463f8a08c7feb8d663a76034eb1c7d903e1d3",
+      "sourceSha256": "6e18ef20dad6e4711320c64b6d51d304c251c586e59584889cbfa58062c526de",
       "startPage": 50
     },
     {

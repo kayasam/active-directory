@@ -1,4 +1,4 @@
-# 01 — Infrastructure Active Directory
+# 01. Infrastructure Active Directory
 
 > **Objectif** : Comprendre le rôle et l'architecture d'Active Directory, installer le rôle AD DS et promouvoir un serveur en contrôleur de domaine.
 

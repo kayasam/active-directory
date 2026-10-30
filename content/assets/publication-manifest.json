@@ -2,43 +2,43 @@
   "chapters": [
     {
       "key": "ad/01-infrastructure-ad",
-      "title": "01 — Infrastructure Active Directory",
+      "title": "01. Infrastructure Active Directory",
       "tp": true,
       "correction": true
     },
     {
       "key": "ad/02-structure-logique",
-      "title": "02 — Structure logique : OUs, outils, délégation",
+      "title": "02. Structure logique : OUs, outils, délégation",
       "tp": true,
       "correction": true
     },
     {
       "key": "ad/03-objets-ad",
-      "title": "03 — Objets AD : utilisateurs, ordinateurs, groupes",
+      "title": "03. Objets AD : utilisateurs, ordinateurs, groupes",
       "tp": true,
       "correction": true
     },
     {
       "key": "ad/04-sites-replication",
-      "title": "04 — Sites AD et réplication",
+      "title": "04. Sites AD et réplication",
       "tp": true,
       "correction": true
     },
     {
       "key": "ad/05-gpo",
-      "title": "05 — Stratégies de groupe (GPO)",
+      "title": "05. Stratégies de groupe (GPO)",
       "tp": true,
       "correction": true
     },
     {
       "key": "ad/06-securite-ad",
-      "title": "06 — Sécurité Active Directory",
+      "title": "06. Sécurité Active Directory",
       "tp": true,
       "correction": true
     },
     {
       "key": "ad/07-maintenance-depannage",
-      "title": "07 — Maintenance et dépannage",
+      "title": "07. Maintenance et dépannage",
       "tp": true,
       "correction": true
     },

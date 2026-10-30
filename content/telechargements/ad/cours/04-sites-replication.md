@@ -1,4 +1,4 @@
-# 04 — Sites AD et réplication
+# 04. Sites AD et réplication
 
 > **Objectif** : Comprendre la topologie physique d'Active Directory, configurer des sites et des liens de sites, promouvoir un second contrôleur de domaine et superviser la réplication.
 

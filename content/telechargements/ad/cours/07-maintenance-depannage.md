@@ -1,4 +1,4 @@
-# 07 — Maintenance et dépannage
+# 07. Maintenance et dépannage
 
 > **Objectif** : Sauvegarder et restaurer Active Directory, diagnostiquer l'état d'un contrôleur de domaine, connaître les rôles FSMO et les outils de surveillance.
 

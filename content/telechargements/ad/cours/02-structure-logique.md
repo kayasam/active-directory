@@ -1,4 +1,4 @@
-# 02 — Structure logique : OUs, outils, délégation
+# 02. Structure logique : OUs, outils, délégation
 
 > **Objectif** : Maîtriser les outils d'administration AD, comprendre la structure logique (DN, OU, conteneurs), concevoir et créer une hiérarchie d'unités organisationnelles, déléguer l'administration.
 
