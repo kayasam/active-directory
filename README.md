@@ -101,3 +101,5 @@ Le workflow compile les contenus générés déjà validés et commités, sans d
 `template-manifest.json` conserve le commit d’origine, l’empreinte de l’archive exacte et celles des fichiers visuels. `reference/site-linux-bash-92ef419.zip` est la copie exacte du dépôt source, conservée localement avec ses anciens scripts spécialisés ; **ce n’est pas le préparateur du nouveau modèle**. Les styles de base restent ceux du site d’origine ; seules les adaptations de noms, d’adresses et de parcours rendent les composants génériques.
 
 Une évolution du modèle se teste dans une copie, puis les empreintes sont renouvelées volontairement après validation visuelle. Ne pas régénérer le manifeste pour contourner une divergence inexpliquée. Le skill personnel `site-formation-quartz` accompagne ce modèle.
+
+Icone Active Directory : https://github.com/benc-uk/icon-collection/blob/master/_archive/cloud-old/Active%20Directory.svg (Microsoft).

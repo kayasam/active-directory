@@ -164,6 +164,8 @@ plugins:
   - source: "@quartz-community/explorer"
     enabled: true
     options:
+      filterFn: >-
+        function(node) { return node.slugSegment !== "tags" && !["ad/annexe/index"].includes(node.slug); }
       mapFn: >-
         function(node) {}
       sortFn: >-

@@ -220,7 +220,8 @@
           "slug": "scripts-fournil",
           "file": "cours/08-tp-final/scripts.md"
         }
-      ]
+      ],
+      "hideAnnexe": true
     }
   ]
 }

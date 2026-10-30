@@ -229,8 +229,8 @@ def prepare():
         for item in [a for a in annexes if a['track']==tid]:
             raw=body(item['path'].read_text(encoding='utf-8-sig')); write(stage/(item['key']+'.md'),page(item['title'],without_heading(resolve(raw,item['path'])))); files['annexe/'+item['slug']+'.md']=offline(raw,item['path'])
             annex_links.append('- ['+item['title']+']('+item['href']+')')
-        if annex_links: write(stage/tid/'annexe/index.md',page('Annexe','\n\n'.join(annex_links)))
-        track_page='<div class="home-chapter-grid">'+''.join(links)+'</div>'+ ('\n\n[Annexe]('+base+'/'+tid+'/annexe/)\n' if annex_links else '')
+        if annex_links and not track.get('hideAnnexe'): write(stage/tid/'annexe/index.md',page('Annexe','\n\n'.join(annex_links)))
+        track_page='<div class="home-chapter-grid">'+''.join(links)+'</div>'+ ('\n\n[Annexe]('+base+'/'+tid+'/annexe/)\n' if annex_links and not track.get('hideAnnexe') else '')
         write(stage/tid/'index.md',page(track['title'],track_page))
         # Include only published documents and the runtime assets needed offline.
         for asset in (ROOT/'assets').rglob('*'):
@@ -245,7 +245,7 @@ def prepare():
     downloads.append('<a class="home-pdf-download" href="'+base+'/telechargements/cours-complets.pdf?v='+digest(pdf_data)[:12]+'" download><strong>Tous les cours en PDF</strong><span>Télécharger le PDF →</span></a>')
     home='<header class="home-header"><h1>'+html.escape(site['title'])+'</h1><p>'+html.escape(site.get('description',''))+'</p></header>'
     for track in site['tracks']:
-        home+='<section class="home-track"><div class="home-track__head"><div class="home-track__logo"><img src="'+base+'/assets/brands/formation.svg" alt="" /></div><div class="home-track__heading"><h2>'+html.escape(track['title'])+'</h2><p>'+html.escape(track.get('description',''))+'</p></div><a class="home-track__start" href="'+base+'/'+track['id']+'/'+track['chapters'][0]['slug']+'/">Commencer au chapitre 01 →</a></div><div class="home-chapter-grid">'+''.join('<a class="home-chapter" href="'+c['href']+'"><strong>'+html.escape(c['title'])+'</strong><span aria-hidden="true">→</span></a>' for c in chapters if c['track']==track['id'])+'</div></section>'
+        home+='<section class="home-track"><div class="home-track__head"><div class="home-track__logo"><img src="'+base+'/assets/brands/active-directory.svg" alt="Active Directory" /></div><div class="home-track__heading"><h2>'+html.escape(track['title'])+'</h2><p>'+html.escape(track.get('description',''))+'</p></div><a class="home-track__start" href="'+base+'/'+track['id']+'/'+track['chapters'][0]['slug']+'/">Commencer au chapitre 01 →</a></div><div class="home-chapter-grid">'+''.join('<a class="home-chapter" href="'+c['href']+'"><strong>'+html.escape(c['title'])+'</strong><span aria-hidden="true">→</span></a>' for c in chapters if c['track']==track['id'])+'</div></section>'
     home+='<section class="home-downloads"><h2>Supports hors ligne</h2><div class="home-downloads__grid">'+''.join(downloads)+'</div></section>'
     write(stage/'index.md',page(site['title'],home)); write(stage/'assets/publication-manifest.json',json.dumps(manifest,ensure_ascii=False,indent=2)); write(stage/'.generated-template','1\n')
     target=ROOT/'content'
@@ -254,6 +254,11 @@ def prepare():
         clean(target)
     stage.rename(target)
     config=(ROOT/'quartz.config.yaml').read_text(encoding='utf-8')
+    # Supporting procedures remain reachable from final-project exercises.
+    config=re.sub(r'      filterFn: >-\n.*?(?=      mapFn:)', '',config,flags=re.S)
+    hidden=[track['id']+'/annexe/index' for track in site['tracks'] if track.get('hideAnnexe')]
+    if hidden:
+        config=config.replace('      mapFn: >-', '      filterFn: >-\n        function(node) { return node.slugSegment !== "tags" && !'+json.dumps(hidden)+'.includes(node.slug); }\n      mapFn: >-',1)
     config=re.sub(r'(?m)^  pageTitle:.*$',lambda _:'  pageTitle: '+json.dumps(site['title'],ensure_ascii=False),config)
     config=re.sub(r'(?m)^  baseUrl:.*$',lambda _:'  baseUrl: '+url.netloc+url.path,config)
     config=re.sub(r'      mapFn: >-\n.*?(?=      sortFn:)', '      mapFn: >-\n        function(node) {}\n', config, flags=re.S)
