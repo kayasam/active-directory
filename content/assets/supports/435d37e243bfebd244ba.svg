@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 560" width="1100" height="560" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="card-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1100" height="560" fill="#f8fafc"/>
+
+  <text x="550" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1e293b">Le modèle en trois niveaux — Fournil</text>
+  <text x="550" y="66" text-anchor="middle" font-size="14" fill="#64748b">Chaque compte d'administration n'ouvre de session que sur les machines de son niveau</text>
+
+  <!-- ===== Colonne gauche : les niveaux ===== -->
+  <!-- Tier 0 -->
+  <g filter="url(#card-shadow)">
+    <rect x="20" y="90" width="640" height="130" rx="14" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  </g>
+  <rect x="20" y="90" width="120" height="130" rx="14" fill="#dc2626"/>
+  <rect x="120" y="90" width="20" height="130" fill="#dc2626"/>
+  <text x="80" y="140" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">Tier 0</text>
+  <text x="80" y="165" text-anchor="middle" font-size="12" fill="#ffffff">contrôle</text>
+  <text x="80" y="181" text-anchor="middle" font-size="12" fill="#ffffff">du domaine</text>
+  <text x="160" y="120" font-size="13" font-weight="700" fill="#64748b">MACHINES</text>
+  <text x="160" y="142" font-size="14" fill="#1e293b">DC01, DC02 · hôte Hyper-V des DC</text>
+  <text x="160" y="162" font-size="14" fill="#1e293b">sauvegardes des DC · PKI · Entra Connect</text>
+  <text x="160" y="192" font-size="13" font-weight="700" fill="#64748b">COMPTES</text>
+  <rect x="245" y="177" width="110" height="24" rx="12" fill="#fef2f2" stroke="#dc2626"/>
+  <text x="300" y="194" text-anchor="middle" font-size="13" font-weight="600" fill="#dc2626">adm0.sysinfo</text>
+  <text x="370" y="194" font-size="13" fill="#1e293b">GG_Tier0_Admins → Admins du domaine</text>
+
+  <!-- Tier 1 -->
+  <g filter="url(#card-shadow)">
+    <rect x="20" y="240" width="640" height="130" rx="14" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+  </g>
+  <rect x="20" y="240" width="120" height="130" rx="14" fill="#d97706"/>
+  <rect x="120" y="240" width="20" height="130" fill="#d97706"/>
+  <text x="80" y="290" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">Tier 1</text>
+  <text x="80" y="315" text-anchor="middle" font-size="12" fill="#ffffff">serveurs</text>
+  <text x="80" y="331" text-anchor="middle" font-size="12" fill="#ffffff">et données</text>
+  <text x="160" y="270" font-size="13" font-weight="700" fill="#64748b">MACHINES</text>
+  <text x="160" y="292" font-size="14" fill="#1e293b">Serveurs membres : fichiers (SRV-FIC01),</text>
+  <text x="160" y="312" font-size="14" fill="#1e293b">impression, bases de données, applications</text>
+  <text x="160" y="342" font-size="13" font-weight="700" fill="#64748b">COMPTES</text>
+  <rect x="245" y="327" width="110" height="24" rx="12" fill="#fffbeb" stroke="#d97706"/>
+  <text x="300" y="344" text-anchor="middle" font-size="13" font-weight="600" fill="#d97706">adm1.sysinfo</text>
+  <text x="370" y="344" font-size="13" fill="#1e293b">GG_Tier1_Admins → admin local des serveurs</text>
+
+  <!-- Tier 2 -->
+  <g filter="url(#card-shadow)">
+    <rect x="20" y="390" width="640" height="130" rx="14" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+  </g>
+  <rect x="20" y="390" width="120" height="130" rx="14" fill="#2563eb"/>
+  <rect x="120" y="390" width="20" height="130" fill="#2563eb"/>
+  <text x="80" y="440" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">Tier 2</text>
+  <text x="80" y="465" text-anchor="middle" font-size="12" fill="#ffffff">postes</text>
+  <text x="80" y="481" text-anchor="middle" font-size="12" fill="#ffffff">et utilisateurs</text>
+  <text x="160" y="420" font-size="13" font-weight="700" fill="#64748b">MACHINES</text>
+  <text x="160" y="442" font-size="14" fill="#1e293b">Postes de travail : PC-PROD-01, PC-DIRECTION-01,</text>
+  <text x="160" y="462" font-size="14" fill="#1e293b">portables, imprimantes</text>
+  <text x="160" y="492" font-size="13" font-weight="700" fill="#64748b">COMPTES</text>
+  <rect x="245" y="477" width="110" height="24" rx="12" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="300" y="494" text-anchor="middle" font-size="13" font-weight="600" fill="#2563eb">adm2.jrenard</text>
+  <text x="370" y="494" font-size="13" fill="#1e293b">GG_Tier2_Admins → admin local des postes</text>
+
+  <!-- ===== Colonne droite : qui se connecte où ===== -->
+  <g filter="url(#card-shadow)">
+    <rect x="690" y="90" width="390" height="430" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  </g>
+  <text x="885" y="122" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">Qui ouvre une session où ?</text>
+
+  <!-- en-têtes colonnes -->
+  <text x="852" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="#dc2626">DC</text>
+  <text x="937" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="#d97706">Serveurs</text>
+  <text x="1022" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="#2563eb">Postes</text>
+  <line x1="710" y1="172" x2="1060" y2="172" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- ligne adm0 -->
+  <text x="712" y="210" font-size="14" font-weight="600" fill="#dc2626">adm0.*</text>
+  <circle cx="852" cy="205" r="13" fill="#16a34a"/><path d="M845,205 l5,5 l9,-10" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="937" cy="205" r="13" fill="#dc2626"/><path d="M931,199 l12,12 M943,199 l-12,12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="1022" cy="205" r="13" fill="#dc2626"/><path d="M1016,199 l12,12 M1028,199 l-12,12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- ligne adm1 -->
+  <text x="712" y="255" font-size="14" font-weight="600" fill="#d97706">adm1.*</text>
+  <circle cx="852" cy="250" r="13" fill="#dc2626"/><path d="M846,244 l12,12 M858,244 l-12,12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="937" cy="250" r="13" fill="#16a34a"/><path d="M930,250 l5,5 l9,-10" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="1022" cy="250" r="13" fill="#dc2626"/><path d="M1016,244 l12,12 M1028,244 l-12,12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- ligne adm2 -->
+  <text x="712" y="300" font-size="14" font-weight="600" fill="#2563eb">adm2.*</text>
+  <circle cx="852" cy="295" r="13" fill="#dc2626"/><path d="M846,289 l12,12 M858,289 l-12,12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="937" cy="295" r="13" fill="#dc2626"/><path d="M931,289 l12,12 M943,289 l-12,12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="1022" cy="295" r="13" fill="#16a34a"/><path d="M1015,295 l5,5 l9,-10" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- ligne compte quotidien -->
+  <text x="712" y="345" font-size="14" font-weight="600" fill="#64748b">jrenard</text>
+  <text x="712" y="362" font-size="11" fill="#64748b">(quotidien)</text>
+  <circle cx="852" cy="345" r="13" fill="#dc2626"/><path d="M846,339 l12,12 M858,339 l-12,12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="937" cy="345" r="13" fill="#dc2626"/><path d="M931,339 l12,12 M943,339 l-12,12" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="1022" y="350" text-anchor="middle" font-size="12" fill="#64748b">utilisateur</text>
+
+  <line x1="710" y1="385" x2="1060" y2="385" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- règle d'or -->
+  <rect x="710" y="400" width="350" height="100" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="885" y="428" text-anchor="middle" font-size="14" font-weight="700" fill="#2563eb">La règle d'or</text>
+  <text x="885" y="452" text-anchor="middle" font-size="13" fill="#1e293b">Un compte ne se connecte jamais</text>
+  <text x="885" y="470" text-anchor="middle" font-size="13" fill="#1e293b">sur une machine d'un niveau inférieur.</text>
+  <text x="885" y="490" text-anchor="middle" font-size="12" font-style="italic" fill="#64748b">« On ne descend jamais avec ses clés »</text>
+
+  <text x="550" y="545" text-anchor="middle" font-size="12" fill="#64748b">Les refus sont imposés par GPO (droits « Interdire l'ouverture de session ») sur l'OU de chaque niveau.</text>
+</svg>

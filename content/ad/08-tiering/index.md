@@ -22,13 +22,7 @@ Quand un compte ouvre une session **interactive** sur un ordinateur (console, Bu
 
 Un attaquant qui prend le contrôle de cette machine peut récupérer ces secrets et **se faire passer pour le compte** (attaques *pass-the-hash*, *pass-the-ticket*), sans jamais connaître le mot de passe.
 
-```mermaid
-flowchart LR
-    A["Poste PC-PROD-01<br/>compromis (pièce jointe piégée)"] --> B["Le technicien se connecte<br/>avec un compte <b>Admin du domaine</b><br/>pour dépanner l'imprimante"]
-    B --> C["Le hash du compte admin<br/>reste dans LSASS"]
-    C --> D["L'attaquant le récupère"]
-    D --> E["Il se connecte à DC01<br/>→ <b>tout le domaine est perdu</b>"]
-```
+![Schema-Tiering-Vol-Identifiants](https://cours.kaya.ovh/active-directory/assets/supports/241e562af5e32fe0e2fe.svg)
 
 > [!WARNING] Ce n'est pas un scénario théorique
 > C'est le chemin d'attaque le plus courant dans les rançongiciels : on ne « casse » pas le DC, on attend qu'un administrateur vienne se connecter sur une machine déjà compromise.
@@ -49,15 +43,7 @@ On classe chaque machine et chaque compte selon **ce qu'il permet de contrôler*
 | **Tier 1** | Serveurs membres : fichiers, impression, bases de données, applications | Contrôle des **données et services** de l'entreprise |
 | **Tier 2** | Postes de travail, portables, imprimantes, comptes du support | Contrôle des **utilisateurs** |
 
-```mermaid
-flowchart TB
-    T0["<b>Tier 0</b><br/>DC01, DC02, AD, hyperviseur des DC<br/>adm0.*"]
-    T1["<b>Tier 1</b><br/>Serveurs membres<br/>adm1.*"]
-    T2["<b>Tier 2</b><br/>Postes PC-*<br/>adm2.*"]
-    T0 -- "administre" --> T1
-    T1 -- "administre" --> T2
-    T2 -. "connexion INTERDITE<br/>d'un compte de niveau supérieur" .-> T0
-```
+![Schema-Tiering-Niveaux](https://cours.kaya.ovh/active-directory/assets/supports/435d37e243bfebd244ba.svg)
 
 ### La règle d'or
 
