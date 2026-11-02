@@ -110,7 +110,4 @@ Get-ADUser test.repli -Server DC02
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/active-directory/ad/04-sites-replication/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/active-directory/ad/04-sites-replication/tp-corrigev2)

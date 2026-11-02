@@ -153,7 +153,4 @@ Qu'est-ce qu'un enregistrement SRV et pourquoi AD en a-t-il besoin ?
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/active-directory/ad/07-maintenance-depannage/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/active-directory/ad/07-maintenance-depannage/tp-corrigev2)

@@ -71,7 +71,7 @@ def prepare():
         path = (source_root/name).resolve()
         assert path.is_relative_to(source_root) and path.is_file(), f'Source invalide : {name}'
         return path
-    chapters = []; annexes = []; routes = {}; keys = set(); tracks = set()
+    chapters = []; annexes = []; routes = {}; keys = set(); tracks = set(); private_corrections = set()
     for track in site['tracks']:
         tid = track['id']; assert re.fullmatch('[a-z0-9]+(?:-[a-z0-9]+)*',tid) and tid not in tracks
         tracks.add(tid); assert track['chapters'], 'Chaque parcours doit contenir un chapitre'
@@ -97,6 +97,7 @@ def prepare():
                 assert exercise_key not in keys; keys.add(exercise_key)
                 corrected=source(definition['correction']) if definition.get('correction') else None
                 visible=bool(corrected and published(corrected.read_text(encoding='utf-8-sig')))
+                if corrected and not visible: private_corrections.add(corrected)
                 correction_key=key+'/tp/'+stem+'-corrigev2' if len(definitions)>1 else key+'/tp-corrigev2'
                 download_stem=chapter['slug']+('-'+stem if len(definitions)>1 else '')
                 exercise=dict(key=exercise_key,path=tp_path,correctionPath=corrected,visible=visible,correctionKey=correction_key,downloadStem=download_stem)
@@ -142,13 +143,14 @@ def prepare():
             if asset: return m[1]+posixpath.relpath(asset,posixpath.dirname(name))+m[3]
             if parsed.scheme or parsed.netloc or not parsed.path: return m[0]
             target=(origin.parent/unquote(parsed.path)).resolve()
+            if target in private_corrections: return ''
             if target in offline_names and offline_names[target][0]==track:
                 url=posixpath.relpath(offline_names[target][1],posixpath.dirname(name))
                 return m[1]+url+('#'+parsed.fragment if parsed.fragment else '')+m[3]
             if target in routes: return m[1]+routes[target]+m[3]
             raise ValueError('Lien hors ligne non déclaré : '+m[2])
         return re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)(\))',link,text)
-    # Resolve only declared, publishable documents. Private correction links are rejected.
+    # Remove links to unpublished corrections, including links authored in the TP.
     def resolve(text, origin):
         def link(m):
             parsed=urlsplit(m[2])
@@ -156,6 +158,7 @@ def prepare():
             if asset: return m[1]+base+'/'+asset+m[3]
             if parsed.scheme or parsed.netloc or not parsed.path: return m[0]
             target=(origin.parent/unquote(parsed.path)).resolve()
+            if target in private_corrections: return ''
             if target in routes: return m[1]+routes[target]+('#'+parsed.fragment if parsed.fragment else '')+m[3]
             raise ValueError(f'Lien local non déclaré : {origin.name} → {m[2]}')
         return re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)(\))',link,text)

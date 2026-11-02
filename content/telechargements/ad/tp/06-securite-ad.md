@@ -113,7 +113,4 @@ Search-ADAccount -AccountDisabled | Select-Object Name, SamAccountName
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/active-directory/ad/06-securite-ad/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/active-directory/ad/06-securite-ad/tp-corrigev2)

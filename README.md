@@ -6,11 +6,12 @@ Dépôt : https://github.com/kayasam/active-directory
 ## Mettre à jour depuis Obsidian
 
 ```powershell
-python scripts/sync-vault.py
 ./publier.ps1 -Push -Message "Mettre à jour Active Directory"
 ```
 
-Le script importe uniquement `cours/`, les médias utilisés et les scripts du projet Fournil. Il ne modifie pas le coffre. `sources/` reste local et ignoré par Git. Les corrigés ne sortent que si leur frontmatter contient `publier: true`.
+Chaque construction relit automatiquement le coffre Obsidian avant de générer le site. Il suffit de lancer `publier.ps1 -Push` après avoir coché ou décoché `publier`. Si la synchronisation échoue, la publication est interrompue pour éviter de republier une ancienne copie.
+
+La synchronisation importe uniquement `cours/`, les médias utilisés et les scripts du projet Fournil. Elle ne modifie pas le coffre. `sources/` reste local et ignoré par Git. Les corrigés ne sortent que si leur frontmatter contient `publier: true`. Décocher cette propriété retire leur page, leur bouton et leur contenu du ZIP à la publication suivante.
 
 GitHub Actions construit le contenu généré et vérifié, puis l’envoie par rsync sur le VPS. La clé de déploiement dédiée est limitée en écriture au dossier `active-directory`. GitHub Pages n’est pas utilisé ; le dépôt peut être privé sans changer ce déploiement.
 

@@ -3,6 +3,8 @@ $previousUtf8 = $env:PYTHONUTF8
 $env:PYTHONUTF8 = '1'
 Push-Location $PSScriptRoot
 try {
+  & python scripts/sync-vault.py
+  if ($LASTEXITCODE) { throw 'Synchronisation Obsidian échouée : construction interrompue.' }
   & python scripts/prepare-site.py
   if ($LASTEXITCODE) { throw 'Préparation échouée.' }
   & node quartz/bootstrap-cli.mjs build

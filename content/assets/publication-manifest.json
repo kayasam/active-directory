@@ -4,43 +4,43 @@
       "key": "ad/01-infrastructure-ad",
       "title": "01. Infrastructure Active Directory",
       "tp": true,
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/02-structure-logique",
       "title": "02. Structure logique : OUs, outils, délégation",
       "tp": true,
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/03-objets-ad",
       "title": "03. Objets AD : utilisateurs, ordinateurs, groupes",
       "tp": true,
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/04-sites-replication",
       "title": "04. Sites AD et réplication",
       "tp": true,
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/05-gpo",
       "title": "05. Stratégies de groupe (GPO)",
       "tp": true,
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/06-securite-ad",
       "title": "06. Sécurité Active Directory",
       "tp": true,
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/07-maintenance-depannage",
       "title": "07. Maintenance et dépannage",
       "tp": true,
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/08-tp-final",
@@ -55,49 +55,49 @@
       "correctionKey": "ad/01-infrastructure-ad/tp-corrigev2",
       "downloadStem": "01-infrastructure-ad",
       "track": "ad",
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/02-structure-logique/tp",
       "correctionKey": "ad/02-structure-logique/tp-corrigev2",
       "downloadStem": "02-structure-logique",
       "track": "ad",
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/03-objets-ad/tp",
       "correctionKey": "ad/03-objets-ad/tp-corrigev2",
       "downloadStem": "03-objets-ad",
       "track": "ad",
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/04-sites-replication/tp",
       "correctionKey": "ad/04-sites-replication/tp-corrigev2",
       "downloadStem": "04-sites-replication",
       "track": "ad",
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/05-gpo/tp",
       "correctionKey": "ad/05-gpo/tp-corrigev2",
       "downloadStem": "05-gpo",
       "track": "ad",
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/06-securite-ad/tp",
       "correctionKey": "ad/06-securite-ad/tp-corrigev2",
       "downloadStem": "06-securite-ad",
       "track": "ad",
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/07-maintenance-depannage/tp",
       "correctionKey": "ad/07-maintenance-depannage/tp-corrigev2",
       "downloadStem": "07-maintenance-depannage",
       "track": "ad",
-      "correction": true
+      "correction": false
     },
     {
       "key": "ad/08-tp-final/tp/tp-00-0-demarrer-ici",
@@ -198,15 +198,7 @@
       "correction": false
     }
   ],
-  "corrections": [
-    "ad/01-infrastructure-ad/tp",
-    "ad/02-structure-logique/tp",
-    "ad/03-objets-ad/tp",
-    "ad/04-sites-replication/tp",
-    "ad/05-gpo/tp",
-    "ad/06-securite-ad/tp",
-    "ad/07-maintenance-depannage/tp"
-  ],
+  "corrections": [],
   "tracks": [
     {
       "id": "ad",

@@ -181,7 +181,4 @@ Quel est l'avantage de pré-créer le compte avant de joindre la machine physiqu
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/active-directory/ad/03-objets-ad/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/active-directory/ad/03-objets-ad/tp-corrigev2)

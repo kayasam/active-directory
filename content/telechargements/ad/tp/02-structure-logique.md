@@ -104,7 +104,4 @@ $cred = Get-Credential "FOURNIL\helpdesk"
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/active-directory/ad/02-structure-logique/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/active-directory/ad/02-structure-logique/tp-corrigev2)
