@@ -7,7 +7,7 @@
   "tracks": [
     {
       "id": "ad",
-      "title": "Active Directory — Initiation et approfondissement",
+      "title": "Active Directory",
       "description": "Sept chapitres avec travaux pratiques et un projet final guidé : AD, DFS et GPO.",
       "chapters": [
         {
