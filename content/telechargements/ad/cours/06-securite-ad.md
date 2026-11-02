@@ -249,6 +249,9 @@ Search-ADAccount -AccountInactive -DateTime $limite -UsersOnly |
 2. **Déléguer plutôt qu'élever** — utiliser la délégation AD (TP 02) pour les tâches répétitives
 3. **Groupes d'administration spécialisés** — ne pas tout mettre dans `Domain Admins`
 
+> [!TIP] Aller plus loin : le tiering
+> Ces règles sont la première marche du **cloisonnement par niveaux** (Tier 0 / 1 / 2) : un compte d'administration par niveau, et des GPO qui l'empêchent de se connecter sur une machine moins protégée. C'est l'objet du [chapitre 08](https://cours.kaya.ovh/active-directory/ad/08-tiering/).
+
 ### Groupes privilégiés intégrés à connaître
 
 | Groupe | Droits | Règle |

@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "25708a6c653d9604c8080a316ecae56c91a1890e62066e7700fb18f7ef008d0a",
+  "pdfSha256": "c165c24d6a3bb33f783a41e58e631f4593162f183cee99a50a4ceac7c78485c3",
   "chapters": [
     {
       "key": "ad/01-infrastructure-ad",
@@ -47,7 +47,7 @@
       "title": "06. Sécurité Active Directory",
       "href": "https://cours.kaya.ovh/active-directory/ad/06-securite-ad/",
       "download": "telechargements/ad/cours/06-securite-ad.md",
-      "sourceSha256": "2a6fbf579580c1113e2026e474faa41df83042df4cb4f57271252a373d69c5fa",
+      "sourceSha256": "bf9144417eac7ad1dcfca274e0a15f64069706b8b63f11e5e69e29db92765ca5",
       "startPage": 42
     },
     {
@@ -56,15 +56,23 @@
       "href": "https://cours.kaya.ovh/active-directory/ad/07-maintenance-depannage/",
       "download": "telechargements/ad/cours/07-maintenance-depannage.md",
       "sourceSha256": "6e18ef20dad6e4711320c64b6d51d304c251c586e59584889cbfa58062c526de",
-      "startPage": 50
+      "startPage": 51
     },
     {
-      "key": "ad/08-tp-final",
+      "key": "ad/08-tiering",
+      "title": "08. Tiering : cloisonner l'administration",
+      "href": "https://cours.kaya.ovh/active-directory/ad/08-tiering/",
+      "download": "telechargements/ad/cours/08-tiering.md",
+      "sourceSha256": "528ac9a57c2db029f9987a3d12186a63928cc971d92938881e993bbb461daf29",
+      "startPage": 56
+    },
+    {
+      "key": "ad/09-tp-final",
       "title": "Le Fournil — Infrastructure Active Directory",
-      "href": "https://cours.kaya.ovh/active-directory/ad/08-tp-final/",
-      "download": "telechargements/ad/cours/08-tp-final.md",
-      "sourceSha256": "1b042db458c06e234475c24c51999d50d2b339152eea91cd21d94de31a764b81",
-      "startPage": 55
+      "href": "https://cours.kaya.ovh/active-directory/ad/09-tp-final/",
+      "download": "telechargements/ad/cours/09-tp-final.md",
+      "sourceSha256": "ea7057fb5504497d07506dd66e4212a26a0f75bb7bfe74cdb470adcb45cf5ff0",
+      "startPage": 64
     }
   ]
 }

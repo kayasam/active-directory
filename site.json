@@ -8,7 +8,7 @@
     {
       "id": "ad",
       "title": "Active Directory",
-      "description": "Sept chapitres avec travaux pratiques et un projet final guidé : AD, DFS et GPO.",
+      "description": "Cours et travaux pratiques avec un projet final guidé : AD, DFS et GPO.",
       "chapters": [
         {
           "slug": "01-infrastructure-ad",
@@ -53,63 +53,69 @@
           "correction": "cours/07-maintenance-depannage/tp/07-tp-maintenance-depannage-correction.md"
         },
         {
-          "slug": "08-tp-final",
-          "course": "cours/08-tp-final/procedures/Guide-déploiement-fournil.md",
+          "slug": "08-tiering",
+          "course": "cours/08-tiering/08-tiering.md",
+          "tp": "cours/08-tiering/tp/08-tp-tiering.md",
+          "correction": "cours/08-tiering/tp/08-tp-tiering-correction.md"
+        },
+        {
+          "slug": "09-tp-final",
+          "course": "cours/09-tp-final/procedures/Guide-déploiement-fournil.md",
           "tps": [
             {
-              "file": "cours/08-tp-final/procedures/TP/00.0-DEMARRER-ICI.md",
+              "file": "cours/09-tp-final/procedures/TP/00.0-DEMARRER-ICI.md",
               "slug": "tp-00-0-demarrer-ici"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/00.1-Installer-les-VM.md",
+              "file": "cours/09-tp-final/procedures/TP/00.1-Installer-les-VM.md",
               "slug": "tp-00-1-installer-les-vm"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/00.1-VMware-Workstation.md",
+              "file": "cours/09-tp-final/procedures/TP/00.1-VMware-Workstation.md",
               "slug": "tp-00-1-vmware-workstation"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/00.2-Preparer-les-Serveurs.md",
+              "file": "cours/09-tp-final/procedures/TP/00.2-Preparer-les-Serveurs.md",
               "slug": "tp-00-2-preparer-les-serveurs"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/00.3-Promouvoir-DC01.md",
+              "file": "cours/09-tp-final/procedures/TP/00.3-Promouvoir-DC01.md",
               "slug": "tp-00-3-promouvoir-dc01"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/00.4-Joindre-DC02.md",
+              "file": "cours/09-tp-final/procedures/TP/00.4-Joindre-DC02.md",
               "slug": "tp-00-4-joindre-dc02"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/00.5-Poste-de-Travail.md",
+              "file": "cours/09-tp-final/procedures/TP/00.5-Poste-de-Travail.md",
               "slug": "tp-00-5-poste-de-travail"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/01.TP-Avance-AD.md",
+              "file": "cours/09-tp-final/procedures/TP/01.TP-Avance-AD.md",
               "slug": "tp-01-tp-avance-ad"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/01.TP-Debutant-AD.md",
+              "file": "cours/09-tp-final/procedures/TP/01.TP-Debutant-AD.md",
               "slug": "tp-01-tp-debutant-ad"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/01.TP-Intermediaire-AD.md",
+              "file": "cours/09-tp-final/procedures/TP/01.TP-Intermediaire-AD.md",
               "slug": "tp-01-tp-intermediaire-ad"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/02.TP-Avance-DFS.md",
+              "file": "cours/09-tp-final/procedures/TP/02.TP-Avance-DFS.md",
               "slug": "tp-02-tp-avance-dfs"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/02.TP-Debutant-DFS.md",
+              "file": "cours/09-tp-final/procedures/TP/02.TP-Debutant-DFS.md",
               "slug": "tp-02-tp-debutant-dfs"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/03.TP-Avance-GPO.md",
+              "file": "cours/09-tp-final/procedures/TP/03.TP-Avance-GPO.md",
               "slug": "tp-03-tp-avance-gpo"
             },
             {
-              "file": "cours/08-tp-final/procedures/TP/03.TP-Debutant-GPO.md",
+              "file": "cours/09-tp-final/procedures/TP/03.TP-Debutant-GPO.md",
               "slug": "tp-03-tp-debutant-gpo"
             }
           ]
@@ -118,107 +124,107 @@
       "annexe": [
         {
           "slug": "01-ad-manuel-00-index",
-          "file": "cours/08-tp-final/procedures/01-AD/Manuel/00-Index.md"
+          "file": "cours/09-tp-final/procedures/01-AD/Manuel/00-Index.md"
         },
         {
           "slug": "01-ad-manuel-manuel-01-charger-module-ad",
-          "file": "cours/08-tp-final/procedures/01-AD/Manuel/Manuel-01-Charger-Module-AD.md"
+          "file": "cours/09-tp-final/procedures/01-AD/Manuel/Manuel-01-Charger-Module-AD.md"
         },
         {
           "slug": "01-ad-manuel-manuel-02-creer-les-ous",
-          "file": "cours/08-tp-final/procedures/01-AD/Manuel/Manuel-02-Creer-les-OUs.md"
+          "file": "cours/09-tp-final/procedures/01-AD/Manuel/Manuel-02-Creer-les-OUs.md"
         },
         {
           "slug": "01-ad-manuel-manuel-03-creer-les-groupes",
-          "file": "cours/08-tp-final/procedures/01-AD/Manuel/Manuel-03-Creer-les-Groupes.md"
+          "file": "cours/09-tp-final/procedures/01-AD/Manuel/Manuel-03-Creer-les-Groupes.md"
         },
         {
           "slug": "01-ad-manuel-manuel-04-imbriquer-groupes-agdlp",
-          "file": "cours/08-tp-final/procedures/01-AD/Manuel/Manuel-04-Imbriquer-Groupes-AGDLP.md"
+          "file": "cours/09-tp-final/procedures/01-AD/Manuel/Manuel-04-Imbriquer-Groupes-AGDLP.md"
         },
         {
           "slug": "01-ad-manuel-manuel-05-permissions-ntfs",
-          "file": "cours/08-tp-final/procedures/01-AD/Manuel/Manuel-05-Permissions-NTFS.md"
+          "file": "cours/09-tp-final/procedures/01-AD/Manuel/Manuel-05-Permissions-NTFS.md"
         },
         {
           "slug": "01-ad-manuel-manuel-06-creer-les-utilisateurs",
-          "file": "cours/08-tp-final/procedures/01-AD/Manuel/Manuel-06-Creer-les-Utilisateurs.md"
+          "file": "cours/09-tp-final/procedures/01-AD/Manuel/Manuel-06-Creer-les-Utilisateurs.md"
         },
         {
           "slug": "01-ad-script-explication-script-ad",
-          "file": "cours/08-tp-final/procedures/01-AD/Script/Explication-Script-AD.md"
+          "file": "cours/09-tp-final/procedures/01-AD/Script/Explication-Script-AD.md"
         },
         {
           "slug": "02-dfs-manuel-00-index",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/00-Index.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/00-Index.md"
         },
         {
           "slug": "02-dfs-manuel-dfs-01-installer-roles",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/DFS-01-Installer-Roles.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/DFS-01-Installer-Roles.md"
         },
         {
           "slug": "02-dfs-manuel-dfs-02-dossiers-partages-dc02",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/DFS-02-Dossiers-Partages-DC02.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/DFS-02-Dossiers-Partages-DC02.md"
         },
         {
           "slug": "02-dfs-manuel-dfs-03-partages-dc01",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/DFS-03-Partages-DC01.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/DFS-03-Partages-DC01.md"
         },
         {
           "slug": "02-dfs-manuel-dfs-04-espaces-noms-dfs",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/DFS-04-Espaces-Noms-DFS.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/DFS-04-Espaces-Noms-DFS.md"
         },
         {
           "slug": "02-dfs-manuel-dfs-05-replication-dfsr",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/DFS-05-Replication-DFSr.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/DFS-05-Replication-DFSr.md"
         },
         {
           "slug": "02-dfs-manuel-dfs-06-homes",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/DFS-06-Homes.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/DFS-06-Homes.md"
         },
         {
           "slug": "02-dfs-manuel-dfs-07-homedirectory",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/DFS-07-HomeDirectory.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/DFS-07-HomeDirectory.md"
         },
         {
           "slug": "02-dfs-manuel-dfs-08-verification-depannage",
-          "file": "cours/08-tp-final/procedures/02-DFS/Manuel/DFS-08-Verification-Depannage.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Manuel/DFS-08-Verification-Depannage.md"
         },
         {
           "slug": "02-dfs-script-explication-script-dfs",
-          "file": "cours/08-tp-final/procedures/02-DFS/Script/Explication-Script-DFS.md"
+          "file": "cours/09-tp-final/procedures/02-DFS/Script/Explication-Script-DFS.md"
         },
         {
           "slug": "03-gpo-manuel-00-index",
-          "file": "cours/08-tp-final/procedures/03-GPO/Manuel/00-Index.md"
+          "file": "cours/09-tp-final/procedures/03-GPO/Manuel/00-Index.md"
         },
         {
           "slug": "03-gpo-manuel-gpo-01-script-connexion",
-          "file": "cours/08-tp-final/procedures/03-GPO/Manuel/GPO-01-Script-Connexion.md"
+          "file": "cours/09-tp-final/procedures/03-GPO/Manuel/GPO-01-Script-Connexion.md"
         },
         {
           "slug": "03-gpo-manuel-gpo-02-creer-lier-gpo",
-          "file": "cours/08-tp-final/procedures/03-GPO/Manuel/GPO-02-Creer-Lier-GPO.md"
+          "file": "cours/09-tp-final/procedures/03-GPO/Manuel/GPO-02-Creer-Lier-GPO.md"
         },
         {
           "slug": "03-gpo-manuel-gpo-03-deploiement-sysvol",
-          "file": "cours/08-tp-final/procedures/03-GPO/Manuel/GPO-03-Deploiement-SYSVOL.md"
+          "file": "cours/09-tp-final/procedures/03-GPO/Manuel/GPO-03-Deploiement-SYSVOL.md"
         },
         {
           "slug": "03-gpo-manuel-gpo-04-enregistrer-script",
-          "file": "cours/08-tp-final/procedures/03-GPO/Manuel/GPO-04-Enregistrer-Script.md"
+          "file": "cours/09-tp-final/procedures/03-GPO/Manuel/GPO-04-Enregistrer-Script.md"
         },
         {
           "slug": "03-gpo-manuel-gpo-05-verification-depannage",
-          "file": "cours/08-tp-final/procedures/03-GPO/Manuel/GPO-05-Verification-Depannage.md"
+          "file": "cours/09-tp-final/procedures/03-GPO/Manuel/GPO-05-Verification-Depannage.md"
         },
         {
           "slug": "03-gpo-script-explication-script-gpo",
-          "file": "cours/08-tp-final/procedures/03-GPO/Script/Explication-Script-GPO.md"
+          "file": "cours/09-tp-final/procedures/03-GPO/Script/Explication-Script-GPO.md"
         },
         {
           "slug": "scripts-fournil",
-          "file": "cours/08-tp-final/scripts.md"
+          "file": "cours/09-tp-final/scripts.md"
         }
       ],
       "hideAnnexe": true

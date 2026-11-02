@@ -169,7 +169,7 @@ plugins:
       mapFn: >-
         function(node) {}
       sortFn: >-
-        function(a,b) { const rank = {"ad/index": 0, "ad/01-infrastructure-ad/index": 0, "ad/02-structure-logique/index": 1, "ad/03-objets-ad/index": 2, "ad/04-sites-replication/index": 3, "ad/05-gpo/index": 4, "ad/06-securite-ad/index": 5, "ad/07-maintenance-depannage/index": 6, "ad/08-tp-final/index": 7}; return (rank[a.slug] ?? 999) - (rank[b.slug] ?? 999) || a.displayName.localeCompare(b.displayName, "fr", {numeric:true}); }
+        function(a,b) { const rank = {"ad/index": 0, "ad/01-infrastructure-ad/index": 0, "ad/02-structure-logique/index": 1, "ad/03-objets-ad/index": 2, "ad/04-sites-replication/index": 3, "ad/05-gpo/index": 4, "ad/06-securite-ad/index": 5, "ad/07-maintenance-depannage/index": 6, "ad/08-tiering/index": 7, "ad/09-tp-final/index": 8}; return (rank[a.slug] ?? 999) - (rank[b.slug] ?? 999) || a.displayName.localeCompare(b.displayName, "fr", {numeric:true}); }
     layout:
       position: left
       priority: 50
