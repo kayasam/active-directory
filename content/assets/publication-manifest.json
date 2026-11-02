@@ -4,7 +4,7 @@
       "key": "ad/01-infrastructure-ad",
       "title": "01. Infrastructure Active Directory",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "ad/02-structure-logique",
@@ -55,7 +55,7 @@
       "correctionKey": "ad/01-infrastructure-ad/tp-corrigev2",
       "downloadStem": "01-infrastructure-ad",
       "track": "ad",
-      "correction": false
+      "correction": true
     },
     {
       "key": "ad/02-structure-logique/tp",
@@ -198,7 +198,9 @@
       "correction": false
     }
   ],
-  "corrections": [],
+  "corrections": [
+    "ad/01-infrastructure-ad/tp"
+  ],
   "tracks": [
     {
       "id": "ad",

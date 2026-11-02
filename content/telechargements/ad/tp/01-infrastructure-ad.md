@@ -112,4 +112,7 @@ Combien de tests passent ? Y a-t-il des avertissements ou erreurs ?
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/active-directory/ad/01-infrastructure-ad/tp-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/active-directory/ad/01-infrastructure-ad/tp-corrigev2)
