@@ -14,7 +14,8 @@ final_folders = list((vault/'cours').glob('*-tp-final'))
 if len(final_folders) != 1: raise ValueError('Un seul dossier de projet final est attendu dans cours/.')
 final_root = final_folders[0]
 documents = [p for p in (vault/'cours').rglob('*.md') if 'excalidraw' not in p.name]
-all_files = documents + list((vault/'Ressources/images').glob('*')) + list((final_root/'scripts').glob('*'))
+scripts = sorted(p for p in (final_root/'scripts').glob('*') if p.is_file())
+all_files = documents + [p for p in (vault/'Ressources/images').glob('*') if p.is_file()] + scripts
 def find(target, origin):
     raw = unquote(target)
     direct = (origin.parent/raw).resolve()
@@ -73,7 +74,6 @@ def slug(p):
     return re.sub('[^a-z0-9]+','-',text).strip('-')
 chapters.append(dict(slug=final_root.name,course=(final/'Guide-déploiement-fournil.md').relative_to(vault).as_posix(),tps=[dict(file=p.relative_to(vault).as_posix(),slug=slug(p)) for p in sorted((final/'TP').glob('*.md')) if 'excalidraw' not in p.name]))
 annexes=[dict(slug=slug(p),file=p.relative_to(vault).as_posix()) for p in sorted(final.rglob('*.md')) if p.parent.name!='TP' and p.name!='Guide-déploiement-fournil.md']
-scripts=list(sorted((final_root/'scripts').glob('*')))
 script_index=dest/final_root.relative_to(vault)/'scripts.md'
 script_index.write_text('# Scripts et données du projet Fournil\n\nLes scripts et CSV sont regroupés dans `assets/supports/scripts/` du ZIP. Conserver tous les fichiers dans le même dossier avant de les utiliser.\n\n'+'\n'.join('- ['+p.name+'](scripts/'+p.name+')' for p in scripts)+'\n',encoding='utf-8')
 annexes.append(dict(slug='scripts-fournil',file=script_index.relative_to(dest).as_posix()))

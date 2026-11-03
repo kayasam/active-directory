@@ -20,7 +20,23 @@ def published(text):
 def page(label, text): return '---\ntitle: ' + json.dumps(label, ensure_ascii=False) + '\n---\n\n' + text
 def clean(path):
     assert path.resolve().parent == ROOT.resolve(), 'Suppression hors du projet interdite'
-    if path.exists(): shutil.rmtree(path)
+    # Keep the directory itself: Windows may hold an open directory handle.
+    if path.exists():
+        for child in path.iterdir():
+            if child.is_dir(): shutil.rmtree(child)
+            else: child.unlink()
+
+def install_content(stage, target):
+    assert stage.resolve().parent == target.resolve().parent == ROOT.resolve(), 'Installation hors du projet interdite'
+    if target.exists():
+        assert (target/'.generated-template').is_file(), 'content contient des fichiers non générés : déplacer les sources avant de préparer.'
+    # Copy first, so a failed copy does not start by deleting the previous site.
+    # Avoid renaming either directory (WinError 5 with open directory handles).
+    shutil.copytree(stage, target, dirs_exist_ok=True)
+    for path in sorted(target.rglob('*'), key=lambda p: len(p.parts), reverse=True):
+        if not (stage/path.relative_to(target)).exists():
+            if path.is_dir(): path.rmdir()
+            else: path.unlink()
 def archive(files):
     stream = io.BytesIO()
     with zipfile.ZipFile(stream, 'w', zipfile.ZIP_DEFLATED) as z:
@@ -164,7 +180,7 @@ def prepare():
         return re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)(\))',link,text)
     for item in chapters+annexes:
         resolve(body(item['path'].read_text(encoding='utf-8-sig')),item['path'])
-    stage=ROOT/'.template-stage'; clean(stage); stage.mkdir()
+    stage=ROOT/'.template-stage'; clean(stage); stage.mkdir(exist_ok=True)
     shutil.copytree(ROOT/'assets',stage/'assets')
     write(stage/'assets/workshops.json','[]\n'); write(stage/'assets/site.json',json.dumps({'title':site['title'],'shortTitle':site.get('shortTitle',site['title'])}))
     registry={}; quizzes={}; manifest={'chapters':[],'exercises':[],'corrections':[],'tracks':[],'templateVersion':1}
@@ -252,10 +268,7 @@ def prepare():
     home+='<section class="home-downloads"><h2>Supports hors ligne</h2><div class="home-downloads__grid">'+''.join(downloads)+'</div></section>'
     write(stage/'index.md',page(site['title'],home)); write(stage/'assets/publication-manifest.json',json.dumps(manifest,ensure_ascii=False,indent=2)); write(stage/'.generated-template','1\n')
     target=ROOT/'content'
-    if target.exists():
-        assert (target/'.generated-template').is_file(), 'content contient des fichiers non générés : déplacer les sources avant de préparer.'
-        clean(target)
-    stage.rename(target)
+    install_content(stage, target)
     config=(ROOT/'quartz.config.yaml').read_text(encoding='utf-8')
     # Supporting procedures remain reachable from final-project exercises.
     config=re.sub(r'      filterFn: >-\n.*?(?=      mapFn:)', '',config,flags=re.S)

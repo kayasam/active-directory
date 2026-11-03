@@ -16,7 +16,7 @@
       "key": "ad/03-objets-ad",
       "title": "03. Objets AD : utilisateurs, ordinateurs, groupes",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "ad/04-sites-replication",
@@ -75,7 +75,7 @@
       "correctionKey": "ad/03-objets-ad/tp-corrigev2",
       "downloadStem": "03-objets-ad",
       "track": "ad",
-      "correction": false
+      "correction": true
     },
     {
       "key": "ad/04-sites-replication/tp",
@@ -214,6 +214,7 @@
   "corrections": [
     "ad/01-infrastructure-ad/tp",
     "ad/02-structure-logique/tp",
+    "ad/03-objets-ad/tp",
     "ad/08-tiering/tp"
   ],
   "tracks": [
