@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "9e7c6838aa3aa0e94dc25aa2017c1a78872b876d30b496f2426d21407849bb89",
+  "pdfSha256": "4c94abeab34e1e9b9633952fd0cc248e1fa67f34473012635bc30b53f7c42a1b",
   "chapters": [
     {
       "key": "ad/01-infrastructure-ad",
@@ -63,7 +63,7 @@
       "title": "08. Tiering : cloisonner l'administration",
       "href": "https://cours.kaya.ovh/active-directory/ad/08-tiering/",
       "download": "telechargements/ad/cours/08-tiering.md",
-      "sourceSha256": "18d18d555819fc7ef358a69a7419927b70f90d4ebda26e7fea33c0af380ca2f4",
+      "sourceSha256": "79f99d0e22b1124913f4b6b4aaf252a836f72f5e9747d0e9858ce8bc0d11f514",
       "startPage": 56
     },
     {
@@ -72,7 +72,7 @@
       "href": "https://cours.kaya.ovh/active-directory/ad/09-tp-final/",
       "download": "telechargements/ad/cours/09-tp-final.md",
       "sourceSha256": "ea7057fb5504497d07506dd66e4212a26a0f75bb7bfe74cdb470adcb45cf5ff0",
-      "startPage": 65
+      "startPage": 68
     }
   ]
 }

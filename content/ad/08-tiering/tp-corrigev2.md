@@ -193,7 +193,15 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 > gpresult /scope computer /r
 > Get-LocalGroupMember -Group "Administrateurs"
 > ```
-> `GPO_Tier2_Postes` apparaît dans les **objets de stratégie de groupe appliqués**, et `FOURNIL\GG_Tier2_Admins` dans les membres du groupe local `Administrateurs`.
+> `GPO_Tier2_Postes` apparaît dans les **objets de stratégie de groupe appliqués**, et `FOURNIL\GG_Tier2_Admins` dans les membres du groupe local `Administrateurs` :
+> ```
+> Name                      PrincipalSource
+> ----                      ---------------
+> FOURNIL\Admins du domaine ActiveDirectory
+> FOURNIL\GG_Tier2_Admins   ActiveDirectory
+> PC-PROD-01\Administrateur Local
+> ```
+> `Admins du domaine` reste membre des `Administrateurs` locaux (ajouté lors de la jonction au domaine). Ce n'est pas un problème : l'**interdiction** d'ouverture de session l'emporte toujours sur l'appartenance à un groupe.
 >
 > Si la GPO n'apparaît pas : vérifier que `PC-PROD-01` est bien dans `OU=Postes` (`Get-ADComputer PC-PROD-01`) et qu'il a redémarré depuis sa jonction au domaine (TP 03).
 
@@ -205,7 +213,12 @@ Que se passe-t-il dans chaque cas ? `adm2.jrenard` est-il administrateur du post
 
 > [!success]- Afficher la correction — C4
 > - `adm0.sysinfo` : ouverture de session **refusée** avec le message *« La méthode de connexion que vous essayez d'utiliser n'est pas autorisée »*. Le mot de passe est pourtant correct : c'est le droit **Interdire l'ouverture d'une session locale** qui joue.
-> - `adm2.jrenard` : la session s'ouvre. `whoami /groups` affiche `BUILTIN\Administrateurs` : il est bien administrateur du poste, grâce au groupe restreint.
+>
+> ![ad-tp08-refus-adm0-poste](https://cours.kaya.ovh/active-directory/assets/supports/a08841ad458f5bf050dd.png)
+>
+> - `adm2.jrenard` : la session s'ouvre. `whoami /groups` affiche `BUILTIN\Administrateurs` et `FOURNIL\GG_Tier2_Admins` : il est bien administrateur du poste, grâce au groupe restreint.
+>
+> ![ad-tp08-adm2-admin-poste](https://cours.kaya.ovh/active-directory/assets/supports/6cf313b342b83f23d6c1.png)
 >
 > Le support peut donc administrer les postes sans jamais y apporter un compte capable de prendre le domaine.
 
@@ -255,7 +268,11 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 
 > [!success]- Afficher la correction — D2
 > - `\\DC01\IPC$` : **réussit**. Avec un **nom**, Windows utilise **Kerberos**.
-> - `\\192.168.3.10\IPC$` : **échoue** (erreur de restriction de compte). Avec une **adresse IP**, Kerberos est impossible (il faut un nom de service), Windows se rabat sur **NTLM**, et NTLM est interdit aux membres de `Protected Users`.
+> - `\\192.168.3.10\IPC$` : **échoue** avec *« System error 1327 — Account restrictions are preventing this user from signing in »*. Avec une **adresse IP**, Kerberos est impossible (il faut un nom de service), Windows se rabat sur **NTLM**, et NTLM est interdit aux membres de `Protected Users`.
+>
+> ![ad-tp08-protected-users-ntlm](https://cours.kaya.ovh/active-directory/assets/supports/a759f3537ea06bad89fd.png)
+>
+> Le même `net use` par IP avec `adm2.jrenard` (hors Protected Users) réussit : c'est bien l'appartenance au groupe qui bloque NTLM.
 >
 > C'est la protection attendue : même si un hash NTLM de `adm0.sysinfo` était volé, il ne servirait à rien.
 >
@@ -319,7 +336,16 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 > gpupdate /force
 > Invoke-LapsPolicyProcessing
 > ```
-> Journal : **Observateur d'événements → Journaux des applications et des services → Microsoft → Windows → LAPS → Operational**. On y trouve le traitement de la stratégie, puis l'événement indiquant que le mot de passe a été **mis à jour dans Active Directory**.
+> Journal : **Observateur d'événements → Journaux des applications et des services → Microsoft → Windows → LAPS → Operational**. Au premier passage, on y trouve notamment :
+>
+> | ID | Message |
+> |---|---|
+> | 10015 | *The managed account password needs to be updated…* |
+> | **10018** | *LAPS successfully updated Active Directory with the new password.* |
+> | **10020** | *LAPS successfully updated the local admin account with the new password.* |
+> | 10004 | *LAPS policy processing succeeded.* |
+>
+> Aux passages suivants, **10016** (*the managed account password does not need to be updated at this time*) : normal tant que le mot de passe n'a pas expiré.
 > ```powershell
 > Get-WinEvent -LogName "Microsoft-Windows-LAPS/Operational" -MaxEvents 10 |
 >     Select-Object TimeCreated, Id, Message
@@ -332,20 +358,48 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 > ```powershell
 > Get-LapsADPassword -Identity "PC-PROD-01" -AsPlainText
 > ```
-> La sortie donne notamment le compte géré (`Account`), le mot de passe (`Password`), sa date de mise à jour et sa date d'expiration. Sans `-AsPlainText`, le mot de passe est renvoyé sous forme de `SecureString`.
+> Sortie attendue (le mot de passe sera différent chez toi) :
+> ```
+> ComputerName        : PC-PROD-01
+> Account             : Administrateur
+> Password            : }!bezTR0V$@91X33
+> PasswordUpdateTime  : …
+> ExpirationTimestamp : … (+30 jours)
+> Source              : EncryptedPassword
+> DecryptionStatus    : Success
+> AuthorizedDecryptor : FOURNIL\Admins du domaine
+> ```
+> `Source : EncryptedPassword` : le mot de passe est **chiffré** dans AD (domaine en niveau fonctionnel 2016 ou plus). Seul le **déchiffreur autorisé**, par défaut `Admins du domaine`, peut le lire. Sans `-AsPlainText`, le mot de passe est renvoyé sous forme de `SecureString`.
 >
 > Dans `dsa.msc` : `OU=Postes` → propriétés de `PC-PROD-01` → onglet **LAPS** → **Afficher le mot de passe**.
 
-**E6.** Donne le droit de lire les mots de passe LAPS des postes au groupe `GG_Tier2_Admins`, et à lui seul.
+**E6.** Fais en sorte que le groupe `GG_Tier2_Admins` puisse lire les mots de passe LAPS des postes. Vérifie depuis une session `adm2.jrenard` sur `PC-PROD-01` : que vaut `DecryptionStatus` ?
 
 > [!success]- Afficher la correction — E6
+> Deux réglages sont nécessaires, parce que le mot de passe est **chiffré** (voir E5).
+>
+> **1. Le droit de lecture** sur l'attribut, limité à `OU=Postes` :
 > ```powershell
 > Set-LapsADReadPasswordPermission -Identity "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab" `
 >                                  -AllowedPrincipals "FOURNIL\GG_Tier2_Admins"
 > ```
-> On ne donne ce droit **que** sur `OU=Postes` : le support lit les mots de passe des postes, jamais ceux des serveurs. Pour `OU=Serveurs`, on le donnerait à `GG_Tier1_Admins`.
+> Seul, il ne suffit pas : depuis la session `adm2.jrenard`, `Get-LapsADPassword -Identity PC-PROD-01 -AsPlainText` renvoie un mot de passe **vide** et `DecryptionStatus : Unauthorized`.
 >
-> Les `Admins du domaine` peuvent lire les mots de passe LAPS de toutes les machines par défaut.
+> **2. Le droit de déchiffrer**, dans `GPO_LAPS_Postes` :
+> `Configuration ordinateur → Stratégies → Modèles d'administration → Système → LAPS` → **Configurer les déchiffreurs de mots de passe autorisés** → Activé → `FOURNIL\GG_Tier2_Admins`.
+>
+> Le nouveau déchiffreur ne vaut que pour le **prochain** mot de passe. Sur `PC-PROD-01`, en administrateur :
+> ```powershell
+> gpupdate /force
+> Reset-LapsPassword
+> ```
+> Ensuite, depuis la session `adm2.jrenard` :
+>
+> ![ad-tp08-laps-adm2](https://cours.kaya.ovh/active-directory/assets/supports/88d6b2e1f4fca4aa322c.png)
+>
+> `DecryptionStatus : Success` et `AuthorizedDecryptor : FOURNIL\GG_Tier2_Admins`.
+>
+> > Il n'y a qu'**un** déchiffreur par mot de passe : désormais, les `Admins du domaine` ne peuvent plus le déchiffrer. C'est cohérent avec le tiering : le mot de passe d'un poste appartient au Tier 2. Pour `OU=Serveurs`, on ferait la même chose avec `GG_Tier1_Admins`.
 
 ---
 
@@ -358,6 +412,8 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 > Get-ADUser -Filter 'adminCount -eq 1' | Select-Object Name, SamAccountName
 > ```
 > AD pose `adminCount = 1` sur tout compte qui est, ou **a été**, membre d'un groupe protégé (`Admins du domaine`, `Opérateurs de compte`, `Administrateurs`…). Le processus **SDProp** remplace alors ses permissions par un modèle protégé, toutes les 60 minutes.
+>
+> Le marquage n'est pas immédiat : `adm0.sysinfo`, ajouté à `Admins du domaine` en B4, n'apparaît qu'au prochain passage de SDProp (jusqu'à 60 minutes).
 >
 > L'attribut **reste** après le retrait du groupe : `adm.sysinfo` (retiré de `Opérateurs de compte` en B5) y figure encore. C'est une bonne liste de départ pour repérer les anciens comptes à privilèges à nettoyer.
 

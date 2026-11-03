@@ -22,7 +22,7 @@
       "key": "ad/04-sites-replication",
       "title": "04. Sites AD et réplication",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "ad/05-gpo",
@@ -82,7 +82,7 @@
       "correctionKey": "ad/04-sites-replication/tp-corrigev2",
       "downloadStem": "04-sites-replication",
       "track": "ad",
-      "correction": false
+      "correction": true
     },
     {
       "key": "ad/05-gpo/tp",
@@ -215,6 +215,7 @@
     "ad/01-infrastructure-ad/tp",
     "ad/02-structure-logique/tp",
     "ad/03-objets-ad/tp",
+    "ad/04-sites-replication/tp",
     "ad/08-tiering/tp"
   ],
   "tracks": [

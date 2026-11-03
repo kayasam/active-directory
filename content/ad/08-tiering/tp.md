@@ -125,7 +125,7 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 
 **E5.** Sur `DC01`, affiche le mot de passe administrateur local de `PC-PROD-01`. Retrouve-le aussi dans `dsa.msc`.
 
-**E6.** Donne le droit de lire les mots de passe LAPS des postes au groupe `GG_Tier2_Admins`, et à lui seul.
+**E6.** Fais en sorte que le groupe `GG_Tier2_Admins` puisse lire les mots de passe LAPS des postes. Vérifie depuis une session `adm2.jrenard` sur `PC-PROD-01` : que vaut `DecryptionStatus` ?
 
 ---
 

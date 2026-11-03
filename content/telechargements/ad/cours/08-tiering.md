@@ -145,6 +145,20 @@ L'administration locale se donne avec les **Groupes restreints** :
 > [!WARNING] Ne jamais lier ces GPO à la racine du domaine ni à `Domain Controllers`
 > Une interdiction appliquée par erreur aux DC peut empêcher **tous** les administrateurs de s'y connecter. On teste d'abord avec un seul compte, sur un seul poste, et on garde le compte `Administrateur` intégré hors de ces groupes (compte de secours, mot de passe sous enveloppe).
 
+### Le résultat sur le poste
+
+Un compte Tier 0 qui tente d'ouvrir une session sur `PC-PROD-01` est refusé, même avec le bon mot de passe :
+
+![ad-tp08-refus-adm0-poste](https://cours.kaya.ovh/active-directory/assets/supports/a08841ad458f5bf050dd.png)
+*« The sign-in method you're trying to use isn't allowed » (« La méthode de connexion que vous essayez d'utiliser n'est pas autorisée ») : c'est le droit « Interdire l'ouverture d'une session locale ».*
+
+Le compte Tier 2, lui, ouvre sa session et se retrouve administrateur du poste par le groupe `GG_Tier2_Admins` :
+
+![ad-tp08-adm2-admin-poste](https://cours.kaya.ovh/active-directory/assets/supports/6cf313b342b83f23d6c1.png)
+
+> [!NOTE] L'interdiction vise aussi PowerShell Direct
+> Une fois la GPO appliquée, même `Invoke-Command -VMName` (PowerShell Direct depuis l'hôte Hyper-V) est refusé au compte Administrateur du domaine sur le poste : *« Les informations d'identification ne sont pas valides »*. Pour administrer les postes, on utilise un compte Tier 2.
+
 ---
 
 ## 6. Le groupe Protected Users
@@ -168,6 +182,9 @@ Get-ADGroupMember -Identity "Protected Users"
 > - **Jamais** de compte de service ni de compte ordinateur dans `Protected Users` : ils ont souvent besoin de NTLM ou de délégation.
 > - Une connexion **par adresse IP** (`\\192.168.3.10\partage`) passe en NTLM : elle échoue pour un membre de `Protected Users`. Il faut utiliser le **nom** (`\\DC01\partage`).
 > - Garder au moins un compte de secours **hors** du groupe.
+
+![ad-tp08-protected-users-ntlm](https://cours.kaya.ovh/active-directory/assets/supports/a759f3537ea06bad89fd.png)
+*`net use` avec `adm0.sysinfo` (membre de Protected Users) : par le **nom** `\\DC01`, ça passe (Kerberos). Par l'**adresse IP**, on obtient « System error 1327 — Account restrictions are preventing this user from signing in » (NTLM refusé).*
 
 - [Groupe Protected Users — Microsoft Learn](https://learn.microsoft.com/fr-fr/windows-server/security/credentials-protection-and-management/protected-users-security-group)
 
@@ -202,6 +219,14 @@ Set-LapsADReadPasswordPermission -Identity "OU=Postes,OU=Ordinateurs,DC=ad,DC=fo
 |---|---|
 | **Configurer le répertoire de sauvegarde des mots de passe** | Activé → *Active Directory* |
 | **Paramètres du mot de passe** | Activé → complexité maximale, 16 caractères, 30 jours |
+| **Configurer les déchiffreurs de mots de passe autorisés** | Activé → `FOURNIL\GG_Tier2_Admins` |
+
+> [!WARNING] Le mot de passe est chiffré : le droit de lecture ne suffit pas
+> Avec un domaine en niveau fonctionnel **2016 ou plus**, Windows LAPS **chiffre** le mot de passe dans AD. Seul le **déchiffreur autorisé** peut le lire, et c'est par défaut **Admins du domaine** :
+> - avec seulement `Set-LapsADReadPasswordPermission`, `adm2.jrenard` obtient `DecryptionStatus : Unauthorized` et un mot de passe vide ;
+> - avec le paramètre **Configurer les déchiffreurs de mots de passe autorisés** → `GG_Tier2_Admins`, il obtient `DecryptionStatus : Success`.
+>
+> Un seul déchiffreur par mot de passe : une fois `GG_Tier2_Admins` désigné, ce sont **les Admins du domaine** qui ne peuvent plus le déchiffrer. C'est cohérent avec le tiering : le mot de passe d'un poste appartient au Tier 2.
 
 ### Utilisation
 
@@ -215,6 +240,11 @@ Get-LapsADPassword -Identity "PC-PROD-01" -AsPlainText
 # Forcer un nouveau mot de passe (après une intervention, par exemple)
 Reset-LapsPassword            # à lancer sur le poste concerné
 ```
+
+![ad-tp08-laps-adm2](https://cours.kaya.ovh/active-directory/assets/supports/88d6b2e1f4fca4aa322c.png)
+*Lecture du mot de passe par `adm2.jrenard` : `Source : EncryptedPassword`, `DecryptionStatus : Success`, `AuthorizedDecryptor : FOURNIL\GG_Tier2_Admins`. La date d'expiration correspond aux 30 jours de la GPO.*
+
+Sur le poste, le journal **Microsoft → Windows → LAPS → Operational** trace chaque rotation : **10018** (*LAPS successfully updated Active Directory with the new password*), puis **10020** (*… updated the local admin account with the new password*).
 
 Dans `dsa.msc`, les propriétés d'un ordinateur géré affichent un onglet **LAPS** (mot de passe et date d'expiration).
 
