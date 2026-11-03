@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "4c94abeab34e1e9b9633952fd0cc248e1fa67f34473012635bc30b53f7c42a1b",
+  "pdfSha256": "e7e1f70f667678879f50769b4a3a1c0633a9a39b86f97bb8f39ac0528693b51c",
   "chapters": [
     {
       "key": "ad/01-infrastructure-ad",
@@ -31,7 +31,7 @@
       "title": "04. Sites AD et réplication",
       "href": "https://cours.kaya.ovh/active-directory/ad/04-sites-replication/",
       "download": "telechargements/ad/cours/04-sites-replication.md",
-      "sourceSha256": "7f037621e85fb6443968c547664a4626830c1b11470b0a26902c818bfe99ef9b",
+      "sourceSha256": "25cabd608f409330e7ca8b6d5a02cb0a775a146dd1476479f0c9c73d53d73707",
       "startPage": 26
     },
     {

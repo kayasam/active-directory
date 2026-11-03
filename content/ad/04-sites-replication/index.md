@@ -259,7 +259,7 @@ dcdiag /test:replications /v
 Get-ADDomainController -Filter * | Select-Object Name, Site, IPv4Address
 
 # Voir les partenaires de réplication
-Get-ADReplicationPartnerMetadata -Target "DC01" -Scope Domain
+Get-ADReplicationPartnerMetadata -Target "DC01"
 ```
 
 ---
