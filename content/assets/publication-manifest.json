@@ -28,7 +28,7 @@
       "key": "ad/05-gpo",
       "title": "05. Stratégies de groupe (GPO)",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "ad/06-securite-ad",
@@ -89,7 +89,7 @@
       "correctionKey": "ad/05-gpo/tp-corrigev2",
       "downloadStem": "05-gpo",
       "track": "ad",
-      "correction": false
+      "correction": true
     },
     {
       "key": "ad/06-securite-ad/tp",
@@ -216,6 +216,7 @@
     "ad/02-structure-logique/tp",
     "ad/03-objets-ad/tp",
     "ad/04-sites-replication/tp",
+    "ad/05-gpo/tp",
     "ad/08-tiering/tp"
   ],
   "tracks": [

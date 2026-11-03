@@ -90,4 +90,7 @@ Get-GPO -All | Select-Object DisplayName, GpoStatus
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/active-directory/ad/05-gpo/tp-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/active-directory/ad/05-gpo/tp-corrigev2)
