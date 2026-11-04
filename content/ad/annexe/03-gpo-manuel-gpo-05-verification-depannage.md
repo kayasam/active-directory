@@ -106,7 +106,7 @@ gpresult /r /scope:user
 ```
 
 Chercher `GPO_Emplacement_Home` dans la section **"Objets de stratégie de groupe appliqués"**. Si elle n'y est pas :
-- L'utilisateur n'est pas dans `OU=fournil` ou une sous-OU
+- L'utilisateur n'est pas dans `OU=Fournil` ou une sous-OU
 - Le lien GPO est désactivé dans `gpmc.msc`
 - Un filtre WMI ou de sécurité bloque la GPO
 

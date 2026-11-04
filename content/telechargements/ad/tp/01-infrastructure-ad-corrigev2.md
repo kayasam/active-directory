@@ -169,9 +169,9 @@ La société **Fournil** est une boulangerie industrielle implantée à Bordeaux
 > | `Managed Service Accounts` | Comptes de service gérés (gMSA) |
 > | `Users` | Conteneur par défaut des utilisateurs et groupes créés à l'installation |
 >
-> ![ad-tp01-dsa-conteneurs](https://cours.kaya.ovh/active-directory/assets/supports/f2eb37ba29f238575f9b.png)
+> ![ad-tp01-dsa-conteneurs](https://cours.kaya.ovh/active-directory/assets/supports/88d5d0bd1461c9997ab6.png)
 >
-> > `Computers` et `Users` sont des **conteneurs** (pas des OU) : on ne peut pas leur appliquer de GPO directement. Seule `Domain Controllers` porte l'icône d'OU.
+> > `Computers` et `Users` sont des **conteneurs** (pas des OU) : on ne peut pas leur appliquer de GPO directement. Juste après la promotion, seule `Domain Controllers` porte l'icône d'OU (sur la capture, prise plus tard dans la formation, on voit aussi `Administration` et `Fournil`).
 > >
 > > Avec **Affichage → Fonctionnalités avancées**, d'autres conteneurs apparaissent (`System`, `LostAndFound`, `Program Data`, `NTDS Quotas`, `TPM Devices`…) : on n'y touche pas.
 
@@ -190,7 +190,7 @@ La société **Fournil** est une boulangerie industrielle implantée à Bordeaux
 > | `SOA` | `@` | Autorité de la zone |
 > | `A` | `@` | Le nom du domaine lui-même pointe vers le DC |
 >
-> ![ad-tp01-dns-zone](https://cours.kaya.ovh/active-directory/assets/supports/db17a688dd44c866a175.png)
+> ![ad-tp01-dns-zone](https://cours.kaya.ovh/active-directory/assets/supports/d6252ced121313fa4f6a.png)
 >
 > On trouve aussi `_kpasswd` (changement de mot de passe Kerberos), les variantes `_udp`, et les mêmes SRV déclinés par site (`_ldap._tcp.Default-First-Site-Name._sites`). C'est ce qui permettra, au chapitre 04, d'orienter chaque client vers le DC de son site.
 

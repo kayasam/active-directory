@@ -24,7 +24,7 @@ On crée **3 groupes par niveau** : un `G_` (global), un `DL_..._L` (lecture) et
 
 ```powershell
 New-ADGroup -Name "G_fournil" -GroupCategory Security -GroupScope Global `
-    -Path "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Groupe global pour fournil"
 ```
 
@@ -42,15 +42,15 @@ New-ADGroup -Name "G_fournil" -GroupCategory Security -GroupScope Global `
 
 ```powershell
 New-ADGroup -Name "G_fournil" -GroupCategory Security -GroupScope Global `
-    -Path "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Groupe global pour fournil"
 
 New-ADGroup -Name "DL_fournil_L" -GroupCategory Security -GroupScope DomainLocal `
-    -Path "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Lecture sur fournil"
 
 New-ADGroup -Name "DL_fournil_M" -GroupCategory Security -GroupScope DomainLocal `
-    -Path "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Modification sur fournil"
 ```
 
@@ -58,15 +58,15 @@ New-ADGroup -Name "DL_fournil_M" -GroupCategory Security -GroupScope DomainLocal
 
 ```powershell
 New-ADGroup -Name "G_Laboratoire" -GroupCategory Security -GroupScope Global `
-    -Path "OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Groupe global Laboratoire"
 
 New-ADGroup -Name "DL_Laboratoire_L" -GroupCategory Security -GroupScope DomainLocal `
-    -Path "OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Lecture sur Laboratoire"
 
 New-ADGroup -Name "DL_Laboratoire_M" -GroupCategory Security -GroupScope DomainLocal `
-    -Path "OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Modification sur Laboratoire"
 ```
 
@@ -74,15 +74,15 @@ New-ADGroup -Name "DL_Laboratoire_M" -GroupCategory Security -GroupScope DomainL
 
 ```powershell
 New-ADGroup -Name "G_Laboratoire_fabrication" -GroupCategory Security -GroupScope Global `
-    -Path "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Groupe global fabrication"
 
 New-ADGroup -Name "DL_Laboratoire_fabrication_L" -GroupCategory Security -GroupScope DomainLocal `
-    -Path "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Lecture sur fabrication"
 
 New-ADGroup -Name "DL_Laboratoire_fabrication_M" -GroupCategory Security -GroupScope DomainLocal `
-    -Path "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Modification sur fabrication"
 ```
 
@@ -90,15 +90,15 @@ New-ADGroup -Name "DL_Laboratoire_fabrication_M" -GroupCategory Security -GroupS
 
 ```powershell
 New-ADGroup -Name "G_Laboratoire_fabrication_boulangerie" -GroupCategory Security -GroupScope Global `
-    -Path "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Groupe global boulangerie"
 
 New-ADGroup -Name "DL_Laboratoire_fabrication_boulangerie_L" -GroupCategory Security -GroupScope DomainLocal `
-    -Path "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Lecture sur boulangerie"
 
 New-ADGroup -Name "DL_Laboratoire_fabrication_boulangerie_M" -GroupCategory Security -GroupScope DomainLocal `
-    -Path "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Modification sur boulangerie"
 ```
 
@@ -107,6 +107,6 @@ New-ADGroup -Name "DL_Laboratoire_fabrication_boulangerie_M" -GroupCategory Secu
 ## Vérification
 
 ```powershell
-Get-ADGroup -Filter * -SearchBase "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" |
+Get-ADGroup -Filter * -SearchBase "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" |
     Select-Object Name, GroupScope | Sort-Object Name
 ```

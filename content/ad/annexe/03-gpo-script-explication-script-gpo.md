@@ -6,7 +6,7 @@ title: "03 - Déployer la GPO \"Emplacement réseau Home\" - Fournil"
 
 Ce document décrit le déploiement d'une stratégie de groupe (GPO) qui crée automatiquement un raccourci **"Mon Dossier Personnel"** dans les emplacements réseau de l'Explorateur Windows pour chaque utilisateur du domaine `ad.fournil.lab`. Ce raccourci pointe vers le répertoire personnel de l'utilisateur (`\\ad.fournil.lab\HOMES\<Entite>\<Login>`), tel que défini dans l'attribut `HomeDirectory` de son compte Active Directory.
 
-La GPO s'applique à tous les utilisateurs de l'unité d'organisation `OU=fournil,DC=ad,DC=fournil,DC=lab` et de ses sous-OU, y compris l'arborescence Utilisateurs.
+La GPO s'applique à tous les utilisateurs de l'unité d'organisation `OU=Fournil,DC=ad,DC=fournil,DC=lab` et de ses sous-OU, y compris l'arborescence Utilisateurs.
 
 **Serveurs concernés :**
 
@@ -154,7 +154,7 @@ $gpo = New-GPO -Name "GPO_Emplacement_Home"
 ### Etape 2.2 : Vérification des liens GPO existants (facultatif)
 
 ```powershell
-$ouTarget = "OU=fournil,DC=ad,DC=fournil,DC=lab"
+$ouTarget = "OU=Fournil,DC=ad,DC=fournil,DC=lab"
 Get-GPInheritance -Target $ouTarget | Select-Object -ExpandProperty GpoLinks
 ```
 
@@ -162,7 +162,7 @@ Get-GPInheritance -Target $ouTarget | Select-Object -ExpandProperty GpoLinks
 
 - `Get-GPInheritance` : Cmdlet qui récupère les informations d'héritage des stratégies de groupe pour une OU donnée.
 - `-Target $ouTarget` : Le chemin **Distinguished Name** (DN) de l'unité d'organisation cible. Le DN est le chemin LDAP complet de l'OU dans la hiérarchie Active Directory :
-  - `OU=fournil` : L'unité d'organisation nommée "fournil"
+  - `OU=Fournil` : L'unité d'organisation nommée "fournil"
   - `DC=ad,DC=fournil,DC=lab` : Les composantes du domaine `ad.fournil.lab`
 - `| Select-Object -ExpandProperty GpoLinks` : Filtre la sortie pour n'afficher que la propriété `GpoLinks`, qui contient la liste de toutes les GPO liées à cette OU. Le paramètre `-ExpandProperty` "déplie" la collection pour afficher directement les éléments plutôt que l'objet conteneur.
 
@@ -171,17 +171,17 @@ Cette commande est **facultative** et sert à vérifier l'état actuel avant d'a
 ### Etape 2.3 : Liaison de la GPO à l'OU
 
 ```powershell
-New-GPLink -Name "GPO_Emplacement_Home" -Target "OU=fournil,DC=ad,DC=fournil,DC=lab" -LinkEnabled Yes
+New-GPLink -Name "GPO_Emplacement_Home" -Target "OU=Fournil,DC=ad,DC=fournil,DC=lab" -LinkEnabled Yes
 ```
 
 **Explication des paramètres :**
 
 - `New-GPLink` : Cmdlet qui crée un lien entre une GPO et un conteneur Active Directory (site, domaine ou OU).
 - `-Name "GPO_Emplacement_Home"` : Le nom de la GPO à lier (doit correspondre exactement au nom donné lors de la création).
-- `-Target "OU=fournil,DC=ad,DC=fournil,DC=lab"` : L'OU cible à laquelle la GPO sera liée.
+- `-Target "OU=Fournil,DC=ad,DC=fournil,DC=lab"` : L'OU cible à laquelle la GPO sera liée.
 - `-LinkEnabled Yes` : Active le lien immédiatement. Si la valeur était `No`, la GPO serait liée mais inactive (désactivée).
 
-**Portée de la GPO :** La GPO s'applique à **tous les utilisateurs** situés dans l'OU `fournil` et dans **toutes ses sous-OU** (héritage). Cela inclut l'arborescence `OU=Utilisateurs,OU=fournil,...` et toutes les entités en dessous. Ainsi, chaque utilisateur du domaine Fournil bénéficiera du raccourci réseau lors de sa prochaine ouverture de session.
+**Portée de la GPO :** La GPO s'applique à **tous les utilisateurs** situés dans l'OU `Fournil` et dans **toutes ses sous-OU** (héritage). Cela inclut l'arborescence `OU=Utilisateurs,OU=Fournil,...` et toutes les entités en dessous. Ainsi, chaque utilisateur du domaine Fournil bénéficiera du raccourci réseau lors de sa prochaine ouverture de session.
 
 ---
 
@@ -385,7 +385,7 @@ rsop.msc
 
 Naviguer vers : **Configuration utilisateur** > **Paramètres Windows** > **Scripts (ouverture/fermeture de session)** > **Ouverture de session**. Le script `Set-NetworkLocation.ps1` doit y apparaître. S'il n'apparaît pas :
 
-- Vérifier que le compte utilisateur se trouve bien dans l'OU `OU=fournil,DC=ad,DC=fournil,DC=lab` ou une sous-OU.
+- Vérifier que le compte utilisateur se trouve bien dans l'OU `OU=Fournil,DC=ad,DC=fournil,DC=lab` ou une sous-OU.
 - Vérifier que le lien GPO est activé dans GPMC (`gpmc.msc`).
 - Vérifier qu'aucun filtre WMI ou filtre de sécurité ne bloque l'application de la GPO.
 

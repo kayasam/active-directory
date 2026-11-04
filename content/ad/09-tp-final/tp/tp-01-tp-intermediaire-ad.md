@@ -66,9 +66,9 @@ $utilisateurs.Count
 ## 2.1 — Structure de base
 
 ```powershell
-New-ADOrganizationalUnit -Name "fournil" -Path $dn -ProtectedFromAccidentalDeletion $false
+New-ADOrganizationalUnit -Name "Fournil" -Path $dn -ProtectedFromAccidentalDeletion $false
 
-$racine = "OU=fournil,$dn"
+$racine = "OU=Fournil,$dn"
 
 foreach ($type in "Utilisateurs","Groupes","Ordinateurs") {
     New-ADOrganizationalUnit -Name $type -Path $racine -ProtectedFromAccidentalDeletion $false
@@ -112,7 +112,7 @@ Vérifiez :
 (Get-ADOrganizationalUnit -SearchBase $racine -Filter *).Count
 ```
 
-> Résultat attendu : **121 OUs**, en comptant l'OU `fournil` elle-même.
+> Résultat attendu : **121 OUs**, en comptant l'OU `Fournil` elle-même.
 
 ---
 
@@ -331,7 +331,7 @@ icacls "C:\fournil\Laboratoire\fabrication\boulangerie"
 
 | Élément | Résultat attendu |
 |---------|-----------------|
-| OUs, avec `fournil` | 121 |
+| OUs, avec `Fournil` | 121 |
 | Groupes `G_` | 40 |
 | Groupes `DL_` | 80 |
 | Utilisateurs | 30 |

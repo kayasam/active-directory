@@ -49,31 +49,31 @@ Options : mot de passe `P@ssw0rd!`, changer le mot de passe à la prochaine conn
 > ```powershell
 > New-ADUser -Name "Sophie Dupont" -GivenName "Sophie" -Surname "Dupont" `
 >   -SamAccountName "sdupont" -UserPrincipalName "sdupont@ad.fournil.lab" `
->   -Path "OU=Production,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+>   -Path "OU=Production,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >   -AccountPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) `
 >   -ChangePasswordAtLogon $true -Enabled $true
 >
 > New-ADUser -Name "Thomas Vidal" -GivenName "Thomas" -Surname "Vidal" `
 >   -SamAccountName "tvidal" -UserPrincipalName "tvidal@ad.fournil.lab" `
->   -Path "OU=Commercial,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+>   -Path "OU=Commercial,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >   -AccountPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) `
 >   -ChangePasswordAtLogon $true -Enabled $true
 >
 > New-ADUser -Name "Julie Renard" -GivenName "Julie" -Surname "Renard" `
 >   -SamAccountName "jrenard" -UserPrincipalName "jrenard@ad.fournil.lab" `
->   -Path "OU=Support,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+>   -Path "OU=Support,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >   -AccountPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) `
 >   -ChangePasswordAtLogon $true -Enabled $true
 > ```
 
 **A3.** Vérifie que tous les comptes sont créés :
 ```powershell
-Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" -SearchScope Subtree | Select-Object Name, SamAccountName, Enabled
+Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" -SearchScope Subtree | Select-Object Name, SamAccountName, Enabled
 ```
 
 > [!success]- Afficher la correction — A3
 > ```powershell
-> Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" -SearchScope Subtree |
+> Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" -SearchScope Subtree |
 >   Select-Object Name, SamAccountName, Enabled
 > ```
 > **6** utilisateurs attendus : Claire, Marc, Sophie, Thomas, Julie **et `helpdesk`**, créé au TP 02 dans `OU=Support` (la recherche est en `Subtree`).
@@ -135,7 +135,7 @@ Pierre,Aubert,Commercial
 >       -Surname $_.Nom `
 >       -SamAccountName $sam `
 >       -UserPrincipalName "$sam@ad.fournil.lab" `
->       -Path "OU=$($_.OU),OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+>       -Path "OU=$($_.OU),OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >       -AccountPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) `
 >       -ChangePasswordAtLogon $true `
 >       -Enabled $true
@@ -146,7 +146,7 @@ Pierre,Aubert,Commercial
 
 > [!success]- Afficher la correction — B3
 > ```powershell
-> (Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" -SearchScope Subtree).Count
+> (Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" -SearchScope Subtree).Count
 > ```
 > **10** utilisateurs attendus (5 créés en partie A + `helpdesk` du TP 02 + 4 importés). Si tu as aussi gardé `test.deleg` (TP 02, D3), il en trouve 11.
 
@@ -231,10 +231,10 @@ Get-ADComputer -Filter * | Select-Object Name, DistinguishedName
 
 Dans quelle OU le compte a-t-il atterri ? Pourquoi ? (Pense à ce que tu as fait au TP 02, partie C.)
 
-S'il est resté dans `CN=Computers` (redirection non faite), déplace-le dans `OU=Postes,OU=Ordinateurs` via `dsa.msc` (glisser-déposer) ou PowerShell :
+S'il est resté dans `CN=Computers` (redirection non faite), déplace-le dans `OU=Postes,OU=Ordinateurs,OU=Fournil` via `dsa.msc` (glisser-déposer) ou PowerShell :
 
 ```powershell
-Get-ADComputer PC-PROD-01 | Move-ADObject -TargetPath "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+Get-ADComputer PC-PROD-01 | Move-ADObject -TargetPath "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
 > [!success]- Afficher la correction — C5
@@ -246,18 +246,18 @@ Get-ADComputer PC-PROD-01 | Move-ADObject -TargetPath "OU=Postes,OU=Ordinateurs,
 > Name            DistinguishedName
 > ----            -----------------
 > DC01            CN=DC01,OU=Domain Controllers,DC=ad,DC=fournil,DC=lab
-> PC-DIRECTION-01 CN=PC-DIRECTION-01,OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab
-> PC-PROD-01      CN=PC-PROD-01,OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab
+> PC-DIRECTION-01 CN=PC-DIRECTION-01,OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
+> PC-PROD-01      CN=PC-PROD-01,OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 > ```
 > `PC-PROD-01` arrive **directement dans `OU=Postes`** grâce au `redircmp` du TP 02 : il n'y a rien à déplacer. Sans redirection, il serait dans `CN=Computers`.
 >
-> > Piège : la commande `Move-ADObject -Identity "CN=PC-PROD-01,CN=Computers,…"` échoue alors avec **« Directory object not found »**, puisque l'objet n'y est pas. Pour déplacer sans connaître l'emplacement exact : `Get-ADComputer PC-PROD-01 | Move-ADObject -TargetPath "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"`.
+> > Piège : la commande `Move-ADObject -Identity "CN=PC-PROD-01,CN=Computers,…"` échoue alors avec **« Directory object not found »**, puisque l'objet n'y est pas. Pour déplacer sans connaître l'emplacement exact : `Get-ADComputer PC-PROD-01 | Move-ADObject -TargetPath "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"`.
 
 **C6.** Pré-crée un second compte ordinateur `PC-DIRECTION-01` directement dans la bonne OU :
 
 ```powershell
 New-ADComputer -Name "PC-DIRECTION-01" `
-               -Path "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab" `
+               -Path "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
                -Enabled $true
 ```
 
@@ -266,7 +266,7 @@ Quel est l'avantage de pré-créer le compte avant de joindre la machine physiqu
 > [!success]- Afficher la correction — C6
 > ```powershell
 > New-ADComputer -Name "PC-DIRECTION-01" `
->                -Path "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab" `
+>                -Path "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >                -Enabled $true
 > ```
 > Avantages de la pré-création :
@@ -290,17 +290,17 @@ Quel est l'avantage de pré-créer le compte avant de joindre la machine physiqu
 > [!success]- Afficher la correction — D1
 > ```powershell
 > # Créer l'OU Groupes si elle n'existe pas
-> New-ADOrganizationalUnit -Name "Groupes" -Path "DC=ad,DC=fournil,DC=lab"
+> New-ADOrganizationalUnit -Name "Groupes" -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
 >
 > # Groupes globaux
-> New-ADGroup -Name "GG_Direction"  -GroupScope Global      -GroupCategory Security -Path "OU=Groupes,DC=ad,DC=fournil,DC=lab"
-> New-ADGroup -Name "GG_Production" -GroupScope Global      -GroupCategory Security -Path "OU=Groupes,DC=ad,DC=fournil,DC=lab"
-> New-ADGroup -Name "GG_Commercial" -GroupScope Global      -GroupCategory Security -Path "OU=Groupes,DC=ad,DC=fournil,DC=lab"
-> New-ADGroup -Name "GG_Support"    -GroupScope Global      -GroupCategory Security -Path "OU=Groupes,DC=ad,DC=fournil,DC=lab"
+> New-ADGroup -Name "GG_Direction"  -GroupScope Global      -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADGroup -Name "GG_Production" -GroupScope Global      -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADGroup -Name "GG_Commercial" -GroupScope Global      -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADGroup -Name "GG_Support"    -GroupScope Global      -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 >
 > # Groupes domaine local
-> New-ADGroup -Name "DL_Partage_Production_Lecture"  -GroupScope DomainLocal -GroupCategory Security -Path "OU=Groupes,DC=ad,DC=fournil,DC=lab"
-> New-ADGroup -Name "DL_Partage_Production_Ecriture" -GroupScope DomainLocal -GroupCategory Security -Path "OU=Groupes,DC=ad,DC=fournil,DC=lab"
+> New-ADGroup -Name "DL_Partage_Production_Lecture"  -GroupScope DomainLocal -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADGroup -Name "DL_Partage_Production_Ecriture" -GroupScope DomainLocal -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
 **D2.** Ajoute les utilisateurs dans les groupes globaux correspondants à leur pôle.
@@ -369,10 +369,10 @@ Quel est l'avantage de pré-créer le compte avant de joindre la machine physiqu
 
 > [!success]- Afficher la correction — E2
 > Actions à réaliser :
-> 1. Déplacer l'objet utilisateur vers `OU=Commercial,OU=Utilisateurs` :
+> 1. Déplacer l'objet utilisateur vers `OU=Commercial,OU=Utilisateurs,OU=Fournil` :
 > ```powershell
 > Move-ADObject -Identity (Get-ADUser "sdupont").DistinguishedName `
->               -TargetPath "OU=Commercial,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab"
+>               -TargetPath "OU=Commercial,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 > 2. Retirer du groupe `GG_Production` :
 > ```powershell

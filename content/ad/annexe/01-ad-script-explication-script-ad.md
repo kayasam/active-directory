@@ -66,7 +66,7 @@ Les OUs servent à :
 Dans notre cas, la hiérarchie des OUs reflète l'organigramme de l'entreprise :
 
 ```
-fournil (OU racine)
+Fournil (OU racine)
 ├── Utilisateurs
 │   ├── Laboratoire
 │   │   ├── fabrication
@@ -96,7 +96,7 @@ Le **Distinguished Name** (DN) est l'adresse unique d'un objet dans Active Direc
 Un DN est composé de **composantes** séparées par des virgules, lues **de gauche à droite du plus spécifique au plus général** :
 
 ```
-OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab
+OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 ```
 
 | Composante | Signification | Exemple |
@@ -110,8 +110,8 @@ OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC
 Par exemple, pour placer un utilisateur dans l'OU `boulangerie` :
 
 ```
-Hiérarchie visuelle :         fournil → Utilisateurs → Laboratoire → fabrication → boulangerie
-DN LDAP (inversé) :           OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab
+Hiérarchie visuelle :         Fournil → Utilisateurs → Laboratoire → fabrication → boulangerie
+DN LDAP (inversé) :           OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 ```
 
 C'est cette inversion qui rend parfois les DN difficiles à lire pour les débutants, mais c'est la convention standard du protocole LDAP.
@@ -262,7 +262,7 @@ function New-OUIfNotExists {
 | Paramètre | Type | Description | Exemple |
 |-----------|------|-------------|---------|
 | `$ouName` | `[string]` | Nom de l'OU à créer | `"Laboratoire"` |
-| `$parentPath` | `[string]` | DN LDAP du conteneur parent sous lequel créer l'OU | `"OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"` |
+| `$parentPath` | `[string]` | DN LDAP du conteneur parent sous lequel créer l'OU | `"OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"` |
 
 #### Explication pas à pas
 
@@ -272,7 +272,7 @@ function New-OUIfNotExists {
 $ouPath = "OU=$ouName,$parentPath"
 ```
 
-Le DN de la nouvelle OU est construit en préfixant `OU=<nom>` devant le chemin parent. Par exemple, si `$ouName = "Laboratoire"` et `$parentPath = "OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"`, alors `$ouPath = "OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"`.
+Le DN de la nouvelle OU est construit en préfixant `OU=<nom>` devant le chemin parent. Par exemple, si `$ouName = "Laboratoire"` et `$parentPath = "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"`, alors `$ouPath = "OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"`.
 
 **Étape 2 -- Vérification du cache :**
 
@@ -320,10 +320,10 @@ Pour créer manuellement l'OU `Laboratoire` sous `Utilisateurs` :
 
 ```powershell
 # Vérifier si l'OU existe
-Get-ADOrganizationalUnit -LDAPFilter "(distinguishedName=OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab)"
+Get-ADOrganizationalUnit -LDAPFilter "(distinguishedName=OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab)"
 
 # Si elle n'existe pas, la créer
-New-ADOrganizationalUnit -Name "Laboratoire" -Path "OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"
+New-ADOrganizationalUnit -Name "Laboratoire" -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
 ---
@@ -370,7 +370,7 @@ function New-GroupIfNotExists {
 |-----------|------|-------------|---------|
 | `$groupName` | `[string]` | Nom du groupe à créer | `"G_Laboratoire_fabrication"` |
 | `$groupScope` | `[string]` | Étendue du groupe : `"Global"` ou `"DomainLocal"` | `"Global"` |
-| `$path` | `[string]` | DN de l'OU dans laquelle créer le groupe | `"OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab"` |
+| `$path` | `[string]` | DN de l'OU dans laquelle créer le groupe | `"OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"` |
 | `$description` | `[string]` | Description du groupe (texte libre) | `"Groupe global pour G_Laboratoire_fabrication"` |
 
 #### Explication pas à pas
@@ -427,13 +427,13 @@ Dans notre script, les groupes suivent une convention de nommage stricte :
 
 ```powershell
 # Vérifier si le groupe existe
-Get-ADGroup -Filter { Name -eq "G_Laboratoire_fabrication" } -SearchBase "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab"
+Get-ADGroup -Filter { Name -eq "G_Laboratoire_fabrication" } -SearchBase "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # Si il n'existe pas, le créer
 New-ADGroup -Name "G_Laboratoire_fabrication" `
     -GroupCategory Security `
     -GroupScope Global `
-    -Path "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -Description "Groupe global pour G_Laboratoire_fabrication"
 ```
 
@@ -791,7 +791,7 @@ function New-UserIfNotExists {
 | `$upn` | `[string]` | User Principal Name, au format email | `"mlebrun@ad.fournil.lab"` |
 | `$password` | `[SecureString]` | Mot de passe initial sous forme sécurisée | Résultat de `ConvertTo-SecureString` |
 | `$description` | `[string]` | Description/fonction de l'utilisateur | `"Chef Boulanger"` |
-| `$path` | `[string]` | DN de l'OU dans laquelle créer l'utilisateur | `"OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"` |
+| `$path` | `[string]` | DN de l'OU dans laquelle créer l'utilisateur | `"OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"` |
 
 #### Explication pas à pas
 
@@ -831,7 +831,7 @@ New-ADUser `
 | `-Surname` | `$surname` | Le **nom de famille** de l'utilisateur. Correspond à l'attribut LDAP `sn` (surname). Par exemple `"Lebrun"`. |
 | `-SamAccountName` | `$samAccountName` | Le **nom de connexion pré-Windows 2000** (aussi appelé « login » ou « logon name »). C'est l'identifiant que l'utilisateur saisit pour se connecter sous la forme `DOMAINE\login`. **Limité à 20 caractères maximum** (contrainte historique de Windows NT). Par exemple `"mlebrun"`. Doit être unique dans tout le domaine. |
 | `-UserPrincipalName` | `$upn` | Le **nom principal de l'utilisateur** au format email (`login@domaine`). C'est l'identifiant de connexion moderne. Par exemple `"mlebrun@ad.fournil.lab"`. Doit être unique dans toute la forêt AD. Les utilisateurs peuvent se connecter avec ce format ou avec le format `DOMAINE\login`. |
-| `-Path` | `$path` | Le **DN de l'OU** dans laquelle créer l'utilisateur. Par exemple `"OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"`. |
+| `-Path` | `$path` | Le **DN de l'OU** dans laquelle créer l'utilisateur. Par exemple `"OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"`. |
 | `-AccountPassword` | `$password` | Le **mot de passe initial** du compte, sous forme de `[SecureString]`. Active Directory refuse les mots de passe en texte clair pour des raisons de sécurité. La conversion est faite avant l'appel via `ConvertTo-SecureString`. |
 | `-ChangePasswordAtLogon` | `$true` | Force l'utilisateur à **changer son mot de passe** lors de sa première connexion. C'est une bonne pratique de sécurité : le mot de passe initial (`a12345!`) est temporaire et connu de l'administrateur, il doit être remplacé par un mot de passe personnel. |
 | `-Enabled` | `$true` | **Active** le compte immédiatement après sa création. Par défaut, `New-ADUser` crée des comptes désactivés. Avec `$true`, l'utilisateur peut se connecter dès la création du compte. |
@@ -867,7 +867,7 @@ New-ADUser `
     -Surname "Lebrun" `
     -SamAccountName "mlebrun" `
     -UserPrincipalName "mlebrun@ad.fournil.lab" `
-    -Path "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab" `
+    -Path "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
     -AccountPassword $pwd `
     -ChangePasswordAtLogon $true `
     -Enabled $true `
@@ -880,7 +880,7 @@ New-ADUser `
 
 ### Objectif
 
-Créer l'OU racine `fournil` et les trois OUs de séparation par type d'objet : `Utilisateurs`, `Groupes` et `Ordinateurs`.
+Créer l'OU racine `Fournil` et les trois OUs de séparation par type d'objet : `Utilisateurs`, `Groupes` et `Ordinateurs`.
 
 ### Pourquoi séparer par type d'objet ?
 
@@ -894,7 +894,7 @@ C'est une **bonne pratique Microsoft** qui offre plusieurs avantages :
 ### Commandes exécutées
 
 ```powershell
-# OU racine : fournil
+# OU racine : Fournil
 $entreprisePath = New-OUIfNotExists -ouName "fournil" -parentPath "DC=ad,DC=fournil,DC=lab"
 
 # OUs de type d'objet sous fournil
@@ -907,7 +907,7 @@ $ordinateursBasePath  = New-OUIfNotExists -ouName "Ordinateurs"  -parentPath $en
 
 ```
 DC=ad,DC=fournil,DC=lab
-└── OU=fournil
+└── OU=Fournil
     ├── OU=Utilisateurs
     ├── OU=Groupes
     └── OU=Ordinateurs
@@ -917,10 +917,10 @@ DC=ad,DC=fournil,DC=lab
 
 | Variable | DN LDAP |
 |----------|---------|
-| `$entreprisePath` | `OU=fournil,DC=ad,DC=fournil,DC=lab` |
-| `$utilisateursBasePath` | `OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab` |
-| `$groupesBasePath` | `OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab` |
-| `$ordinateursBasePath` | `OU=Ordinateurs,OU=fournil,DC=ad,DC=fournil,DC=lab` |
+| `$entreprisePath` | `OU=Fournil,DC=ad,DC=fournil,DC=lab` |
+| `$utilisateursBasePath` | `OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab` |
+| `$groupesBasePath` | `OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab` |
+| `$ordinateursBasePath` | `OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab` |
 
 ---
 
@@ -959,7 +959,7 @@ Le script construit un tableau `$orgParts` à partir des colonnes `Entite`, `Pol
 Le script parcourt `$orgParts` et crée chaque OU en cascade :
 
 ```
-OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab
+OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 └── OU=Laboratoire
     └── OU=fabrication
         └── OU=boulangerie
@@ -968,9 +968,9 @@ OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab
 Commandes équivalentes :
 
 ```powershell
-New-OUIfNotExists -ouName "Laboratoire" -parentPath "OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"
-New-OUIfNotExists -ouName "fabrication" -parentPath "OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"
-New-OUIfNotExists -ouName "boulangerie" -parentPath "OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"
+New-OUIfNotExists -ouName "Laboratoire" -parentPath "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+New-OUIfNotExists -ouName "fabrication" -parentPath "OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+New-OUIfNotExists -ouName "boulangerie" -parentPath "OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
 **Étape 3 -- Création des OUs sous Groupes :**
@@ -978,7 +978,7 @@ New-OUIfNotExists -ouName "boulangerie" -parentPath "OU=fabrication,OU=Laboratoi
 Même hiérarchie sous l'OU `Groupes` :
 
 ```
-OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab
+OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab
 └── OU=Laboratoire
     └── OU=fabrication
         └── OU=boulangerie
@@ -1163,10 +1163,10 @@ $ouParts = @(
     "OU=fabrication",          # Pole
     "OU=Laboratoire",          # Entite
     "OU=Utilisateurs",         # Branche type
-    "OU=fournil"               # OU racine
+    "OU=Fournil"               # OU racine
 )
 
-$userPath = "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"
+$userPath = "OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
 Pour un utilisateur sans service (par exemple `jduval` dans `qualite-hygiene`) :
@@ -1176,10 +1176,10 @@ $ouParts = @(
     "OU=qualite-hygiene",      # Pole (pas de service)
     "OU=Laboratoire",          # Entite
     "OU=Utilisateurs",
-    "OU=fournil"
+    "OU=Fournil"
 )
 
-$userPath = "OU=qualite-hygiene,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab"
+$userPath = "OU=qualite-hygiene,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
 **Étape 2 -- Conversion du mot de passe et création de l'utilisateur :**
@@ -1224,20 +1224,20 @@ Après l'exécution du script, voici les commandes pour valider le bon fonctionn
 ### Vérifier les OUs
 
 ```powershell
-# Lister toutes les OUs sous fournil
-Get-ADOrganizationalUnit -Filter * -SearchBase "OU=fournil,DC=ad,DC=fournil,DC=lab" |
+# Lister toutes les OUs sous Fournil
+Get-ADOrganizationalUnit -Filter * -SearchBase "OU=Fournil,DC=ad,DC=fournil,DC=lab" |
     Select-Object Name, DistinguishedName |
     Format-Table -AutoSize
 
 # Compter les OUs créées
-(Get-ADOrganizationalUnit -Filter * -SearchBase "OU=fournil,DC=ad,DC=fournil,DC=lab").Count
+(Get-ADOrganizationalUnit -Filter * -SearchBase "OU=Fournil,DC=ad,DC=fournil,DC=lab").Count
 ```
 
 ### Vérifier les utilisateurs
 
 ```powershell
-# Lister tous les utilisateurs sous fournil
-Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab" -Properties Description |
+# Lister tous les utilisateurs sous Fournil
+Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" -Properties Description |
     Select-Object SamAccountName, Name, Description, DistinguishedName |
     Format-Table -AutoSize
 
@@ -1249,12 +1249,12 @@ Get-ADUser -Identity "mlebrun" -Properties *
 
 ```powershell
 # Lister tous les groupes Global (G_)
-Get-ADGroup -Filter { Name -like "G_*" } -SearchBase "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" |
+Get-ADGroup -Filter { Name -like "G_*" } -SearchBase "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" |
     Select-Object Name, GroupScope |
     Format-Table -AutoSize
 
 # Lister tous les groupes DomainLocal (DL_)
-Get-ADGroup -Filter { Name -like "DL_*" } -SearchBase "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" |
+Get-ADGroup -Filter { Name -like "DL_*" } -SearchBase "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" |
     Select-Object Name, GroupScope |
     Format-Table -AutoSize
 ```
@@ -1346,8 +1346,8 @@ C'est exactement ce que fait le script : les valeurs sont passées en paramètre
 **Solution :** Vérifier que l'ordre est bien inversé par rapport à la hiérarchie visuelle :
 
 ```
-Hiérarchie visuelle :  fournil → Utilisateurs → Laboratoire → fabrication → boulangerie
-Chemin LDAP correct :  OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab
+Hiérarchie visuelle :  Fournil → Utilisateurs → Laboratoire → fabrication → boulangerie
+Chemin LDAP correct :  OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 ```
 
 ### Permission refusée (Access Denied)
@@ -1414,8 +1414,8 @@ Le mot de passe `a12345!` contient des minuscules, des chiffres et un caractère
 
 | Nom du groupe | Étendue | OU de création | Description |
 |---------------|---------|---------------|-------------|
-| `G_fournil` | Global | `OU=Groupes,OU=fournil,...` | Groupe global entreprise |
-| `G_Laboratoire` | Global | `OU=Laboratoire,OU=Groupes,OU=fournil,...` | Groupe global entité Laboratoire |
+| `G_fournil` | Global | `OU=Groupes,OU=Fournil,...` | Groupe global entreprise |
+| `G_Laboratoire` | Global | `OU=Laboratoire,OU=Groupes,OU=Fournil,...` | Groupe global entité Laboratoire |
 | `G_Laboratoire_fabrication` | Global | `OU=fabrication,OU=Laboratoire,OU=Groupes,...` | Groupe global pôle fabrication |
 | `G_Laboratoire_fabrication_boulangerie` | Global | `OU=boulangerie,OU=fabrication,...` | Groupe global service boulangerie |
 | `G_Laboratoire_fabrication_patisserie` | Global | `OU=patisserie,OU=fabrication,...` | Groupe global service patisserie |

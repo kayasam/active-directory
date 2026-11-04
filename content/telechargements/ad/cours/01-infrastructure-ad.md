@@ -58,13 +58,14 @@ Exemples d'OU pour Fournil :
 
 ```
 ad.fournil.lab
-├── OU=Fournil
-│   ├── OU=Direction
-│   ├── OU=Production
-│   ├── OU=Commercial
-│   └── OU=Support
-├── OU=Groupes
-└── OU=Ordinateurs
+└── OU=Fournil            ← OU racine de l'entreprise
+    ├── OU=Utilisateurs
+    │   ├── OU=Direction
+    │   ├── OU=Production
+    │   ├── OU=Commercial
+    │   └── OU=Support
+    ├── OU=Groupes
+    └── OU=Ordinateurs
 ```
 
 > [!WARNING]
@@ -212,10 +213,10 @@ Install-ADDSForest `
 | **DNS** | `dnsmgmt.msc` | Zone `ad.fournil.lab` créée avec enregistrements SRV |
 | **Observateur d'événements** | `eventvwr.msc` | Journal *Directory Service* : événement **1000** (« démarrage d'AD DS terminé ») |
 
-![ad-tp01-dsa-conteneurs](https://cours.kaya.ovh/active-directory/assets/supports/f2eb37ba29f238575f9b.png)
-*`dsa.msc` juste après la promotion : les conteneurs par défaut (dossiers simples) et la seule OU créée d'office, `Domain Controllers` (icône d'OU).*
+![ad-tp01-dsa-conteneurs](https://cours.kaya.ovh/active-directory/assets/supports/88d5d0bd1461c9997ab6.png)
+*`dsa.msc` : les conteneurs par défaut (dossiers simples) et les OU (icône d'OU). Juste après la promotion, seule `Domain Controllers` existe ; `Administration` et `Fournil` sont créées aux chapitres 02 et 08.*
 
-![ad-tp01-dns-zone](https://cours.kaya.ovh/active-directory/assets/supports/db17a688dd44c866a175.png)
+![ad-tp01-dns-zone](https://cours.kaya.ovh/active-directory/assets/supports/d6252ced121313fa4f6a.png)
 *`dnsmgmt.msc` : la zone `ad.fournil.lab` est créée par la promotion, avec les dossiers `_tcp`, `_udp`, `_sites`, `_msdcs` qui contiennent les enregistrements SRV.*
 
 ### Via PowerShell

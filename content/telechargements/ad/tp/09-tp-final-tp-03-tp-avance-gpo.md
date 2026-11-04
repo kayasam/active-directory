@@ -55,19 +55,19 @@ Les utilisateurs du Fournil ont un dossier personnel accessible via `\\ad.fourni
 
 Dans votre script de déploiement, écrivez le code qui :
 1. Crée une GPO nommée `GPO_Emplacement_Home` (si elle n'existe pas)
-2. La lie à l'OU `OU=fournil,DC=ad,DC=fournil,DC=lab` (si le lien n'existe pas)
+2. La lie à l'OU `OU=Fournil,DC=ad,DC=fournil,DC=lab` (si le lien n'existe pas)
 
 ### Questions
 
 - Quelle est la différence entre **créer** une GPO (`New-GPO`) et la **lier** (`New-GPLink`) ?
-- Pourquoi lier à `OU=fournil` et pas directement à `OU=Utilisateurs,OU=fournil` ?
+- Pourquoi lier à `OU=Fournil` et pas directement à `OU=Utilisateurs,OU=Fournil` ?
 - Comment vérifier si la GPO est déjà liée à une OU ?
 
 ### Vérification
 
 ```powershell
 Get-GPO -Name "GPO_Emplacement_Home" | Select-Object DisplayName, Id
-Get-GPInheritance -Target "OU=fournil,DC=ad,DC=fournil,DC=lab" |
+Get-GPInheritance -Target "OU=Fournil,DC=ad,DC=fournil,DC=lab" |
     Select-Object -ExpandProperty GpoLinks
 ```
 

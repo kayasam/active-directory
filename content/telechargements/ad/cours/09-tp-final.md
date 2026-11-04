@@ -110,7 +110,7 @@ Le Fournil est une boulangerie artisanale avec 30 employés répartis en 2 entit
 |---|------|---------|
 | 0 | [Index GPO Manuel](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-00-index) | Vue d'ensemble des 5 phases |
 | 1 | [GPO-01-Script-Connexion](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-01-script-connexion) | Le script de connexion (Shell.Application, Desktop.ini, CLSID) |
-| 2 | [GPO-02-Creer-Lier-GPO](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-02-creer-lier-gpo) | Créer et lier la GPO à l'OU fournil |
+| 2 | [GPO-02-Creer-Lier-GPO](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-02-creer-lier-gpo) | Créer et lier la GPO à l'OU Fournil |
 | 3 | [GPO-03-Deploiement-SYSVOL](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-03-deploiement-sysvol) | Copier le script dans SYSVOL |
 | 4 | [GPO-04-Enregistrer-Script](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-04-enregistrer-script) | psscripts.ini pour le script de connexion |
 | 5 | [GPO-05-Verification-Depannage](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-05-verification-depannage) | Tests et dépannage |

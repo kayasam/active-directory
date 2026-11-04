@@ -5,7 +5,7 @@ Import-Module GroupPolicy
 # Configuration
 # =============================================================================
 $gpoName = "GPO_Emplacement_Home"
-$ouTarget = "OU=fournil,DC=ad,DC=fournil,DC=lab"
+$ouTarget = "OU=Fournil,DC=ad,DC=fournil,DC=lab"
 $domainName = "ad.fournil.lab"
 $scriptName = "Set-NetworkLocation.ps1"
 

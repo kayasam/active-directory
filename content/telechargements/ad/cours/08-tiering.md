@@ -77,38 +77,65 @@ Le chapitre 06 posait la première règle : un compte d'administration séparé 
 
 ## 4. Ranger l'annuaire par niveau
 
-### Les comptes et groupes d'administration
+### Une OU Administration à côté de Fournil
 
-On crée une OU dédiée, séparée des utilisateurs :
+Les comptes, groupes et machines d'administration vont dans une OU dédiée, `Administration`, placée **directement sous le domaine**, au même niveau que l'OU racine `Fournil`. Elle n'est **pas** rangée sous `Fournil`.
 
 ```
 ad.fournil.lab
-├── OU=Administration
-│   ├── OU=Tier0    ← adm0.*, GG_Tier0_Admins
-│   ├── OU=Tier1    ← adm1.*, GG_Tier1_Admins
-│   └── OU=Tier2    ← adm2.*, GG_Tier2_Admins
-├── OU=Utilisateurs
-└── OU=Ordinateurs
-    ├── OU=Postes     ← machines Tier 2
-    └── OU=Serveurs   ← machines Tier 1
+├── OU=Administration           ← hors de Fournil : ni ses délégations, ni ses GPO
+│   ├── OU=Tier0
+│   │   ├── OU=Comptes          ← adm0.*
+│   │   ├── OU=Groupes          ← GG_Tier0_Admins
+│   │   └── OU=Services         ← comptes de service Tier 0 (svc_backup)
+│   ├── OU=Tier1
+│   │   ├── OU=Comptes          ← adm1.*
+│   │   ├── OU=Groupes          ← GG_Tier1_Admins
+│   │   ├── OU=Serveurs         ← serveurs membres (SRV-FIC01…)
+│   │   └── OU=Services         ← comptes de service des applications
+│   └── OU=Tier2
+│       ├── OU=Comptes          ← adm2.*
+│       └── OU=Groupes          ← GG_Tier2_Admins
+├── OU=Fournil                  ← objets métier (chapitres 02 à 07)
+│   ├── OU=Utilisateurs
+│   ├── OU=Groupes
+│   └── OU=Ordinateurs
+│       └── OU=Postes           ← machines Tier 2
+└── OU=Domain Controllers       ← DC : Tier 0
 ```
 
-Les DC restent dans `OU=Domain Controllers` : c'est le Tier 0.
+Pourquoi pas sous `OU=Fournil` ? Parce que **tout ce qui est posé sur une OU est hérité par ses sous-OUs** :
+- **délégations** : un droit « réinitialiser les mots de passe » donné sur `OU=Fournil` permettrait de réinitialiser `adm0.sysinfo`, et donc de devenir Tier 0 ;
+- **GPO** : les GPO des utilisateurs et des postes s'appliqueraient aussi aux comptes et aux serveurs d'administration.
+
+En séparant les deux branches dès la racine, l'héritage ne peut jamais faire passer un droit métier vers l'administration.
+
+> [!NOTE] Les serveurs quittent `OU=Fournil`
+> Au chapitre 02, on avait prévu `OU=Serveurs` sous `Fournil/Ordinateurs`. Avec le tiering, les serveurs membres sont des machines Tier 1 : ils passent dans `Administration/Tier1/Serveurs`. De même, `svc_backup` (chapitre 06) sauvegarde les DC : c'est un compte Tier 0, il passe dans `Administration/Tier0/Services`.
 
 ```powershell
-New-ADOrganizationalUnit -Name "Administration" -Path "DC=ad,DC=fournil,DC=lab"
+$domaine = "DC=ad,DC=fournil,DC=lab"
+$admin   = "OU=Administration,$domaine"
+
+New-ADOrganizationalUnit -Name "Administration" -Path $domaine
 foreach ($t in 0,1,2) {
-    New-ADOrganizationalUnit -Name "Tier$t" -Path "OU=Administration,DC=ad,DC=fournil,DC=lab"
+    New-ADOrganizationalUnit -Name "Tier$t" -Path $admin
+    foreach ($sous in "Comptes","Groupes") {
+        New-ADOrganizationalUnit -Name $sous -Path "OU=Tier$t,$admin"
+    }
     New-ADGroup -Name "GG_Tier${t}_Admins" -GroupScope Global -GroupCategory Security `
-                -Path "OU=Tier$t,OU=Administration,DC=ad,DC=fournil,DC=lab"
+                -Path "OU=Groupes,OU=Tier$t,$admin"
 }
+New-ADOrganizationalUnit -Name "Services" -Path "OU=Tier0,$admin"
+New-ADOrganizationalUnit -Name "Serveurs" -Path "OU=Tier1,$admin"
+New-ADOrganizationalUnit -Name "Services" -Path "OU=Tier1,$admin"
 
 # Seul le groupe Tier 0 donne les droits d'administration du domaine
 Add-ADGroupMember -Identity "Admins du domaine" -Members "GG_Tier0_Admins"
 ```
 
 > [!WARNING] Délégation sur l'OU Administration
-> Qui peut modifier un objet de `OU=Tier0` (réinitialiser `adm0.sysinfo`, ajouter un membre à `GG_Tier0_Admins`) **devient** Tier 0. La délégation du support (chapitre 02) porte sur `OU=Utilisateurs` : elle ne doit **jamais** s'étendre à `OU=Administration`.
+> Qui peut modifier un objet de `OU=Tier0` (réinitialiser `adm0.sysinfo`, ajouter un membre à `GG_Tier0_Admins`) **devient** Tier 0. La délégation du support (chapitre 02) porte sur `OU=Utilisateurs,OU=Fournil` : comme `Administration` n'est pas sous `Fournil`, elle ne peut **pas** s'y étendre par héritage. On ne pose jamais de délégation à la racine du domaine.
 
 ---
 
@@ -133,8 +160,8 @@ Les connexions **réseau** (accès à un partage, console MMC à distance) ne so
 
 | GPO | Liée à | Interdit la connexion de | Donne l'admin local à |
 |---|---|---|---|
-| `GPO_Tier2_Postes` | `OU=Postes` | `GG_Tier0_Admins`, `GG_Tier1_Admins`, `Admins du domaine` | `GG_Tier2_Admins` |
-| `GPO_Tier1_Serveurs` | `OU=Serveurs` | `GG_Tier0_Admins`, `GG_Tier2_Admins`, `Admins du domaine` | `GG_Tier1_Admins` |
+| `GPO_Tier2_Postes` | `OU=Postes,OU=Ordinateurs,OU=Fournil` | `GG_Tier0_Admins`, `GG_Tier1_Admins`, `Admins du domaine` | `GG_Tier2_Admins` |
+| `GPO_Tier1_Serveurs` | `OU=Serveurs,OU=Tier1,OU=Administration` | `GG_Tier0_Admins`, `GG_Tier2_Admins`, `Admins du domaine` | `GG_Tier1_Admins` |
 
 L'administration locale se donne avec les **Groupes restreints** :
 `Paramètres de sécurité → Groupes restreints → Ajouter un groupe → GG_Tier2_Admins` → section **« Ce groupe est membre de »** → `Administrateurs`.
@@ -149,12 +176,12 @@ L'administration locale se donne avec les **Groupes restreints** :
 
 Un compte Tier 0 qui tente d'ouvrir une session sur `PC-PROD-01` est refusé, même avec le bon mot de passe :
 
-![ad-tp08-refus-adm0-poste](https://cours.kaya.ovh/active-directory/assets/supports/a08841ad458f5bf050dd.png)
-*« The sign-in method you're trying to use isn't allowed » (« La méthode de connexion que vous essayez d'utiliser n'est pas autorisée ») : c'est le droit « Interdire l'ouverture d'une session locale ».*
+![ad-tp08-refus-adm0-poste](https://cours.kaya.ovh/active-directory/assets/supports/12c7f92c1b03c78f90c6.png)
+*« La méthode de connexion que vous tentez d’utiliser n’est pas autorisée » : c'est le droit « Interdire l'ouverture d'une session locale ».*
 
 Le compte Tier 2, lui, ouvre sa session et se retrouve administrateur du poste par le groupe `GG_Tier2_Admins` :
 
-![ad-tp08-adm2-admin-poste](https://cours.kaya.ovh/active-directory/assets/supports/6cf313b342b83f23d6c1.png)
+![ad-tp08-adm2-admin-poste](https://cours.kaya.ovh/active-directory/assets/supports/e55eea19076b233a64ed.png)
 
 > [!NOTE] L'interdiction vise aussi PowerShell Direct
 > Une fois la GPO appliquée, même `Invoke-Command -VMName` (PowerShell Direct depuis l'hôte Hyper-V) est refusé au compte Administrateur du domaine sur le poste : *« Les informations d'identification ne sont pas valides »*. Pour administrer les postes, on utilise un compte Tier 2.
@@ -183,8 +210,8 @@ Get-ADGroupMember -Identity "Protected Users"
 > - Une connexion **par adresse IP** (`\\192.168.3.10\partage`) passe en NTLM : elle échoue pour un membre de `Protected Users`. Il faut utiliser le **nom** (`\\DC01\partage`).
 > - Garder au moins un compte de secours **hors** du groupe.
 
-![ad-tp08-protected-users-ntlm](https://cours.kaya.ovh/active-directory/assets/supports/a759f3537ea06bad89fd.png)
-*`net use` avec `adm0.sysinfo` (membre de Protected Users) : par le **nom** `\\DC01`, ça passe (Kerberos). Par l'**adresse IP**, on obtient « System error 1327 — Account restrictions are preventing this user from signing in » (NTLM refusé).*
+![ad-tp08-protected-users-ntlm](https://cours.kaya.ovh/active-directory/assets/supports/92485545f07ab6cc47a5.png)
+*`net use` avec `adm0.sysinfo` (membre de Protected Users) : par le **nom** `\\DC01`, ça passe (Kerberos). Par l'**adresse IP**, on obtient « L’erreur système 1327 s’est produite — Des restrictions de compte d’utilisateur empêchent cet utilisateur de se connecter » (NTLM refusé).*
 
 - [Groupe Protected Users — Microsoft Learn](https://learn.microsoft.com/fr-fr/windows-server/security/credentials-protection-and-management/protected-users-security-group)
 
@@ -206,10 +233,10 @@ Si tous les postes ont le **même** mot de passe pour le compte `Administrateur`
 Update-LapsADSchema
 
 # 2. Autoriser les ordinateurs de l'OU à écrire leur propre mot de passe
-Set-LapsADComputerSelfPermission -Identity "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+Set-LapsADComputerSelfPermission -Identity "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # 3. Autoriser le support Tier 2 à lire les mots de passe des postes
-Set-LapsADReadPasswordPermission -Identity "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab" `
+Set-LapsADReadPasswordPermission -Identity "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
                                  -AllowedPrincipals "FOURNIL\GG_Tier2_Admins"
 ```
 
@@ -241,7 +268,7 @@ Get-LapsADPassword -Identity "PC-PROD-01" -AsPlainText
 Reset-LapsPassword            # à lancer sur le poste concerné
 ```
 
-![ad-tp08-laps-adm2](https://cours.kaya.ovh/active-directory/assets/supports/88d6b2e1f4fca4aa322c.png)
+![ad-tp08-laps-adm2](https://cours.kaya.ovh/active-directory/assets/supports/5bcb9f101e23122f8817.png)
 *Lecture du mot de passe par `adm2.jrenard` : `Source : EncryptedPassword`, `DecryptionStatus : Success`, `AuthorizedDecryptor : FOURNIL\GG_Tier2_Admins`. La date d'expiration correspond aux 30 jours de la GPO.*
 
 Sur le poste, le journal **Microsoft → Windows → LAPS → Operational** trace chaque rotation : **10018** (*LAPS successfully updated Active Directory with the new password*), puis **10020** (*… updated the local admin account with the new password*).
@@ -258,7 +285,7 @@ Ces mesures complètent le tiering dans les grandes organisations. Il suffit de 
 
 | Mesure | Principe |
 |---|---|
-| **PAW** (*Privileged Access Workstation*) | Un poste dédié à l'administration Tier 0, sans mail ni navigation |
+| **PAW** (*Privileged Access Workstation*) | Un poste dédié à l'administration d'un niveau, sans mail ni navigation. Il se range dans une sous-OU `PAW` du niveau concerné (`OU=PAW,OU=Tier0,OU=Administration`) |
 | **Stratégies et silos d'authentification** | Restreindre côté DC (et non plus côté machine) où un compte peut s'authentifier |
 | **Comptes de service gérés (gMSA)** | Mot de passe de compte de service géré automatiquement par AD |
 | **Audit de l'annuaire** | Outils d'audit comme **PingCastle** ou **ORADAD** (ANSSI) pour mesurer l'exposition du Tier 0 |
@@ -270,6 +297,7 @@ Ces mesures complètent le tiering dans les grandes organisations. Il suffit de 
 > - Se connecter **laisse des identifiants** sur la machine : un compte puissant ne va jamais sur une machine moins protégée.
 > - **Tier 0** = ce qui contrôle le domaine (DC, AD, hyperviseurs et sauvegardes des DC). **Tier 1** = serveurs. **Tier 2** = postes.
 > - **Un compte par niveau** : `adm0.`, `adm1.`, `adm2.`, et un compte quotidien sans droits.
+> - L'OU **`Administration`** se place **à côté** de l'OU racine `Fournil`, jamais dessous : les délégations et GPO métier ne doivent pas l'atteindre par héritage.
 > - Les **GPO d'interdiction d'ouverture de session** font respecter la règle, les **groupes restreints** (« Ce groupe est membre de ») donnent l'admin local au bon niveau.
 > - **Protected Users** protège les comptes d'administration humains (pas les comptes de service).
 > - **Windows LAPS** donne un mot de passe administrateur local unique à chaque machine.

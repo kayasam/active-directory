@@ -29,7 +29,7 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 
 ## Prérequis
 
-- `DC01` (`192.168.3.10`) et `PC-PROD-01` joint au domaine, dans `OU=Postes,OU=Ordinateurs` (TP 03)
+- `DC01` (`192.168.3.10`) et `PC-PROD-01` joint au domaine, dans `OU=Postes,OU=Ordinateurs,OU=Fournil` (TP 03)
 - Stratégie de mot de passe du TP 06 en place : **10 caractères minimum**. Dans ce TP, les comptes d'administration utilisent `Adm!Fournil@2026`.
 
 ---
@@ -80,25 +80,46 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 
 ## Partie B — Comptes et groupes par niveau (20 min)
 
-**B1.** Crée l'OU `Administration` à la racine du domaine, avec trois sous-OU `Tier0`, `Tier1` et `Tier2`.
+**B1.** Crée l'OU `Administration` **directement sous le domaine**, à côté de `OU=Fournil` (et non dessous), avec l'arborescence suivante :
+
+```
+OU=Administration
+├── OU=Tier0  → Comptes, Groupes, Services
+├── OU=Tier1  → Comptes, Groupes, Serveurs, Services
+└── OU=Tier2  → Comptes, Groupes
+```
+
+Pourquoi ne pas la ranger sous `OU=Fournil` ?
 
 > [!success]- Afficher la correction — B1
 > ```powershell
-> New-ADOrganizationalUnit -Name "Administration" -Path "DC=ad,DC=fournil,DC=lab"
+> $domaine = "DC=ad,DC=fournil,DC=lab"
+> $admin   = "OU=Administration,$domaine"
+>
+> New-ADOrganizationalUnit -Name "Administration" -Path $domaine
 > foreach ($t in 0,1,2) {
->     New-ADOrganizationalUnit -Name "Tier$t" -Path "OU=Administration,DC=ad,DC=fournil,DC=lab"
+>     New-ADOrganizationalUnit -Name "Tier$t" -Path $admin
+>     foreach ($sous in "Comptes","Groupes") {
+>         New-ADOrganizationalUnit -Name $sous -Path "OU=Tier$t,$admin"
+>     }
 > }
-> Get-ADOrganizationalUnit -SearchBase "OU=Administration,DC=ad,DC=fournil,DC=lab" -Filter * |
+> New-ADOrganizationalUnit -Name "Services" -Path "OU=Tier0,$admin"
+> New-ADOrganizationalUnit -Name "Serveurs" -Path "OU=Tier1,$admin"
+> New-ADOrganizationalUnit -Name "Services" -Path "OU=Tier1,$admin"
+>
+> Get-ADOrganizationalUnit -SearchBase $admin -Filter * |
 >     Select-Object Name, DistinguishedName
 > ```
+>
+> **Pourquoi à côté de `Fournil` ?** Délégations et GPO sont **héritées** par les sous-OUs. Sous `OU=Fournil`, une délégation métier (par exemple « réinitialiser les mots de passe » donnée sur toute l'entreprise) permettrait de réinitialiser `adm0.sysinfo`, donc de prendre le Tier 0. Et les GPO des utilisateurs et des postes s'appliqueraient aussi aux comptes d'administration. Deux branches séparées dès la racine : aucun héritage possible de l'une vers l'autre.
 
-**B2.** Crée dans chaque sous-OU le groupe global de sécurité correspondant : `GG_Tier0_Admins`, `GG_Tier1_Admins`, `GG_Tier2_Admins`.
+**B2.** Crée dans l'OU `Groupes` de chaque niveau le groupe global de sécurité correspondant : `GG_Tier0_Admins`, `GG_Tier1_Admins`, `GG_Tier2_Admins`.
 
 > [!success]- Afficher la correction — B2
 > ```powershell
 > foreach ($t in 0,1,2) {
 >     New-ADGroup -Name "GG_Tier${t}_Admins" -GroupScope Global -GroupCategory Security `
->                 -Path "OU=Tier$t,OU=Administration,DC=ad,DC=fournil,DC=lab"
+>                 -Path "OU=Groupes,OU=Tier$t,OU=Administration,DC=ad,DC=fournil,DC=lab"
 > }
 > ```
 > `${t}` (avec accolades) est nécessaire : sans elles, PowerShell chercherait une variable `$t_Admins`.
@@ -107,9 +128,9 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 
 | Compte | OU | Groupe |
 |---|---|---|
-| `adm0.sysinfo` | `Tier0` | `GG_Tier0_Admins` |
-| `adm1.sysinfo` | `Tier1` | `GG_Tier1_Admins` |
-| `adm2.jrenard` | `Tier2` | `GG_Tier2_Admins` |
+| `adm0.sysinfo` | `Tier0/Comptes` | `GG_Tier0_Admins` |
+| `adm1.sysinfo` | `Tier1/Comptes` | `GG_Tier1_Admins` |
+| `adm2.jrenard` | `Tier2/Comptes` | `GG_Tier2_Admins` |
 
 > [!success]- Afficher la correction — B3
 > ```powershell
@@ -122,7 +143,7 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 > foreach ($c in $comptes) {
 >     New-ADUser -Name $c.Nom -SamAccountName $c.Nom `
 >                -UserPrincipalName "$($c.Nom)@ad.fournil.lab" `
->                -Path "OU=Tier$($c.Tier),OU=Administration,DC=ad,DC=fournil,DC=lab" `
+>                -Path "OU=Comptes,OU=Tier$($c.Tier),OU=Administration,DC=ad,DC=fournil,DC=lab" `
 >                -AccountPassword $pw -Enabled $true
 >     Add-ADGroupMember -Identity "GG_Tier$($c.Tier)_Admins" -Members $c.Nom
 > }
@@ -151,11 +172,30 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 > Disable-ADAccount -Identity "adm.sysinfo"
 > ```
 
+**B6.** Range les objets d'administration qui traînent encore sous `OU=Fournil` :
+- `svc_backup` (TP 06), classé Tier 0 en A1, va dans `Tier0/Services` ;
+- les OUs `OU=Services,OU=Fournil` et `OU=Serveurs,OU=Ordinateurs,OU=Fournil`, désormais vides, sont supprimées : les serveurs membres iront dans `Tier1/Serveurs`.
+
+> [!success]- Afficher la correction — B6
+> ```powershell
+> Get-ADUser svc_backup |
+>     Move-ADObject -TargetPath "OU=Services,OU=Tier0,OU=Administration,DC=ad,DC=fournil,DC=lab"
+>
+> foreach ($ou in "OU=Services,OU=Fournil,DC=ad,DC=fournil,DC=lab",
+>                 "OU=Serveurs,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab") {
+>     Set-ADOrganizationalUnit -Identity $ou -ProtectedFromAccidentalDeletion $false
+>     Remove-ADOrganizationalUnit -Identity $ou -Confirm:$false
+> }
+> ```
+> Les OUs sont protégées contre la suppression accidentelle (TP 02, E1) : il faut lever la protection avant de les supprimer. Si `Remove-ADOrganizationalUnit` signale que l'OU n'est pas vide, un objet y est resté : le déplacer d'abord.
+>
+> Résultat : `OU=Fournil` ne contient plus que des objets **métier** (utilisateurs, groupes, postes). Tout ce qui sert à administrer est sous `OU=Administration`.
+
 ---
 
 ## Partie C — Faire respecter la règle (30 min)
 
-**C1.** Crée la GPO `GPO_Tier2_Postes`, liée à `OU=Postes,OU=Ordinateurs`. Dans **Attribution des droits utilisateur**, ajoute `GG_Tier0_Admins`, `GG_Tier1_Admins` et `Admins du domaine` aux quatre droits suivants :
+**C1.** Crée la GPO `GPO_Tier2_Postes`, liée à `OU=Postes,OU=Ordinateurs,OU=Fournil`. Dans **Attribution des droits utilisateur**, ajoute `GG_Tier0_Admins`, `GG_Tier1_Admins` et `Admins du domaine` aux quatre droits suivants :
 - Interdire l'ouverture d'une session locale
 - Interdire l'ouverture de session par les services Bureau à distance
 - Interdire l'ouverture de session en tant que tâche
@@ -164,7 +204,7 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 > [!success]- Afficher la correction — C1
 > ```powershell
 > New-GPO -Name "GPO_Tier2_Postes" |
->     New-GPLink -Target "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+>     New-GPLink -Target "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 > Puis dans `gpmc.msc` → clic droit sur `GPO_Tier2_Postes` → **Modifier** :
 >
@@ -212,22 +252,22 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 Que se passe-t-il dans chaque cas ? `adm2.jrenard` est-il administrateur du poste ?
 
 > [!success]- Afficher la correction — C4
-> - `adm0.sysinfo` : ouverture de session **refusée** avec le message *« La méthode de connexion que vous essayez d'utiliser n'est pas autorisée »*. Le mot de passe est pourtant correct : c'est le droit **Interdire l'ouverture d'une session locale** qui joue.
+> - `adm0.sysinfo` : ouverture de session **refusée** avec le message *« La méthode de connexion que vous tentez d’utiliser n’est pas autorisée »*. Le mot de passe est pourtant correct : c'est le droit **Interdire l'ouverture d'une session locale** qui joue.
 >
-> ![ad-tp08-refus-adm0-poste](https://cours.kaya.ovh/active-directory/assets/supports/a08841ad458f5bf050dd.png)
+> ![ad-tp08-refus-adm0-poste](https://cours.kaya.ovh/active-directory/assets/supports/12c7f92c1b03c78f90c6.png)
 >
 > - `adm2.jrenard` : la session s'ouvre. `whoami /groups` affiche `BUILTIN\Administrateurs` et `FOURNIL\GG_Tier2_Admins` : il est bien administrateur du poste, grâce au groupe restreint.
 >
-> ![ad-tp08-adm2-admin-poste](https://cours.kaya.ovh/active-directory/assets/supports/6cf313b342b83f23d6c1.png)
+> ![ad-tp08-adm2-admin-poste](https://cours.kaya.ovh/active-directory/assets/supports/e55eea19076b233a64ed.png)
 >
 > Le support peut donc administrer les postes sans jamais y apporter un compte capable de prendre le domaine.
 
-**C5.** Crée de la même façon la GPO `GPO_Tier1_Serveurs`, liée à `OU=Serveurs,OU=Ordinateurs` : elle interdit la connexion de `GG_Tier0_Admins`, `GG_Tier2_Admins` et `Admins du domaine`, et rend `GG_Tier1_Admins` administrateur local.
+**C5.** Crée de la même façon la GPO `GPO_Tier1_Serveurs`, liée à `OU=Serveurs,OU=Tier1,OU=Administration` : elle interdit la connexion de `GG_Tier0_Admins`, `GG_Tier2_Admins` et `Admins du domaine`, et rend `GG_Tier1_Admins` administrateur local.
 
 > [!success]- Afficher la correction — C5
 > ```powershell
 > New-GPO -Name "GPO_Tier1_Serveurs" |
->     New-GPLink -Target "OU=Serveurs,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+>     New-GPLink -Target "OU=Serveurs,OU=Tier1,OU=Administration,DC=ad,DC=fournil,DC=lab"
 > ```
 > Mêmes réglages qu'en C1 et C2, avec :
 > - dans les quatre droits « Interdire… » : `GG_Tier0_Admins`, `GG_Tier2_Admins`, `Admins du domaine` ;
@@ -268,9 +308,9 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 
 > [!success]- Afficher la correction — D2
 > - `\\DC01\IPC$` : **réussit**. Avec un **nom**, Windows utilise **Kerberos**.
-> - `\\192.168.3.10\IPC$` : **échoue** avec *« System error 1327 — Account restrictions are preventing this user from signing in »*. Avec une **adresse IP**, Kerberos est impossible (il faut un nom de service), Windows se rabat sur **NTLM**, et NTLM est interdit aux membres de `Protected Users`.
+> - `\\192.168.3.10\IPC$` : **échoue** avec *« L’erreur système 1327 s’est produite — Des restrictions de compte d’utilisateur empêchent cet utilisateur de se connecter »*. Avec une **adresse IP**, Kerberos est impossible (il faut un nom de service), Windows se rabat sur **NTLM**, et NTLM est interdit aux membres de `Protected Users`.
 >
-> ![ad-tp08-protected-users-ntlm](https://cours.kaya.ovh/active-directory/assets/supports/a759f3537ea06bad89fd.png)
+> ![ad-tp08-protected-users-ntlm](https://cours.kaya.ovh/active-directory/assets/supports/92485545f07ab6cc47a5.png)
 >
 > Le même `net use` par IP avec `adm2.jrenard` (hors Protected Users) réussit : c'est bien l'appartenance au groupe qui bloque NTLM.
 >
@@ -302,22 +342,22 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 >
 > Après coup, l'onglet **LAPS** apparaît dans les propriétés des ordinateurs, dans `dsa.msc`.
 
-**E2.** Autorise les ordinateurs de `OU=Postes,OU=Ordinateurs` à enregistrer leur propre mot de passe LAPS.
+**E2.** Autorise les ordinateurs de `OU=Postes,OU=Ordinateurs,OU=Fournil` à enregistrer leur propre mot de passe LAPS.
 
 > [!success]- Afficher la correction — E2
 > ```powershell
-> Set-LapsADComputerSelfPermission -Identity "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+> Set-LapsADComputerSelfPermission -Identity "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 > Chaque ordinateur reçoit le droit d'écrire **son propre** mot de passe dans **son propre** objet AD, et rien d'autre.
 
-**E3.** Crée la GPO `GPO_LAPS_Postes`, liée à `OU=Postes,OU=Ordinateurs`, avec les paramètres :
+**E3.** Crée la GPO `GPO_LAPS_Postes`, liée à `OU=Postes,OU=Ordinateurs,OU=Fournil`, avec les paramètres :
 - Configurer le répertoire de sauvegarde des mots de passe : **Active Directory**
 - Paramètres du mot de passe : complexité maximale, **16** caractères, **30** jours
 
 > [!success]- Afficher la correction — E3
 > ```powershell
 > New-GPO -Name "GPO_LAPS_Postes" |
->     New-GPLink -Target "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+>     New-GPLink -Target "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 > `Configuration ordinateur → Stratégies → Modèles d'administration → Système → LAPS` :
 >
@@ -380,7 +420,7 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 >
 > **1. Le droit de lecture** sur l'attribut, limité à `OU=Postes` :
 > ```powershell
-> Set-LapsADReadPasswordPermission -Identity "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab" `
+> Set-LapsADReadPasswordPermission -Identity "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >                                  -AllowedPrincipals "FOURNIL\GG_Tier2_Admins"
 > ```
 > Seul, il ne suffit pas : depuis la session `adm2.jrenard`, `Get-LapsADPassword -Identity PC-PROD-01 -AsPlainText` renvoie un mot de passe **vide** et `DecryptionStatus : Unauthorized`.
@@ -395,11 +435,11 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 > ```
 > Ensuite, depuis la session `adm2.jrenard` :
 >
-> ![ad-tp08-laps-adm2](https://cours.kaya.ovh/active-directory/assets/supports/88d6b2e1f4fca4aa322c.png)
+> ![ad-tp08-laps-adm2](https://cours.kaya.ovh/active-directory/assets/supports/5bcb9f101e23122f8817.png)
 >
 > `DecryptionStatus : Success` et `AuthorizedDecryptor : FOURNIL\GG_Tier2_Admins`.
 >
-> > Il n'y a qu'**un** déchiffreur par mot de passe : désormais, les `Admins du domaine` ne peuvent plus le déchiffrer. C'est cohérent avec le tiering : le mot de passe d'un poste appartient au Tier 2. Pour `OU=Serveurs`, on ferait la même chose avec `GG_Tier1_Admins`.
+> > Il n'y a qu'**un** déchiffreur par mot de passe : désormais, les `Admins du domaine` ne peuvent plus le déchiffrer. C'est cohérent avec le tiering : le mot de passe d'un poste appartient au Tier 2. Pour `OU=Serveurs,OU=Tier1,OU=Administration`, on ferait la même chose avec `GG_Tier1_Admins`.
 
 ---
 

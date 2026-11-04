@@ -77,7 +77,7 @@ $dn
 Un objet AD s'identifie par son **Distinguished Name**, qui se lit **de droite à gauche**, du plus général au plus précis :
 
 ```
-CN=mlebrun,OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab
+CN=mlebrun,OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 └──┬───┘ └──────┬───────┘                                              └──────┬─────┘
  l'objet     son tiroir                                               le domaine
 ```
@@ -91,21 +91,21 @@ CN=mlebrun,OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fourn
 ## 0.4 — Créer votre première OU, ensemble
 
 ```powershell
-New-ADOrganizationalUnit -Name "fournil" -Path $dn -ProtectedFromAccidentalDeletion $false
+New-ADOrganizationalUnit -Name "Fournil" -Path $dn -ProtectedFromAccidentalDeletion $false
 ```
 
 Décortiquons :
 
 | Paramètre | Ce qu'il fait |
 |-----------|---------------|
-| `-Name "fournil"` | Le nom de l'OU à créer |
+| `-Name "Fournil"` | Le nom de l'OU à créer |
 | `-Path $dn` | **Où** la créer — le conteneur parent. Ici, la racine du domaine. |
 | `-ProtectedFromAccidentalDeletion $false` | Autorise sa suppression. En production on laisse `$true` ; en TP, `$false` vous permet de repartir de zéro. |
 
 **Vérification :**
 
 ```powershell
-Get-ADOrganizationalUnit -Filter 'Name -eq "fournil"' | Select-Object Name, DistinguishedName
+Get-ADOrganizationalUnit -Filter 'Name -eq "Fournil"' | Select-Object Name, DistinguishedName
 ```
 
 **Résultat attendu :**
@@ -113,7 +113,7 @@ Get-ADOrganizationalUnit -Filter 'Name -eq "fournil"' | Select-Object Name, Dist
 ```
 Name     DistinguishedName
 ----     -----------------
-fournil  OU=fournil,DC=ad,DC=fournil,DC=lab
+fournil  OU=Fournil,DC=ad,DC=fournil,DC=lab
 ```
 
 > [!success] Checkpoint 0
@@ -125,11 +125,11 @@ fournil  OU=fournil,DC=ad,DC=fournil,DC=lab
 
 > [!tip] Repartir de zéro à tout moment
 > ```powershell
-> Get-ADOrganizationalUnit -Filter 'Name -eq "fournil"' |
+> Get-ADOrganizationalUnit -Filter 'Name -eq "Fournil"' |
 >     Set-ADObject -ProtectedFromAccidentalDeletion $false -PassThru |
 >     Remove-ADOrganizationalUnit -Recursive -Confirm:$false
 > ```
-> ⚠️ Supprime **tout** ce que vous avez créé sous `fournil`. À n'utiliser qu'en TP.
+> ⚠️ Supprime **tout** ce que vous avez créé sous `Fournil`. À n'utiliser qu'en TP.
 
 ---
 
@@ -137,11 +137,11 @@ fournil  OU=fournil,DC=ad,DC=fournil,DC=lab
 
 > Objectif : construire le meuble de rangement de l'annuaire.
 
-![Schema-Structure-OUs](https://cours.kaya.ovh/active-directory/assets/supports/224eaa06d54e0e484bc1.svg)
+![Schema-Structure-OUs](https://cours.kaya.ovh/active-directory/assets/supports/0148111e35e5100b08f6.svg)
 
 ### Consigne
 
-1. Sous l'OU `fournil` (déjà créée en exercice 0), créez 3 OUs : `Utilisateurs`, `Groupes`, `Ordinateurs`
+1. Sous l'OU `Fournil` (déjà créée en exercice 0), créez 3 OUs : `Utilisateurs`, `Groupes`, `Ordinateurs`
 2. Sous `Utilisateurs`, créez l'OU `Laboratoire`
 3. Sous `Laboratoire`, créez les pôles : `fabrication`, `approvisionnement`, `conditionnement`, `qualite-hygiene`, `maintenance`
 4. Sous `fabrication`, créez les services : `boulangerie`, `patisserie`, `viennoiserie`
@@ -150,7 +150,7 @@ fournil  OU=fournil,DC=ad,DC=fournil,DC=lab
 > [!tip] Indice — construire le `-Path` d'une sous-OU
 > Le chemin d'une OU enfant, c'est `OU=<parent>,` + le chemin du parent.
 > ```powershell
-> $fournil = "OU=fournil,$dn"
+> $fournil = "OU=Fournil,$dn"
 > New-ADOrganizationalUnit -Name "Utilisateurs" -Path $fournil -ProtectedFromAccidentalDeletion $false
 >
 > $users = "OU=Utilisateurs,$fournil"
@@ -173,12 +173,12 @@ fournil  OU=fournil,DC=ad,DC=fournil,DC=lab
 ### Vérification
 
 ```powershell
-Get-ADOrganizationalUnit -SearchBase "OU=fournil,$dn" -Filter * |
+Get-ADOrganizationalUnit -SearchBase "OU=Fournil,$dn" -Filter * |
     Select-Object Name, DistinguishedName | Sort-Object DistinguishedName
 ```
 
 > **Résultat attendu :** au minimum **13 OUs** côté Utilisateurs
-> (fournil + Utilisateurs + Groupes + Ordinateurs + Laboratoire + 5 pôles + 3 services), plus l'arborescence dupliquée sous `Groupes`.
+> (Fournil + Utilisateurs + Groupes + Ordinateurs + Laboratoire + 5 pôles + 3 services), plus l'arborescence dupliquée sous `Groupes`.
 
 > [!failure] `Répertoire : objet introuvable`
 > Votre `-Path` pointe vers une OU qui n'existe pas encore. On construit **toujours du parent vers l'enfant**.
@@ -196,7 +196,7 @@ Get-ADOrganizationalUnit -SearchBase "OU=fournil,$dn" -Filter * |
 ### Consigne
 
 Pour le service `boulangerie`, créez 3 groupes de sécurité dans
-`OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Groupes,OU=fournil,...` :
+`OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Groupes,OU=Fournil,...` :
 
 | Nom | Portée | Rôle |
 |-----|--------|------|
@@ -219,7 +219,7 @@ Pour le service `boulangerie`, créez 3 groupes de sécurité dans
 ### Vérification
 
 ```powershell
-Get-ADGroup -Filter * -SearchBase "OU=Groupes,OU=fournil,$dn" |
+Get-ADGroup -Filter * -SearchBase "OU=Groupes,OU=Fournil,$dn" |
     Where-Object { $_.Name -like "*boulangerie*" } |
     Select-Object Name, GroupScope | Sort-Object Name
 ```
@@ -455,7 +455,7 @@ Get-ADUser -Identity "mlebrun" -Properties Description, MemberOf, Enabled |
 
 Répondez à ces questions **en utilisant des commandes PowerShell** :
 
-1. Combien d'OUs avez-vous créées au total sous `fournil` ?
+1. Combien d'OUs avez-vous créées au total sous `Fournil` ?
 2. Combien de groupes globaux (`G_`) existent ?
 3. Combien de groupes domaine local (`DL_`) existent ?
 4. De quels groupes `mlebrun` est-il membre — **directs et hérités** ?
@@ -464,13 +464,13 @@ Répondez à ces questions **en utilisant des commandes PowerShell** :
 > [!tip]- Les commandes, si vous séchez
 > ```powershell
 > # 1. Compter les OUs
-> (Get-ADOrganizationalUnit -SearchBase "OU=fournil,$dn" -Filter *).Count
+> (Get-ADOrganizationalUnit -SearchBase "OU=Fournil,$dn" -Filter *).Count
 >
 > # 2. Compter les groupes G_
-> (Get-ADGroup -Filter 'Name -like "G_*"' -SearchBase "OU=Groupes,OU=fournil,$dn").Count
+> (Get-ADGroup -Filter 'Name -like "G_*"' -SearchBase "OU=Groupes,OU=Fournil,$dn").Count
 >
 > # 3. Compter les groupes DL_
-> (Get-ADGroup -Filter 'Name -like "DL_*"' -SearchBase "OU=Groupes,OU=fournil,$dn").Count
+> (Get-ADGroup -Filter 'Name -like "DL_*"' -SearchBase "OU=Groupes,OU=Fournil,$dn").Count
 >
 > # 4. Groupes de mlebrun (directs + hérités)
 > Get-ADPrincipalGroupMembership -Identity "mlebrun" | Select-Object Name, GroupScope

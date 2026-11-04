@@ -95,8 +95,8 @@ Avant de déverrouiller, on cherche **la source** : un téléphone ou un script 
 Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4740} -MaxEvents 1 | Format-List TimeCreated, Message
 ```
 
-![ad-tp06-evenement-4740](https://cours.kaya.ovh/active-directory/assets/supports/e48090a5bd8f9b154a88.png)
-*Le champ **Caller Computer Name** donne le poste d'où viennent les mauvais mots de passe (ici `PC-PROD-01`).*
+![ad-tp06-evenement-4740](https://cours.kaya.ovh/active-directory/assets/supports/52ccd23d862b9d7bacc5.png)
+*Le champ **Nom de l’ordinateur de l’appelant** donne le poste d'où viennent les mauvais mots de passe (ici `PC-PROD-01`).*
 
 **Référence Microsoft :** [Stratégie de verrouillage de compte](https://learn.microsoft.com/fr-fr/windows-server/security/kerberos/account-lockout-policy)
 
@@ -291,7 +291,7 @@ Un compte de service est un compte utilisateur utilisé par une application ou u
 ### Bonnes pratiques
 
 - Créer un compte dédié par service (`svc_sql`, `svc_backup`)
-- Placer ces comptes dans une OU dédiée (`OU=Services`)
+- Placer ces comptes dans une OU dédiée (`OU=Services,OU=Fournil` pour l'instant ; le chapitre 08 les rangera dans `OU=Administration`, selon leur niveau)
 - Cocher **"Le mot de passe n'expire jamais"** (et le documenter)
 - Cocher **"L'utilisateur ne peut pas changer le mot de passe"**
 - Attribuer uniquement les droits nécessaires (moindre privilège)
@@ -301,7 +301,7 @@ New-ADUser `
   -Name "svc_backup" `
   -SamAccountName "svc_backup" `
   -UserPrincipalName "svc_backup@ad.fournil.lab" `
-  -Path "OU=Services,DC=ad,DC=fournil,DC=lab" `
+  -Path "OU=Services,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
   -AccountPassword (ConvertTo-SecureString "Svc!Backup2025#" -AsPlainText -Force) `
   -PasswordNeverExpires $true `
   -CannotChangePassword $true `

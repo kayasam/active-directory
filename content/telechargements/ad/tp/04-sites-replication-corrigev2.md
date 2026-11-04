@@ -206,8 +206,8 @@ Quelles commandes utilises-tu ? Si un test échoue, ne passe pas à la suite.
 > [!success]- Afficher la correction — C6
 > On y trouve un ou plusieurs objets **Connection** (`<générée automatiquement>`) : ce sont les flux de réplication **entrants** de `DC02`. Ils sont créés par le **KCC** (Knowledge Consistency Checker), qui recalcule la topologie toutes les 15 minutes. On ne les crée pas à la main.
 >
-> ![ad-tp04-dssite-sites-connexion](https://cours.kaya.ovh/active-directory/assets/supports/fcd4245ee016f62ec4f9.png)
-> *Résultat attendu : les deux sites avec leur subnet et leur DC. Dans les `NTDS Settings` de DC01, une connexion « automatically generated » arrive de DC02 (site Nantes).*
+> ![ad-tp04-dssite-sites-connexion](https://cours.kaya.ovh/active-directory/assets/supports/56b48ddc32683e2f65cc.png)
+> *Résultat attendu : les deux sites avec leur subnet et leur DC. Dans les `NTDS Settings` de DC01, une connexion « <généré automatiquement> » arrive de DC02 (site Nantes).*
 >
 > > Pour ne pas attendre le cycle du KCC : `repadmin /kcc DC01` et `repadmin /kcc DC02`.
 
@@ -221,7 +221,7 @@ Get-ADUser test.repli -Server DC02
 
 > [!success]- Afficher la correction — D1
 > ```powershell
-> New-ADUser -Name "test.repli" -Path "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+> New-ADUser -Name "test.repli" -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >     -AccountPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) -Enabled $true -Server DC01
 > Get-ADUser test.repli -Server DC02
 > ```

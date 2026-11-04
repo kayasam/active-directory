@@ -43,20 +43,20 @@ Lisez le script `Set-NetworkLocation.ps1` et répondez aux questions.
 ### Consigne
 
 1. Créez une GPO nommée `GPO_Emplacement_Home`
-2. Liez-la à l'OU `OU=fournil,DC=ad,DC=fournil,DC=lab`
+2. Liez-la à l'OU `OU=Fournil,DC=ad,DC=fournil,DC=lab`
 3. Vérifiez que le lien est actif
 
 ### Questions
 
 - Quelle est la différence entre **créer** une GPO et la **lier** ?
-- La GPO s'applique-t-elle aux utilisateurs de `OU=Utilisateurs,OU=fournil,...` ? Pourquoi ?
+- La GPO s'applique-t-elle aux utilisateurs de `OU=Utilisateurs,OU=Fournil,...` ? Pourquoi ?
 - Que fait `-LinkEnabled Yes` ?
 
 ### Vérification
 
 ```powershell
 Get-GPO -Name "GPO_Emplacement_Home" | Select-Object DisplayName, Id
-Get-GPInheritance -Target "OU=fournil,DC=ad,DC=fournil,DC=lab" | Select-Object -ExpandProperty GpoLinks
+Get-GPInheritance -Target "OU=Fournil,DC=ad,DC=fournil,DC=lab" | Select-Object -ExpandProperty GpoLinks
 ```
 
 > [!tip]- Besoin d'aide ? Cliquez ici

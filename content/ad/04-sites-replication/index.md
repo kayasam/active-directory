@@ -183,7 +183,7 @@ Le serveur redémarre automatiquement à la fin de la promotion.
    - `192.168.4.0/24` → site `Nantes`
 5. Déplacer DC02 dans le site `Nantes` (clic droit sur le serveur → **Déplacer**) : créer le subnet ne déplace **pas** un DC existant
 
-![ad-tp04-dssite-sites-connexion](https://cours.kaya.ovh/active-directory/assets/supports/fcd4245ee016f62ec4f9.png)
+![ad-tp04-dssite-sites-connexion](https://cours.kaya.ovh/active-directory/assets/supports/56b48ddc32683e2f65cc.png)
 *Résultat dans `dssite.msc` : deux sites, deux subnets, un DC par site. Dans les `NTDS Settings` de DC01, l'objet Connection généré automatiquement par le KCC depuis DC02.*
 
 ### Via PowerShell

@@ -17,7 +17,7 @@ title: "Procédure manuelle — Créer l'arborescence AD Fournil"
 | # | Note | Ce qu'on fait |
 |---|------|---------------|
 | 1 | [Manuel-01-Charger-Module-AD](https://cours.kaya.ovh/active-directory/ad/annexe/01-ad-manuel-manuel-01-charger-module-ad) | Charger le module PowerShell Active Directory |
-| 2 | [Manuel-02-Creer-les-OUs](https://cours.kaya.ovh/active-directory/ad/annexe/01-ad-manuel-manuel-02-creer-les-ous) | Créer les OUs (fournil, Utilisateurs/Groupes/Ordinateurs, arborescence) |
+| 2 | [Manuel-02-Creer-les-OUs](https://cours.kaya.ovh/active-directory/ad/annexe/01-ad-manuel-manuel-02-creer-les-ous) | Créer les OUs (Fournil, Utilisateurs/Groupes/Ordinateurs, arborescence) |
 | 3 | [Manuel-03-Creer-les-Groupes](https://cours.kaya.ovh/active-directory/ad/annexe/01-ad-manuel-manuel-03-creer-les-groupes) | Créer les groupes de sécurité G_ et DL_ à chaque niveau |
 | 4 | [Manuel-04-Imbriquer-Groupes-AGDLP](https://cours.kaya.ovh/active-directory/ad/annexe/01-ad-manuel-manuel-04-imbriquer-groupes-agdlp) | Imbriquer les groupes selon le modèle AGDLP |
 | 5 | [Manuel-05-Permissions-NTFS](https://cours.kaya.ovh/active-directory/ad/annexe/01-ad-manuel-manuel-05-permissions-ntfs) | Créer les dossiers C:\fournil\... et appliquer les permissions |

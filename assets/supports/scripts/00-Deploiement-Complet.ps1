@@ -18,7 +18,8 @@ $domainNetBIOS      = "FOURNIL"                        # Nom NetBIOS du domaine
 $serverPrincipal    = "DC01"                           # Nom du serveur principal (celui-ci)
 $serverSecondaire   = "DC02"                            # Nom du serveur secondaire (réplica)
 
-$entrepriseOU       = "fournil"                        # Nom de l'OU racine de l'entreprise
+$entrepriseOU       = "fournil"                        # Nom de l'entreprise (dossiers C:\fournil, groupes)
+$ouRacine           = "Fournil"                        # Nom de l'OU racine de l'entreprise
 $ouUtilisateurs     = "Utilisateurs"                   # OU pour les comptes utilisateurs
 $ouGroupes          = "Groupes"                        # OU pour les groupes de sécurité
 $ouOrdinateurs      = "Ordinateurs"                    # OU pour les comptes machines
@@ -275,9 +276,9 @@ if ($r) { Invoke-Command -ComputerName $serverSecondaire -ScriptBlock { Install-
 #  PHASE 2/11 — Structure AD (OUs)
 # =============================================================================
 Write-Host "`n== PHASE 2/11 : Structure AD (OUs) ==" -ForegroundColor Blue
-Write-Host "  Creation de l'OU racine '$entrepriseOU' + Utilisateurs/Groupes/Ordinateurs + arborescence" -ForegroundColor DarkGray
+Write-Host "  Creation de l'OU racine '$ouRacine' + Utilisateurs/Groupes/Ordinateurs + arborescence" -ForegroundColor DarkGray
 
-$entreprisePath = New-OUIfNotExists -Name $entrepriseOU -Parent $baseDN
+$entreprisePath = New-OUIfNotExists -Name $ouRacine -Parent $baseDN
 $pathUsers   = New-OUIfNotExists -Name $ouUtilisateurs -Parent $entreprisePath
 $pathGroups  = New-OUIfNotExists -Name $ouGroupes      -Parent $entreprisePath
 $pathComputers = New-OUIfNotExists -Name $ouOrdinateurs -Parent $entreprisePath
@@ -381,7 +382,7 @@ foreach ($user in $userCsvContent) {
     if ($user.Service -and $user.Service -ne "") { $ouParts += "OU=$($user.Service)" }
     if ($user.Pole    -and $user.Pole    -ne "") { $ouParts += "OU=$($user.Pole)" }
     if ($user.Entite  -and $user.Entite  -ne "") { $ouParts += "OU=$($user.Entite)" }
-    $ouParts += "OU=$ouUtilisateurs"; $ouParts += "OU=$entrepriseOU"
+    $ouParts += "OU=$ouUtilisateurs"; $ouParts += "OU=$ouRacine"
     $userPath = ($ouParts -join ",") + ",$baseDN"
 
     $login = $user.Login
@@ -518,7 +519,7 @@ foreach ($user in $userCsvContent) {
 Write-Host "`n== PHASE 11/11 : GPO ==" -ForegroundColor Blue
 Write-Host "  GPO '$gpoName' : emplacement reseau '$homeDisplayName' a la connexion" -ForegroundColor DarkGray
 
-$ouTarget = "OU=$entrepriseOU,$baseDN"
+$ouTarget = "OU=$ouRacine,$baseDN"
 
 $scriptContent = @"
 

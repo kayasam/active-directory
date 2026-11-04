@@ -41,17 +41,18 @@ Crée la structure suivante dans `ad.fournil.lab` via **`dsa.msc`** :
 
 ```
 ad.fournil.lab
-├── OU=Utilisateurs
-│   ├── OU=Direction
-│   ├── OU=Production
-│   ├── OU=Commercial
-│   └── OU=Support
-└── OU=Ordinateurs
-    ├── OU=Postes
-    └── OU=Serveurs
+└── OU=Fournil
+    ├── OU=Utilisateurs
+    │   ├── OU=Direction
+    │   ├── OU=Production
+    │   ├── OU=Commercial
+    │   └── OU=Support
+    └── OU=Ordinateurs
+        ├── OU=Postes
+        └── OU=Serveurs
 ```
 
-**B1.** Crée les deux OUs racines (`Utilisateurs` et `Ordinateurs`) via l'interface graphique.
+**B1.** Crée l'OU racine `Fournil`, puis ses deux sous-OUs `Utilisateurs` et `Ordinateurs`, via l'interface graphique.
 
 **B2.** Crée les sous-OUs de `Utilisateurs` via **PowerShell**.
 
@@ -67,7 +68,7 @@ ad.fournil.lab
 
 **C2.** Le DC `DC01` est dans l'OU `Domain Controllers`. Est-ce correct ? Faut-il le déplacer ?
 
-**C3.** Redirige le conteneur `Computers` par défaut vers `OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab`. Quelle commande utilises-tu ?
+**C3.** Redirige le conteneur `Computers` par défaut vers `OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab`. Quelle commande utilises-tu ?
 
 **C4.** Vérifie que la redirection est bien prise en compte :
 ```powershell
@@ -79,7 +80,7 @@ Quel résultat obtiens-tu ?
 
 ## Partie D — Délégation (30 min)
 
-**D1.** Crée un utilisateur `helpdesk` dans `OU=Support,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab` (via `dsa.msc` ou PowerShell).
+**D1.** Crée un utilisateur `helpdesk` dans `OU=Support,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab` (via `dsa.msc` ou PowerShell).
 
 **D2.** Via l'**assistant de délégation** sur l'OU `Utilisateurs`, délègue à `helpdesk` la tâche : **"Réinitialiser les mots de passe utilisateur et forcer le changement au prochain accès"**.
 
@@ -88,7 +89,7 @@ Quel résultat obtiens-tu ?
 ```powershell
 $cred = Get-Credential "FOURNIL\helpdesk"
 ```
-- En tant qu'`Administrateur`, crée d'abord un compte de test `test.deleg` dans `OU=Direction,OU=Utilisateurs` (aucun autre utilisateur n'existe encore à ce stade du TP).
+- En tant qu'`Administrateur`, crée d'abord un compte de test `test.deleg` dans `OU=Direction,OU=Utilisateurs,OU=Fournil` (aucun autre utilisateur n'existe encore à ce stade du TP).
 - Avec `$cred`, réinitialise le mot de passe de `test.deleg`.
 - Avec `$cred`, tente de réinitialiser le mot de passe d'un compte **en dehors** de cette OU (ex : `Administrateur`, dans le conteneur `Users`). Que se passe-t-il ?
 

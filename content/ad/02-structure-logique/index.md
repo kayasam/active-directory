@@ -80,13 +80,14 @@ Import-Module ActiveDirectory
 Chaque objet Active Directory est identifié par un chemin unique appelé **Distinguished Name**. Il se lit de droite à gauche.
 
 ```
-CN=Claire Fontaine,OU=Gerance,OU=Direction,OU=Fournil,DC=ad,DC=fournil,DC=lab
+CN=Claire Fontaine,OU=Gerance,OU=Direction,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 ```
 
 | Composant | Signification |
 |-----------|---------------|
 | `DC=ad,DC=fournil,DC=lab` | Le domaine `ad.fournil.lab` |
 | `OU=Fournil` | OU racine de l'entreprise |
+| `OU=Utilisateurs` | Type d'objet : les comptes utilisateurs |
 | `OU=Direction` | Pôle Direction |
 | `OU=Gerance` | Service Gérance |
 | `CN=Claire Fontaine` | Le Common Name de l'objet |
@@ -131,33 +132,41 @@ Les OUs servent à :
 
 ### Approches courantes
 
-**Par département** — adapté aux PME sur un seul site (cas Fournil) :
+**Par département** : les OUs reproduisent l'organigramme (Direction, Production, Commercial…). Lisible, mais utilisateurs et ordinateurs d'un même service se retrouvent mélangés.
+
+**Par type d'objet** : une OU pour les utilisateurs, une pour les ordinateurs, une pour les groupes. Simple, et idéal pour cibler les GPO.
+
+### La structure retenue pour Fournil
+
+On combine les deux, sous **une OU racine** au nom de l'entreprise : d'abord le **type d'objet**, puis le **département**.
 
 ```
 ad.fournil.lab
-└── OU=Fournil
-    ├── OU=Direction
-    ├── OU=Production
-    ├── OU=Logistique
-    ├── OU=Commercial
-    └── OU=Support
+├── OU=Fournil                ← OU racine de l'entreprise
+│   ├── OU=Utilisateurs
+│   │   ├── OU=Direction
+│   │   ├── OU=Production
+│   │   ├── OU=Commercial
+│   │   └── OU=Support
+│   ├── OU=Groupes
+│   └── OU=Ordinateurs
+│       ├── OU=Postes
+│       └── OU=Serveurs
+├── CN=Users                  ← conteneurs par défaut, laissés vides
+├── CN=Computers
+└── OU=Domain Controllers     ← créée par la promotion, on n'y touche pas
 ```
 
-**Par type d'objet** — simple et efficace :
-
-```
-ad.fournil.lab
-├── OU=Utilisateurs
-│   ├── OU=Direction
-│   └── OU=Production
-├── OU=Ordinateurs
-│   ├── OU=Postes
-│   └── OU=Serveurs
-└── OU=Groupes
-```
+Pourquoi une OU racine `Fournil` ?
+- tous les objets de l'entreprise sont **au même endroit**, bien séparés des conteneurs par défaut (`Users`, `Computers`, `Builtin`) ;
+- une GPO ou une délégation commune à toute l'entreprise se pose **une seule fois**, sur `OU=Fournil` ;
+- l'annuaire reste propre si une seconde entité arrive (rachat, filiale) : elle aura sa propre OU racine à côté.
 
 > [!TIP] Bonne pratique
 > Séparer toujours les **ordinateurs** des **utilisateurs** dans des OUs distinctes : les GPO ordinateur et utilisateur ont des cycles d'application différents (démarrage machine vs ouverture de session).
+
+> [!NOTE] Et les comptes d'administration ?
+> Ils n'iront **pas** sous `OU=Fournil`, mais dans une OU `Administration` placée **à côté**, directement sous le domaine. Une délégation ou une GPO posée sur `OU=Fournil` ne doit jamais pouvoir les atteindre. C'est l'objet du chapitre 08 (tiering).
 
 - [Conception des OUs — Microsoft Learn](https://learn.microsoft.com/fr-fr/windows-server/identity/ad-ds/plan/creating-an-organizational-unit-design)
 
@@ -181,10 +190,15 @@ ad.fournil.lab
 # Créer l'OU racine Fournil
 New-ADOrganizationalUnit -Name "Fournil" -Path "DC=ad,DC=fournil,DC=lab"
 
-# Créer les pôles sous Fournil
-New-ADOrganizationalUnit -Name "Direction"  -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
-New-ADOrganizationalUnit -Name "Production" -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
-New-ADOrganizationalUnit -Name "Support"    -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
+# Créer les OUs par type d'objet sous Fournil
+New-ADOrganizationalUnit -Name "Utilisateurs" -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
+New-ADOrganizationalUnit -Name "Groupes"      -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
+New-ADOrganizationalUnit -Name "Ordinateurs"  -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
+
+# Créer les pôles sous Utilisateurs
+New-ADOrganizationalUnit -Name "Direction"  -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+New-ADOrganizationalUnit -Name "Production" -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+New-ADOrganizationalUnit -Name "Support"    -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # Créer sans protection contre la suppression
 New-ADOrganizationalUnit -Name "Test" -Path "DC=ad,DC=fournil,DC=lab" `
@@ -209,17 +223,17 @@ Dans `dsa.msc` : clic droit sur l'objet → **Déplacer** → sélectionner l'OU
 ```powershell
 # Déplacer un utilisateur
 Move-ADObject -Identity "CN=Claire Fontaine,CN=Users,DC=ad,DC=fournil,DC=lab" `
-              -TargetPath "OU=Gerance,OU=Direction,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+              -TargetPath "OU=Gerance,OU=Direction,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # Déplacer un ordinateur
 Move-ADObject -Identity "CN=PC-DIRECTION-01,CN=Computers,DC=ad,DC=fournil,DC=lab" `
-              -TargetPath "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+              -TargetPath "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
 > [!TIP] Redirection des conteneurs par défaut
 > On peut rediriger le conteneur `Computers` par défaut vers une OU personnalisée pour que les nouveaux ordinateurs joints au domaine y arrivent directement :
 > ```powershell
-> redircmp "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+> redircmp "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
 ---
@@ -231,7 +245,7 @@ La délégation permet de confier certaines tâches à un utilisateur ou groupe 
 Exemples courants :
 - Le responsable RH peut réinitialiser les mots de passe de son OU
 - Un technicien peut joindre des ordinateurs au domaine
-- L'utilisateur `helpdesk` peut débloquer les comptes dans `OU=Fournil`
+- L'utilisateur `helpdesk` peut débloquer les comptes dans `OU=Utilisateurs,OU=Fournil`
 
 ### Via l'assistant de délégation (GUI)
 

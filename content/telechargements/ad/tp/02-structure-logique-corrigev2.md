@@ -37,16 +37,19 @@ Tu dois construire la structure d'OUs qui reflétera cette organisation.
 > Structure attendue (ou équivalente) :
 > ```
 > ad.fournil.lab
-> ├── OU=Utilisateurs
-> │   ├── OU=Direction
-> │   ├── OU=Production
-> │   ├── OU=Commercial
-> │   └── OU=Support
-> └── OU=Ordinateurs
->     ├── OU=Postes
->     └── OU=Serveurs
+> └── OU=Fournil
+>     ├── OU=Utilisateurs
+>     │   ├── OU=Direction
+>     │   ├── OU=Production
+>     │   ├── OU=Commercial
+>     │   └── OU=Support
+>     └── OU=Ordinateurs
+>         ├── OU=Postes
+>         └── OU=Serveurs
 > ```
 > Justification de la séparation utilisateurs/ordinateurs : les **GPO de configuration ordinateur** (scripts de démarrage, sécurité système) s'appliquent au démarrage de la machine. Les **GPO utilisateur** (fond d'écran, lecteurs réseau) s'appliquent à la connexion. Mélanger les deux dans la même OU complique le ciblage des GPO.
+>
+> L'OU racine `Fournil` regroupe tous les objets de l'entreprise : une GPO ou une délégation commune se pose une seule fois, et rien ne se mélange avec les conteneurs par défaut (`Users`, `Computers`).
 
 **A2.** Quelle est la différence entre un conteneur (comme `Computers`) et une OU ? Pourquoi ne pas utiliser les conteneurs par défaut ?
 
@@ -59,37 +62,40 @@ Crée la structure suivante dans `ad.fournil.lab` via **`dsa.msc`** :
 
 ```
 ad.fournil.lab
-├── OU=Utilisateurs
-│   ├── OU=Direction
-│   ├── OU=Production
-│   ├── OU=Commercial
-│   └── OU=Support
-└── OU=Ordinateurs
-    ├── OU=Postes
-    └── OU=Serveurs
+└── OU=Fournil
+    ├── OU=Utilisateurs
+    │   ├── OU=Direction
+    │   ├── OU=Production
+    │   ├── OU=Commercial
+    │   └── OU=Support
+    └── OU=Ordinateurs
+        ├── OU=Postes
+        └── OU=Serveurs
 ```
 
-**B1.** Crée les deux OUs racines (`Utilisateurs` et `Ordinateurs`) via l'interface graphique.
+**B1.** Crée l'OU racine `Fournil`, puis ses deux sous-OUs `Utilisateurs` et `Ordinateurs`, via l'interface graphique.
 
 > [!success]- Afficher la correction — B1
-> Via `dsa.msc` : clic droit sur `ad.fournil.lab` → Nouveau → Unité d'organisation → `Utilisateurs`, puis idem pour `Ordinateurs`.
+> Via `dsa.msc` : clic droit sur `ad.fournil.lab` → Nouveau → Unité d'organisation → `Fournil`. Puis clic droit sur `Fournil` → Nouveau → Unité d'organisation → `Utilisateurs`, et idem pour `Ordinateurs`.
+>
+> On ne crée **pas** `Utilisateurs` directement sous le domaine : tous les objets de l'entreprise vivent sous l'OU racine `Fournil` (voir cours, section 5).
 
 **B2.** Crée les sous-OUs de `Utilisateurs` via **PowerShell**.
 
 > [!success]- Afficher la correction — B2
 > ```powershell
-> New-ADOrganizationalUnit -Name "Direction"  -Path "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab"
-> New-ADOrganizationalUnit -Name "Production" -Path "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab"
-> New-ADOrganizationalUnit -Name "Commercial" -Path "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab"
-> New-ADOrganizationalUnit -Name "Support"    -Path "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab"
+> New-ADOrganizationalUnit -Name "Direction"  -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADOrganizationalUnit -Name "Production" -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADOrganizationalUnit -Name "Commercial" -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADOrganizationalUnit -Name "Support"    -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
 **B3.** Crée les sous-OUs de `Ordinateurs` via **PowerShell**.
 
 > [!success]- Afficher la correction — B3
 > ```powershell
-> New-ADOrganizationalUnit -Name "Postes"   -Path "OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
-> New-ADOrganizationalUnit -Name "Serveurs" -Path "OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+> New-ADOrganizationalUnit -Name "Postes"   -Path "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADOrganizationalUnit -Name "Serveurs" -Path "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
 **B4.** Liste toutes les OUs créées avec PowerShell. Quelle est la commande ?
@@ -99,7 +105,7 @@ ad.fournil.lab
 > Get-ADOrganizationalUnit -Filter * | Select-Object Name, DistinguishedName | Sort-Object DistinguishedName
 > ```
 >
-> ![ad-tp02-arborescence-ou](https://cours.kaya.ovh/active-directory/assets/supports/ea7583a37414984cd3ee.png)
+> ![ad-tp02-arborescence-ou](https://cours.kaya.ovh/active-directory/assets/supports/37ba4a7b1e3548243a48.png)
 > *Résultat attendu dans `dsa.msc` : les OUs (icône dossier + annuaire) à côté des conteneurs par défaut (dossier simple).*
 
 ## Partie C — Déplacer des objets (15 min)
@@ -115,11 +121,11 @@ ad.fournil.lab
 > [!success]- Afficher la correction — C2
 > Non, le DC `DC01` est bien dans `OU=Domain Controllers` — c'est correct. Cette OU est créée automatiquement lors de la promotion et est dédiée aux contrôleurs de domaine. Ne jamais la supprimer ni déplacer les DC dans une autre OU sans raison.
 
-**C3.** Redirige le conteneur `Computers` par défaut vers `OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab`. Quelle commande utilises-tu ?
+**C3.** Redirige le conteneur `Computers` par défaut vers `OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab`. Quelle commande utilises-tu ?
 
 > [!success]- Afficher la correction — C3
 > ```powershell
-> redircmp "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+> redircmp "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
 **C4.** Vérifie que la redirection est bien prise en compte :
@@ -136,20 +142,20 @@ Quel résultat obtiens-tu ?
 > ```
 > ComputersContainer
 > ------------------
-> OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab
+> OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 > ```
 > Les prochains ordinateurs joints au domaine arriveront directement dans `OU=Postes`.
 
 ## Partie D — Délégation (30 min)
 
-**D1.** Crée un utilisateur `helpdesk` dans `OU=Support,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab` (via `dsa.msc` ou PowerShell).
+**D1.** Crée un utilisateur `helpdesk` dans `OU=Support,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab` (via `dsa.msc` ou PowerShell).
 
 > [!success]- Afficher la correction — D1
 > ```powershell
 > New-ADUser -Name "helpdesk" `
 >            -SamAccountName "helpdesk" `
 >            -UserPrincipalName "helpdesk@ad.fournil.lab" `
->            -Path "OU=Support,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+>            -Path "OU=Support,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >            -AccountPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) `
 >            -Enabled $true
 > ```
@@ -159,9 +165,9 @@ Quel résultat obtiens-tu ?
 > [!success]- Afficher la correction — D2
 > Via `dsa.msc` : clic droit sur `OU=Utilisateurs` → **Déléguer le contrôle** → Ajouter `helpdesk` → Cocher **"Réinitialiser les mots de passe utilisateur et forcer le changement au prochain accès"** → Terminer.
 >
-> ![ad-tp02-menu-deleguer](https://cours.kaya.ovh/active-directory/assets/supports/5aa8beb53668c0431a7f.png)
+> ![ad-tp02-menu-deleguer](https://cours.kaya.ovh/active-directory/assets/supports/a59ed6dbfadce66cf467.png)
 >
-> ![ad-tp02-assistant-delegation](https://cours.kaya.ovh/active-directory/assets/supports/1619745c6175b2ae115d.png)
+> ![ad-tp02-assistant-delegation](https://cours.kaya.ovh/active-directory/assets/supports/31cdff065af73fff1f59.png)
 > *Deuxième case de la liste, et elle seule : la première (« Créer, supprimer et gérer les comptes ») donnerait bien plus de droits au support.*
 
 **D3.** Pour tester la délégation :
@@ -169,14 +175,14 @@ Quel résultat obtiens-tu ?
 ```powershell
 $cred = Get-Credential "FOURNIL\helpdesk"
 ```
-- En tant qu'`Administrateur`, crée d'abord un compte de test `test.deleg` dans `OU=Direction,OU=Utilisateurs` (aucun autre utilisateur n'existe encore à ce stade du TP).
+- En tant qu'`Administrateur`, crée d'abord un compte de test `test.deleg` dans `OU=Direction,OU=Utilisateurs,OU=Fournil` (aucun autre utilisateur n'existe encore à ce stade du TP).
 - Avec `$cred`, réinitialise le mot de passe de `test.deleg`.
 - Avec `$cred`, tente de réinitialiser le mot de passe d'un compte **en dehors** de cette OU (ex : `Administrateur`, dans le conteneur `Users`). Que se passe-t-il ?
 
 > [!success]- Afficher la correction — D3
 > ```powershell
 > # En tant qu'Administrateur : un compte de test dans l'OU déléguée
-> New-ADUser -Name "test.deleg" -Path "OU=Direction,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+> New-ADUser -Name "test.deleg" -Path "OU=Direction,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >   -AccountPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) -Enabled $true
 >
 > # En tant que helpdesk
@@ -215,10 +221,10 @@ $cred = Get-Credential "FOURNIL\helpdesk"
 >
 > Via PowerShell :
 > ```powershell
-> Set-ADOrganizationalUnit -Identity "OU=Commercial,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+> Set-ADOrganizationalUnit -Identity "OU=Commercial,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >                          -ProtectedFromAccidentalDeletion $false
 >
-> Remove-ADOrganizationalUnit -Identity "OU=Commercial,OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" -Confirm:$false
+> Remove-ADOrganizationalUnit -Identity "OU=Commercial,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" -Confirm:$false
 > ```
 
 **E2.** Recrée l'OU supprimée avec PowerShell en désactivant la protection.
@@ -226,7 +232,7 @@ $cred = Get-Credential "FOURNIL\helpdesk"
 > [!success]- Afficher la correction — E2
 > ```powershell
 > New-ADOrganizationalUnit -Name "Commercial" `
->                          -Path "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" `
+>                          -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >                          -ProtectedFromAccidentalDeletion $false
 > ```
 

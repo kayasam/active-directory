@@ -34,7 +34,7 @@ Les comptes utilisateurs permettent :
 | **UPN** (User Principal Name) | `cfontaine@ad.fournil.lab` | Connexion moderne (format email) |
 | **Nom complet** (DisplayName) | `Claire Fontaine` | Affiché dans l'annuaire |
 | **Mot de passe** | — | Doit respecter la stratégie du domaine |
-| **OU** (path) | `OU=Gerance,OU=Direction,OU=Fournil` | Localisation dans l'annuaire |
+| **OU** (path) | `OU=Gerance,OU=Direction,OU=Utilisateurs,OU=Fournil` | Localisation dans l'annuaire |
 
 > [!TIP] SAMAccountName vs UPN
 > Le SAMAccountName est limité à 20 caractères et reste pour la compatibilité. L'UPN est le format moderne, utilisé notamment pour Azure AD Connect et l'authentification Microsoft 365.
@@ -65,7 +65,7 @@ New-ADUser `
   -Surname           "Fontaine" `
   -SamAccountName    "cfontaine" `
   -UserPrincipalName "cfontaine@ad.fournil.lab" `
-  -Path              "OU=Gerance,OU=Direction,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
+  -Path              "OU=Gerance,OU=Direction,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
   -AccountPassword   (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) `
   -ChangePasswordAtLogon $true `
   -Enabled           $true
@@ -77,7 +77,7 @@ New-ADUser `
 
 ```powershell
 # Lister les utilisateurs d'une OU
-Get-ADUser -Filter * -SearchBase "OU=Production,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+Get-ADUser -Filter * -SearchBase "OU=Production,OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # Modifier un attribut
 Set-ADUser -Identity "mlebrun" -Title "Chef Boulanger" -Department "Production"
@@ -114,7 +114,7 @@ Import-Csv "C:\utilisateurs-fournil.csv" | ForEach-Object {
       -Surname           $_.Nom `
       -SamAccountName    $_.Login `
       -UserPrincipalName $_.Email `
-      -Path              "OU=$($_.Service),OU=$($_.Pole),OU=Fournil,DC=ad,DC=fournil,DC=lab" `
+      -Path              "OU=$($_.Service),OU=$($_.Pole),OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
       -AccountPassword   (ConvertTo-SecureString "Fournil2025!" -AsPlainText -Force) `
       -ChangePasswordAtLogon $true `
       -Enabled           $true
@@ -189,7 +189,7 @@ Add-Computer -DomainName "ad.fournil.lab" `
 
 ```powershell
 New-ADComputer -Name "PC-DIRECTION-01" `
-               -Path "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab" `
+               -Path "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
                -Enabled $true
 ```
 
@@ -245,13 +245,13 @@ Dans `dsa.msc` : clic droit sur l'OU → **Nouveau → Groupe** → choisir le t
 New-ADGroup -Name "GG_Production" `
             -GroupScope Global `
             -GroupCategory Security `
-            -Path "OU=GG,OU=Groupes,DC=ad,DC=fournil,DC=lab"
+            -Path "OU=GG,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # Groupe domaine local (associé à une ressource)
 New-ADGroup -Name "DL_Fournil_Production_RW" `
             -GroupScope DomainLocal `
             -GroupCategory Security `
-            -Path "OU=DL,OU=Groupes,DC=ad,DC=fournil,DC=lab" `
+            -Path "OU=DL,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
             -Description "Lecture+écriture dossier Production"
 
 # Ajouter des membres
@@ -297,11 +297,11 @@ mlebrun, rdubois, lmartin  (A — comptes dans OU=Boulangerie)
 ```powershell
 # 1. Créer le groupe global (regroupe les boulangers)
 New-ADGroup -Name "GG_Production_Boulangerie" -GroupScope Global -GroupCategory Security `
-            -Path "OU=GG,OU=Groupes,DC=ad,DC=fournil,DC=lab"
+            -Path "OU=GG,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # 2. Créer le groupe domaine local (associé au dossier)
 New-ADGroup -Name "DL_Fournil_Boulangerie_RW" -GroupScope DomainLocal -GroupCategory Security `
-            -Path "OU=DL,OU=Groupes,DC=ad,DC=fournil,DC=lab"
+            -Path "OU=DL,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # 3. Ajouter les utilisateurs dans le groupe global
 Add-ADGroupMember -Identity "GG_Production_Boulangerie" -Members "mlebrun","rdubois","lmartin"

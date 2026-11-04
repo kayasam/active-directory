@@ -61,7 +61,7 @@ Marc,Lebrun,Laboratoire,fabrication,boulangerie,Chef Boulanger,mlebrun,a12345!,.
 En haut de votre script, définissez les variables de configuration :
 - Le chemin du CSV organisation
 - Le Distinguished Name de base (`DC=ad,DC=fournil,DC=lab`)
-- Le nom de l'OU racine (`fournil`)
+- Le nom de l'OU racine (`Fournil`)
 - Les noms des 3 OUs de type : `Utilisateurs`, `Groupes`, `Ordinateurs`
 - Le dossier racine des partages (`C:\`)
 
@@ -93,7 +93,7 @@ Puis importez le CSV dans une variable.
 - Retourne le Distinguished Name de l'OU (`OU=nom,chemin_parent`)
 
 Puis parcourez le CSV pour créer la hiérarchie complète :
-1. D'abord l'OU racine `fournil`
+1. D'abord l'OU racine `Fournil`
 2. Puis les 3 OUs de type (`Utilisateurs`, `Groupes`, `Ordinateurs`)
 3. Pour chaque ligne du CSV : créer la chaîne Entité → Pôle → Service sous **chacune** des 3 OUs de type
 
@@ -107,7 +107,7 @@ Puis parcourez le CSV pour créer la hiérarchie complète :
 ### Vérification
 
 ```powershell
-(Get-ADOrganizationalUnit -SearchBase "OU=fournil,DC=ad,DC=fournil,DC=lab" -Filter *).Count
+(Get-ADOrganizationalUnit -SearchBase "OU=Fournil,DC=ad,DC=fournil,DC=lab" -Filter *).Count
 ```
 
 > [!tip]- Indice sur la boucle
@@ -154,7 +154,7 @@ N'oubliez pas le niveau Entreprise : `G_fournil`, `DL_fournil_L`, `DL_fournil_M`
 ### Vérification
 
 ```powershell
-Get-ADGroup -Filter * -SearchBase "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab" |
+Get-ADGroup -Filter * -SearchBase "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab" |
     Select-Object Name, GroupScope | Sort-Object Name
 ```
 
@@ -292,7 +292,7 @@ Importez `utilisateurs-fournil.csv` et pour chaque utilisateur :
 ### Vérification
 
 ```powershell
-Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab" |
+Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" |
     Select-Object Name, SamAccountName | Sort-Object Name
 ```
 
@@ -300,13 +300,13 @@ Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC
 > Le DN se lit du plus précis au plus général :
 > ```powershell
 > # Si Service=boulangerie, Pole=fabrication, Entite=Laboratoire
-> # Le DN sera : OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=fournil,DC=...
+> # Le DN sera : OU=boulangerie,OU=fabrication,OU=Laboratoire,OU=Utilisateurs,OU=Fournil,DC=...
 > $ouParts = @()
 > if ($user.Service -ne "") { $ouParts += "OU=$($user.Service)" }
 > if ($user.Pole -ne "") { $ouParts += "OU=$($user.Pole)" }
 > if ($user.Entite -ne "") { $ouParts += "OU=$($user.Entite)" }
 > $ouParts += "OU=Utilisateurs"
-> $ouParts += "OU=fournil"
+> $ouParts += "OU=Fournil"
 > $userPath = ($ouParts -join ",") + ",$baseDN"
 > ```
 
@@ -361,14 +361,14 @@ Puis exécutez votre script et vérifiez avec ces commandes :
 
 ```powershell
 # Nombre total d'OUs
-(Get-ADOrganizationalUnit -SearchBase "OU=fournil,DC=ad,DC=fournil,DC=lab" -Filter *).Count
+(Get-ADOrganizationalUnit -SearchBase "OU=Fournil,DC=ad,DC=fournil,DC=lab" -Filter *).Count
 
 # Nombre de groupes G_ et DL_
-(Get-ADGroup -Filter 'Name -like "G_*"' -SearchBase "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab").Count
-(Get-ADGroup -Filter 'Name -like "DL_*"' -SearchBase "OU=Groupes,OU=fournil,DC=ad,DC=fournil,DC=lab").Count
+(Get-ADGroup -Filter 'Name -like "G_*"' -SearchBase "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab").Count
+(Get-ADGroup -Filter 'Name -like "DL_*"' -SearchBase "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab").Count
 
 # Nombre d'utilisateurs
-(Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=fournil,DC=ad,DC=fournil,DC=lab").Count
+(Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab").Count
 ```
 
 ### Critère de réussite

@@ -11,7 +11,7 @@ title: "Phase 2 — Création et liaison de la GPO"
 
 ## Description
 
-Cette phase crée l'objet de stratégie de groupe (GPO) dans Active Directory et le lie à l'OU `fournil` pour qu'il s'applique à tous les utilisateurs.
+Cette phase crée l'objet de stratégie de groupe (GPO) dans Active Directory et le lie à l'OU `Fournil` pour qu'il s'applique à tous les utilisateurs.
 
 ## Etape 2.1 — Créer la GPO
 
@@ -30,7 +30,7 @@ $gpo = New-GPO -Name "GPO_Emplacement_Home"
 ## Etape 2.2 — Vérifier les GPO déjà liées (facultatif)
 
 ```powershell
-$ouTarget = "OU=fournil,DC=ad,DC=fournil,DC=lab"
+$ouTarget = "OU=Fournil,DC=ad,DC=fournil,DC=lab"
 Get-GPInheritance -Target $ouTarget | Select-Object -ExpandProperty GpoLinks
 ```
 
@@ -45,7 +45,7 @@ Get-GPInheritance -Target $ouTarget | Select-Object -ExpandProperty GpoLinks
 ## Etape 2.3 — Lier la GPO à l'OU
 
 ```powershell
-New-GPLink -Name "GPO_Emplacement_Home" -Target "OU=fournil,DC=ad,DC=fournil,DC=lab" -LinkEnabled Yes
+New-GPLink -Name "GPO_Emplacement_Home" -Target "OU=Fournil,DC=ad,DC=fournil,DC=lab" -LinkEnabled Yes
 ```
 
 | Paramètre | Explication |
@@ -55,4 +55,4 @@ New-GPLink -Name "GPO_Emplacement_Home" -Target "OU=fournil,DC=ad,DC=fournil,DC=
 | `-Target` | L'OU cible en format LDAP |
 | `-LinkEnabled Yes` | Active le lien immédiatement |
 
-> **Portée** : la GPO s'applique à tous les utilisateurs dans `OU=fournil` et **toutes ses sous-OUs** (héritage). Donc tous les 30 utilisateurs du Fournil sont concernés.
+> **Portée** : la GPO s'applique à tous les utilisateurs dans `OU=Fournil` et **toutes ses sous-OUs** (héritage). Donc tous les 30 utilisateurs du Fournil sont concernés.

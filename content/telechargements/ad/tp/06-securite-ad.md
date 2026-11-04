@@ -86,14 +86,14 @@ Y a-t-il des comptes qui ne devraient pas être là ?
 
 **D2.** Crée un compte d'administration dédié pour l'admin système de Fournil :
 - Nom : `adm.sysinfo`
-- OU : `OU=Support,OU=Utilisateurs`
+- OU : `OU=Support,OU=Utilisateurs,OU=Fournil`
 - Mot de passe : `Adm!Fournil@2025`
 - Ne peut pas changer son mot de passe : Non
 - Mot de passe n'expire jamais : Non
 
 **D3.** Ajoute `adm.sysinfo` au groupe `Account Operators` (gestion des comptes sans être Domain Admin). Quels droits cela lui confère-t-il ?
 
-**D4.** Crée un compte de service `svc_backup` dans une nouvelle `OU=Services` avec les options appropriées (cf. cours).
+**D4.** Crée un compte de service `svc_backup` dans une nouvelle OU `Services`, sous `OU=Fournil`, avec les options appropriées (cf. cours).
 
 ---
 
@@ -113,4 +113,7 @@ Search-ADAccount -AccountDisabled | Select-Object Name, SamAccountName
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/active-directory/ad/06-securite-ad/tp-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/active-directory/ad/06-securite-ad/tp-corrigev2)

@@ -20,7 +20,7 @@ title: "Procédure GPO — Emplacement réseau Home"
 | # | Note | Ce qu'on fait |
 |---|------|---------------|
 | 1 | [GPO-01-Script-Connexion](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-01-script-connexion) | Créer le script `Set-NetworkLocation.ps1` (lecture HomeDirectory AD, raccourci réseau, Desktop.ini, idempotence) |
-| 2 | [GPO-02-Creer-Lier-GPO](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-02-creer-lier-gpo) | Créer la GPO `GPO_Emplacement_Home` et la lier à `OU=fournil` |
+| 2 | [GPO-02-Creer-Lier-GPO](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-02-creer-lier-gpo) | Créer la GPO `GPO_Emplacement_Home` et la lier à `OU=Fournil` |
 | 3 | [GPO-03-Deploiement-SYSVOL](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-03-deploiement-sysvol) | Copier le script dans le SYSVOL de la GPO (répliqué vers DC02) |
 | 4 | [GPO-04-Enregistrer-Script](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-04-enregistrer-script) | Créer `psscripts.ini` pour que Windows exécute le script à la connexion |
 | 5 | [GPO-05-Verification-Depannage](https://cours.kaya.ovh/active-directory/ad/annexe/03-gpo-manuel-gpo-05-verification-depannage) | Tester le raccourci + résoudre les problèmes courants |

@@ -52,8 +52,9 @@ Forêt: ad.fournil.lab
     └── ad.fournil.lab
         ├── Default Domain Policy        ← GPO liée au domaine (stratégie mdp)
         ├── OU=Fournil
-        │   ├── OU=Production
-        │   │   └── GPO_Lecteur_Production
+        │   ├── OU=Utilisateurs
+        │   │   └── OU=Production
+        │   │       └── GPO_Lecteur_Production
         │   └── OU=Ordinateurs
         │       └── GPO_Securite_Postes
         └── Domain Controllers
@@ -115,7 +116,7 @@ New-GPLink -Name "GPO_Fournil_FondEcran" `
            -Target "OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # Créer et lier en une seule commande
-New-GPO -Name "GPO_Securite_Postes" | New-GPLink -Target "OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+New-GPO -Name "GPO_Securite_Postes" | New-GPLink -Target "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
 - [New-GPO — Microsoft Learn](https://learn.microsoft.com/fr-fr/powershell/module/grouppolicy/new-gpo)
@@ -186,7 +187,7 @@ Set-GPPermission -Name "GPO_Lecteur_Production" `
 `Configuration utilisateur → Modèles d'administration → Bureau → Bureau`
 → **Papier peint du Bureau** : `\\DC01\NETLOGON\fond.jpg` (le fichier doit être déposé dans `NETLOGON`, c'est-à-dire `C:\Windows\SYSVOL\sysvol\ad.fournil.lab\scripts` sur le DC)
 
-![ad-tp05-sdupont-fond-gpo](https://cours.kaya.ovh/active-directory/assets/supports/2a8ec21cafad212ae4ea.png)
+![ad-tp05-sdupont-fond-gpo](https://cours.kaya.ovh/active-directory/assets/supports/b8e25f9d4b9d680e862a.png)
 *Session d'un utilisateur de l'OU `Utilisateurs` sur un poste du domaine : le fond est imposé par la GPO.*
 
 ### Mappage de lecteurs réseau (Configuration utilisateur — Préférences)
@@ -194,7 +195,7 @@ Set-GPPermission -Name "GPO_Lecteur_Production" `
 `Configuration utilisateur → Préférences → Paramètres Windows → Mappages de lecteurs`
 → **Nouveau → Lecteur mappé** : lettre `P:`, chemin `\\DC01\Production`
 
-![ad-tp05-sdupont-lecteur-p](https://cours.kaya.ovh/active-directory/assets/supports/040f57648fe420871793.png)
+![ad-tp05-sdupont-lecteur-p](https://cours.kaya.ovh/active-directory/assets/supports/e86e4f3242145dae9487.png)
 *Le lecteur `P:` apparaît dans « Emplacements réseau ». Avec un filtrage de sécurité sur `GG_Production`, seuls les membres de ce groupe le reçoivent.*
 
 > [!WARNING] Lecteur mappé ≠ droit d'écrire
@@ -243,8 +244,8 @@ gpresult /r
 gpresult /user cfontaine /r
 ```
 
-![ad-tp05-gpresult-tvidal](https://cours.kaya.ovh/active-directory/assets/supports/78e7a01c2a9199c7d94c.png)
-*`gpresult /r /scope user` dans la session de `tvidal` : `GPO_Fond_Ecran` est appliquée, `GPO_Lecteur_Production` est écartée par le filtrage de sécurité (« Denied (Security) »).*
+![ad-tp05-gpresult-tvidal](https://cours.kaya.ovh/active-directory/assets/supports/782a5a8a28e3cc7c14b3.png)
+*`gpresult /r /scope user` dans la session de `tvidal` : `GPO_Fond_Ecran` est appliquée, `GPO_Lecteur_Production` est écartée par le filtrage de sécurité (« Refusé (Sécurité) »).*
 
 > [!TIP] Checklist de dépannage GPO
 > 1. La GPO est-elle bien **liée** à la bonne OU ?

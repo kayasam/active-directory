@@ -8,7 +8,7 @@ $baseDN = "DC=ad,DC=fournil,DC=lab"
 # Dossier racine
 $rootFolder = "C:\"
 # Nom de l'OU racine entreprise
-$entrepriseOU = "fournil"
+$entrepriseOU = "Fournil"
 
 # OUs de type d'objet (séparation bonnes pratiques)
 $ouUtilisateurs = "Utilisateurs"
@@ -212,10 +212,10 @@ Write-Host "`n=============================================" -ForegroundColor Bl
 Write-Host "PHASE 1 : Structure de base" -ForegroundColor Blue
 Write-Host "=============================================`n" -ForegroundColor Blue
 
-# OU racine : fournil
+# OU racine : Fournil
 $entreprisePath = New-OUIfNotExists -ouName $entrepriseOU -parentPath $baseDN
 
-# OUs de type d'objet sous fournil
+# OUs de type d'objet sous Fournil
 $utilisateursBasePath = New-OUIfNotExists -ouName $ouUtilisateurs -parentPath $entreprisePath
 $groupesBasePath = New-OUIfNotExists -ouName $ouGroupes -parentPath $entreprisePath
 $ordinateursBasePath = New-OUIfNotExists -ouName $ouOrdinateurs -parentPath $entreprisePath
@@ -340,7 +340,7 @@ $userCsvContent = Import-Csv -Path $userCsvPath -Delimiter ','
 foreach ($user in $userCsvContent) {
     Write-Host "--- $($user.Prenom) $($user.Nom) ($($user.Login))" -ForegroundColor Cyan
 
-    # Chemin dans la branche Utilisateurs : OU=service,OU=pole,OU=entite,OU=Utilisateurs,OU=fournil,DC=...
+    # Chemin dans la branche Utilisateurs : OU=service,OU=pole,OU=entite,OU=Utilisateurs,OU=Fournil,DC=...
     $ouParts = @()
     if ($user.Service -and $user.Service -ne "") { $ouParts += "OU=$($user.Service)" }
     if ($user.Pole -and $user.Pole -ne "") { $ouParts += "OU=$($user.Pole)" }

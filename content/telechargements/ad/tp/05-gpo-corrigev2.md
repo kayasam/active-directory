@@ -41,7 +41,7 @@
 >
 > Via PowerShell :
 > ```powershell
-> New-GPO -Name "GPO_Fond_Ecran" | New-GPLink -Target "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab"
+> New-GPO -Name "GPO_Fond_Ecran" | New-GPLink -Target "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
 **A3.** Modifie la GPO pour imposer un fond d'écran. Chemin du paramètre :
@@ -70,7 +70,7 @@ Utilise `\\DC01\NETLOGON\fond.jpg` comme chemin (le dossier NETLOGON est un part
 > ```
 > Le fond d'écran s'applique à la **prochaine ouverture de session** (déconnexion/reconnexion) : `gpupdate /force` met à jour la stratégie, mais l'Explorateur ne recharge pas toujours le papier peint à chaud. Si le fichier image n'est pas accessible, Windows affiche un fond uni : vérifier que le chemin UNC est accessible à l'utilisateur.
 >
-> ![ad-tp05-sdupont-fond-gpo](https://cours.kaya.ovh/active-directory/assets/supports/2a8ec21cafad212ae4ea.png)
+> ![ad-tp05-sdupont-fond-gpo](https://cours.kaya.ovh/active-directory/assets/supports/b8e25f9d4b9d680e862a.png)
 > *Session de `sdupont` sur PC-PROD-01 : le fond imposé par `GPO_Fond_Ecran` est appliqué.*
 
 **A5.** Quelle commande permet de voir toutes les GPO appliquées à `jrenard` ?
@@ -91,7 +91,7 @@ Utilise `\\DC01\NETLOGON\fond.jpg` comme chemin (le dossier NETLOGON est un part
 
 > [!success]- Afficher la correction — B1
 > ```powershell
-> New-GPO -Name "GPO_Securite_Postes" | New-GPLink -Target "OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+> New-GPO -Name "GPO_Securite_Postes" | New-GPLink -Target "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
 **B2.** Configure le verrouillage automatique après **10 minutes** d'inactivité. Chemin :
@@ -123,7 +123,7 @@ La GPO `GPO_Securite_Postes` apparaît-elle dans les GPO ordinateur appliquées 
 > ```
 > Section "Stratégies de groupe d'ordinateur appliquées" : `GPO_Securite_Postes` doit apparaître. Résultat attendu (`gpresult /scope computer /r`) :
 > ```
-> CN=PC-PROD-01,OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab
+> CN=PC-PROD-01,OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab
 > Group Policy was applied from:      DC01.ad.fournil.lab
 > Applied Group Policy Objects
 >     GPO_Securite_Postes
@@ -149,13 +149,13 @@ La GPO `GPO_Securite_Postes` apparaît-elle dans les GPO ordinateur appliquées 
 > Ou via le Gestionnaire de serveur : Fichiers et stockage → Partages → Nouveau partage.
 >
 > > [!warning] Permissions de partage ET permissions NTFS
-> > Le droit effectif est le **plus restrictif des deux**. Si le partage ne donne que `-ReadAccess` à `DL_Partage_Production_Lecture`, `sdupont` (droit NTFS **Modification** via `DL_Partage_Production_Ecriture`) obtient **« Access to the path 'P:\…' is denied »** en écriture. Il faut donner **Modifier** (`-ChangeAccess`) au groupe Écriture sur le partage.
+> > Le droit effectif est le **plus restrictif des deux**. Si le partage ne donne que `-ReadAccess` à `DL_Partage_Production_Lecture`, `sdupont` (droit NTFS **Modification** via `DL_Partage_Production_Ecriture`) obtient **« L’accès au chemin d’accès 'P:\…' est refusé »** en écriture. Il faut donner **Modifier** (`-ChangeAccess`) au groupe Écriture sur le partage.
 > >
-> > ![ad-tp05-sdupont-ecriture-p](https://cours.kaya.ovh/active-directory/assets/supports/9ced36760affbbb55044.png)
+> > ![ad-tp05-sdupont-ecriture-p](https://cours.kaya.ovh/active-directory/assets/supports/99bcd5a3004797b202a4.png)
 > >
 > > Après `Grant-SmbShareAccess -Name Production -AccountName "FOURNIL\DL_Partage_Production_Ecriture" -AccessRight Change -Force` :
 > >
-> > ![ad-tp05-sdupont-ecriture-p-ok](https://cours.kaya.ovh/active-directory/assets/supports/e9b90530e32518b31f19.png)
+> > ![ad-tp05-sdupont-ecriture-p-ok](https://cours.kaya.ovh/active-directory/assets/supports/6813fe14a9bebba54610.png)
 > >
 > > Pratique courante en entreprise : partage en *Utilisateurs authentifiés : Modifier* (ou Contrôle total) et toute la finesse en **NTFS**. On évite ainsi ce type de conflit.
 >
@@ -165,7 +165,7 @@ La GPO `GPO_Securite_Postes` apparaît-elle dans les GPO ordinateur appliquées 
 
 > [!success]- Afficher la correction — C2
 > ```powershell
-> New-GPO -Name "GPO_Lecteur_Production" | New-GPLink -Target "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab"
+> New-GPO -Name "GPO_Lecteur_Production" | New-GPLink -Target "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
 **C3.** Dans la GPO, configure un mappage du lecteur `P:` vers `\\DC01\Production` :
@@ -210,13 +210,13 @@ La GPO `GPO_Securite_Postes` apparaît-elle dans les GPO ordinateur appliquées 
 >
 > Sessions de `sdupont` puis de `tvidal` sur PC-PROD-01 :
 >
-> ![ad-tp05-sdupont-lecteur-p](https://cours.kaya.ovh/active-directory/assets/supports/040f57648fe420871793.png)
+> ![ad-tp05-sdupont-lecteur-p](https://cours.kaya.ovh/active-directory/assets/supports/e86e4f3242145dae9487.png)
 >
-> ![ad-tp05-tvidal-sans-p](https://cours.kaya.ovh/active-directory/assets/supports/ba596f9ec3095be543d7.png)
+> ![ad-tp05-tvidal-sans-p](https://cours.kaya.ovh/active-directory/assets/supports/96de3ce6587a1db7b722.png)
 >
-> Le `gpresult` de `tvidal` le confirme : `GPO_Lecteur_Production` est **filtrée** (« Denied (Security) »), `GPO_Fond_Ecran` est appliquée.
+> Le `gpresult` de `tvidal` le confirme : `GPO_Lecteur_Production` est **filtrée** (« Refusé (Sécurité) »), `GPO_Fond_Ecran` est appliquée.
 >
-> ![ad-tp05-gpresult-tvidal](https://cours.kaya.ovh/active-directory/assets/supports/78e7a01c2a9199c7d94c.png)
+> ![ad-tp05-gpresult-tvidal](https://cours.kaya.ovh/active-directory/assets/supports/782a5a8a28e3cc7c14b3.png)
 
 ## Partie E — Bonus
 

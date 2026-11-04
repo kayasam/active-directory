@@ -1,13 +1,13 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "e7e1f70f667678879f50769b4a3a1c0633a9a39b86f97bb8f39ac0528693b51c",
+  "pdfSha256": "8f2b17bae82f9134c95e7502f8b3538a33a23730940041b8caa593fd9bb2ed55",
   "chapters": [
     {
       "key": "ad/01-infrastructure-ad",
       "title": "01. Infrastructure Active Directory",
       "href": "https://cours.kaya.ovh/active-directory/ad/01-infrastructure-ad/",
       "download": "telechargements/ad/cours/01-infrastructure-ad.md",
-      "sourceSha256": "8d641b4ea2abaad30657dd48af6d6738a8bde5114aa865f1015bd9b1921cce38",
+      "sourceSha256": "0911b8ca7867cfa78cfaa720128a24d4b8d308ff8d55c70eb55f9536c722af39",
       "startPage": 2
     },
     {
@@ -15,7 +15,7 @@
       "title": "02. Structure logique : OUs, outils, délégation",
       "href": "https://cours.kaya.ovh/active-directory/ad/02-structure-logique/",
       "download": "telechargements/ad/cours/02-structure-logique.md",
-      "sourceSha256": "f4fb1d98785cbe45366a566e0dd84fb04627e0d21c79f89d18148869595a6a34",
+      "sourceSha256": "da282125b7bde34efa7d2556397e45291233e6ff7090b16f97e37052b796dc4f",
       "startPage": 10
     },
     {
@@ -23,32 +23,32 @@
       "title": "03. Objets AD : utilisateurs, ordinateurs, groupes",
       "href": "https://cours.kaya.ovh/active-directory/ad/03-objets-ad/",
       "download": "telechargements/ad/cours/03-objets-ad.md",
-      "sourceSha256": "eb2adbd1ec4eb7842aa6e29b6bfe20b4b42564c0d00df999b3291980ace002bc",
-      "startPage": 17
+      "sourceSha256": "ff312aa4738c9d2ac45398edd58f4c7695d325ae086231f3730257a227689116",
+      "startPage": 18
     },
     {
       "key": "ad/04-sites-replication",
       "title": "04. Sites AD et réplication",
       "href": "https://cours.kaya.ovh/active-directory/ad/04-sites-replication/",
       "download": "telechargements/ad/cours/04-sites-replication.md",
-      "sourceSha256": "25cabd608f409330e7ca8b6d5a02cb0a775a146dd1476479f0c9c73d53d73707",
-      "startPage": 26
+      "sourceSha256": "19dd472866a85955ef60d20ef85ff78bb8c25c6c0e0f8a4f7fcc0d97a798d7cc",
+      "startPage": 27
     },
     {
       "key": "ad/05-gpo",
       "title": "05. Stratégies de groupe (GPO)",
       "href": "https://cours.kaya.ovh/active-directory/ad/05-gpo/",
       "download": "telechargements/ad/cours/05-gpo.md",
-      "sourceSha256": "4e79e2d325cf096cdf3b26aa1f3117fea4f51874cd4bc1af7579fd953704e4dd",
-      "startPage": 33
+      "sourceSha256": "a62f8d6f33ee4aea43048c421aeb6465b3cfeb951f9bfca5365cf4a9301b58dc",
+      "startPage": 34
     },
     {
       "key": "ad/06-securite-ad",
       "title": "06. Sécurité Active Directory",
       "href": "https://cours.kaya.ovh/active-directory/ad/06-securite-ad/",
       "download": "telechargements/ad/cours/06-securite-ad.md",
-      "sourceSha256": "bf9144417eac7ad1dcfca274e0a15f64069706b8b63f11e5e69e29db92765ca5",
-      "startPage": 42
+      "sourceSha256": "df0a6362661d0ad8a3b0a6b48b5bc91ef1ce67ad38d048b058e66d24844106fd",
+      "startPage": 43
     },
     {
       "key": "ad/07-maintenance-depannage",
@@ -56,23 +56,23 @@
       "href": "https://cours.kaya.ovh/active-directory/ad/07-maintenance-depannage/",
       "download": "telechargements/ad/cours/07-maintenance-depannage.md",
       "sourceSha256": "6e18ef20dad6e4711320c64b6d51d304c251c586e59584889cbfa58062c526de",
-      "startPage": 51
+      "startPage": 52
     },
     {
       "key": "ad/08-tiering",
       "title": "08. Tiering : cloisonner l'administration",
       "href": "https://cours.kaya.ovh/active-directory/ad/08-tiering/",
       "download": "telechargements/ad/cours/08-tiering.md",
-      "sourceSha256": "79f99d0e22b1124913f4b6b4aaf252a836f72f5e9747d0e9858ce8bc0d11f514",
-      "startPage": 56
+      "sourceSha256": "b5706f9ede09a5f32603e0ee2cbdb852d1e9493c99a2052f150f77359505ff64",
+      "startPage": 57
     },
     {
       "key": "ad/09-tp-final",
       "title": "Le Fournil — Infrastructure Active Directory",
       "href": "https://cours.kaya.ovh/active-directory/ad/09-tp-final/",
       "download": "telechargements/ad/cours/09-tp-final.md",
-      "sourceSha256": "ea7057fb5504497d07506dd66e4212a26a0f75bb7bfe74cdb470adcb45cf5ff0",
-      "startPage": 68
+      "sourceSha256": "c0fb626f5f5bed042af2cfe02d5c28272570f47226b4c840259fcf66921d0c77",
+      "startPage": 70
     }
   ]
 }

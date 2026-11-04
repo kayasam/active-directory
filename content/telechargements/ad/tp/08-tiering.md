@@ -20,7 +20,7 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 
 ## Prérequis
 
-- `DC01` (`192.168.3.10`) et `PC-PROD-01` joint au domaine, dans `OU=Postes,OU=Ordinateurs` (TP 03)
+- `DC01` (`192.168.3.10`) et `PC-PROD-01` joint au domaine, dans `OU=Postes,OU=Ordinateurs,OU=Fournil` (TP 03)
 - Stratégie de mot de passe du TP 06 en place : **10 caractères minimum**. Dans ce TP, les comptes d'administration utilisent `Adm!Fournil@2026`.
 
 ---
@@ -47,27 +47,40 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 
 ## Partie B — Comptes et groupes par niveau (20 min)
 
-**B1.** Crée l'OU `Administration` à la racine du domaine, avec trois sous-OU `Tier0`, `Tier1` et `Tier2`.
+**B1.** Crée l'OU `Administration` **directement sous le domaine**, à côté de `OU=Fournil` (et non dessous), avec l'arborescence suivante :
 
-**B2.** Crée dans chaque sous-OU le groupe global de sécurité correspondant : `GG_Tier0_Admins`, `GG_Tier1_Admins`, `GG_Tier2_Admins`.
+```
+OU=Administration
+├── OU=Tier0  → Comptes, Groupes, Services
+├── OU=Tier1  → Comptes, Groupes, Serveurs, Services
+└── OU=Tier2  → Comptes, Groupes
+```
+
+Pourquoi ne pas la ranger sous `OU=Fournil` ?
+
+**B2.** Crée dans l'OU `Groupes` de chaque niveau le groupe global de sécurité correspondant : `GG_Tier0_Admins`, `GG_Tier1_Admins`, `GG_Tier2_Admins`.
 
 **B3.** Crée les trois comptes d'administration (mot de passe `Adm!Fournil@2026`) et ajoute-les à leur groupe :
 
 | Compte | OU | Groupe |
 |---|---|---|
-| `adm0.sysinfo` | `Tier0` | `GG_Tier0_Admins` |
-| `adm1.sysinfo` | `Tier1` | `GG_Tier1_Admins` |
-| `adm2.jrenard` | `Tier2` | `GG_Tier2_Admins` |
+| `adm0.sysinfo` | `Tier0/Comptes` | `GG_Tier0_Admins` |
+| `adm1.sysinfo` | `Tier1/Comptes` | `GG_Tier1_Admins` |
+| `adm2.jrenard` | `Tier2/Comptes` | `GG_Tier2_Admins` |
 
 **B4.** Ajoute `GG_Tier0_Admins` au groupe `Admins du domaine`. Vérifie avec une commande que `adm0.sysinfo` est bien, indirectement, administrateur du domaine.
 
 **B5.** `adm.sysinfo`, créé au TP 06, est membre de `Opérateurs de compte`. Dans quel niveau ce compte se trouve-t-il réellement ? Que faudrait-il en faire ?
 
+**B6.** Range les objets d'administration qui traînent encore sous `OU=Fournil` :
+- `svc_backup` (TP 06), classé Tier 0 en A1, va dans `Tier0/Services` ;
+- les OUs `OU=Services,OU=Fournil` et `OU=Serveurs,OU=Ordinateurs,OU=Fournil`, désormais vides, sont supprimées : les serveurs membres iront dans `Tier1/Serveurs`.
+
 ---
 
 ## Partie C — Faire respecter la règle (30 min)
 
-**C1.** Crée la GPO `GPO_Tier2_Postes`, liée à `OU=Postes,OU=Ordinateurs`. Dans **Attribution des droits utilisateur**, ajoute `GG_Tier0_Admins`, `GG_Tier1_Admins` et `Admins du domaine` aux quatre droits suivants :
+**C1.** Crée la GPO `GPO_Tier2_Postes`, liée à `OU=Postes,OU=Ordinateurs,OU=Fournil`. Dans **Attribution des droits utilisateur**, ajoute `GG_Tier0_Admins`, `GG_Tier1_Admins` et `Admins du domaine` aux quatre droits suivants :
 - Interdire l'ouverture d'une session locale
 - Interdire l'ouverture de session par les services Bureau à distance
 - Interdire l'ouverture de session en tant que tâche
@@ -83,7 +96,7 @@ Aujourd'hui, chez Fournil, l'admin système utilise le même compte pour tout, e
 
 Que se passe-t-il dans chaque cas ? `adm2.jrenard` est-il administrateur du poste ?
 
-**C5.** Crée de la même façon la GPO `GPO_Tier1_Serveurs`, liée à `OU=Serveurs,OU=Ordinateurs` : elle interdit la connexion de `GG_Tier0_Admins`, `GG_Tier2_Admins` et `Admins du domaine`, et rend `GG_Tier1_Admins` administrateur local.
+**C5.** Crée de la même façon la GPO `GPO_Tier1_Serveurs`, liée à `OU=Serveurs,OU=Tier1,OU=Administration` : elle interdit la connexion de `GG_Tier0_Admins`, `GG_Tier2_Admins` et `Admins du domaine`, et rend `GG_Tier1_Admins` administrateur local.
 
 **C6.** Pourquoi ne faut-il **jamais** lier ces GPO à la racine du domaine ni à l'OU `Domain Controllers` ?
 
@@ -108,9 +121,9 @@ Supprime chaque connexion après l'essai (`net use * /delete /y`). Explique la d
 
 **E1.** Sur `DC01`, étends le schéma AD pour Windows LAPS.
 
-**E2.** Autorise les ordinateurs de `OU=Postes,OU=Ordinateurs` à enregistrer leur propre mot de passe LAPS.
+**E2.** Autorise les ordinateurs de `OU=Postes,OU=Ordinateurs,OU=Fournil` à enregistrer leur propre mot de passe LAPS.
 
-**E3.** Crée la GPO `GPO_LAPS_Postes`, liée à `OU=Postes,OU=Ordinateurs`, avec les paramètres :
+**E3.** Crée la GPO `GPO_LAPS_Postes`, liée à `OU=Postes,OU=Ordinateurs,OU=Fournil`, avec les paramètres :
 - Configurer le répertoire de sauvegarde des mots de passe : **Active Directory**
 - Paramètres du mot de passe : complexité maximale, **16** caractères, **30** jours
 

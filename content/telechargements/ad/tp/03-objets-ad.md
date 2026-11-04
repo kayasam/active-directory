@@ -42,7 +42,7 @@ Options : mot de passe `P@ssw0rd!`, changer le mot de passe à la prochaine conn
 
 **A3.** Vérifie que tous les comptes sont créés :
 ```powershell
-Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,DC=ad,DC=fournil,DC=lab" -SearchScope Subtree | Select-Object Name, SamAccountName, Enabled
+Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" -SearchScope Subtree | Select-Object Name, SamAccountName, Enabled
 ```
 
 **A4.** Le compte de `Marc Lebrun` doit être temporairement désactivé (arrêt maladie longue durée). Désactive-le via PowerShell.
@@ -129,17 +129,17 @@ Get-ADComputer -Filter * | Select-Object Name, DistinguishedName
 
 Dans quelle OU le compte a-t-il atterri ? Pourquoi ? (Pense à ce que tu as fait au TP 02, partie C.)
 
-S'il est resté dans `CN=Computers` (redirection non faite), déplace-le dans `OU=Postes,OU=Ordinateurs` via `dsa.msc` (glisser-déposer) ou PowerShell :
+S'il est resté dans `CN=Computers` (redirection non faite), déplace-le dans `OU=Postes,OU=Ordinateurs,OU=Fournil` via `dsa.msc` (glisser-déposer) ou PowerShell :
 
 ```powershell
-Get-ADComputer PC-PROD-01 | Move-ADObject -TargetPath "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab"
+Get-ADComputer PC-PROD-01 | Move-ADObject -TargetPath "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
 **C6.** Pré-crée un second compte ordinateur `PC-DIRECTION-01` directement dans la bonne OU :
 
 ```powershell
 New-ADComputer -Name "PC-DIRECTION-01" `
-               -Path "OU=Postes,OU=Ordinateurs,DC=ad,DC=fournil,DC=lab" `
+               -Path "OU=Postes,OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
                -Enabled $true
 ```
 
