@@ -61,6 +61,8 @@
         {
           "slug": "09-tp-final",
           "course": "cours/09-tp-final/procedures/Guide-déploiement-fournil.md",
+          "html": "cours/09-tp-final/09-projet-fournil.html",
+          "guidedTp": true,
           "tps": [
             {
               "file": "cours/09-tp-final/procedures/TP/00.0-DEMARRER-ICI.md",

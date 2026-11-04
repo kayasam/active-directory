@@ -165,7 +165,7 @@ plugins:
     enabled: true
     options:
       filterFn: >-
-        function(node) { return node.slugSegment !== "tags" && !["ad/annexe/index"].includes(node.slug); }
+        function(node) { return node.slugSegment !== "tags" && !["ad/annexe", "ad/09-tp-final/tp/"].some(prefix => node.slug.startsWith(prefix)); }
       mapFn: >-
         function(node) {}
       sortFn: >-

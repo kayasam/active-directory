@@ -1,5 +1,15 @@
-$adUser = Get-ADUser -Identity $env:USERNAME -Properties HomeDirectory
-$NetworkLocationPath = $adUser.HomeDirectory
+﻿# Windows PowerShell sur le client : interrogation LDAP, sans module RSAT AD.
+$loginLdap = $env:USERNAME.Replace('\', '\5c').Replace('*', '\2a').Replace('(', '\28').Replace(')', '\29')
+$searcher = New-Object System.DirectoryServices.DirectorySearcher
+$searcher.Filter = "(&(objectCategory=person)(objectClass=user)(sAMAccountName=$loginLdap))"
+[void]$searcher.PropertiesToLoad.Add('homeDirectory')
+try {
+    $result = $searcher.FindOne()
+    if (-not $result -or $result.Properties['homedirectory'].Count -eq 0) { exit }
+    $NetworkLocationPath = [string]$result.Properties['homedirectory'][0]
+} finally {
+    $searcher.Dispose()
+}
 
 if (-not $NetworkLocationPath) { exit }
 

@@ -17,6 +17,14 @@ GitHub Actions construit le contenu généré et vérifié, puis l’envoie par 
 
 L’accès HTTP reste protégé par Traefik. Le compte formateur existant fonctionne ; le mot de passe stagiaire se configure séparément.
 
+## Projet Fournil guidé
+
+Le bouton TP du chapitre 09 ouvre un guide HTML en 12 étapes. Sa source durable est `Formations/active-directory/cours/09-tp-final/09-projet-fournil.html` dans le coffre Obsidian. La synchronisation copie ce fichier sans le générer depuis les notes Markdown.
+
+Le niveau débutant couvre un service et Marc Lebrun ; CSV et avancé couvrent les 30 salariés. La progression est stockée dans le navigateur, séparément par niveau. Les coches représentent des vérifications déclarées par l’élève, sans connexion aux VM.
+
+Les anciennes procédures restent accessibles depuis les aides du guide. Leurs pages ne surchargent plus l’explorateur. Les liens du HTML sont adaptés pour le site et pour le ZIP hors ligne, puis vérifiés à la construction. Les tests de session utilisateur se font sur CLI01, distinct des deux contrôleurs de domaine.
+
 ## Référence du modèle Quartz
 
 # Modèle de site de formation

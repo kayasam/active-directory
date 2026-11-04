@@ -127,6 +127,7 @@ def prepare():
     offline_names={}
     for item in chapters:
         offline_names[item['path']]=(item['track'],'cours/'+item['slug']+'.md')
+        if 'htmlPath' in item: offline_names[item['htmlPath']]=(item['track'],'cours/'+item['slug']+'.html')
         for exercise in item['exercises']:
             offline_names[exercise['path']]=(item['track'],'tp/'+exercise['downloadStem']+'.md')
             corrected=exercise['correctionPath']
@@ -146,11 +147,32 @@ def prepare():
             write(ROOT/'assets/supports'/name,target.read_bytes())
             return 'assets/supports/'+name
         return None
-    # Collect attachments before staging, including the TP and published corrections.
+    # Rewrite authored HTML links for the site and the downloadable offline copy.
+    def resolve_html(text, origin, offline_copy=False):
+        def link(m):
+            raw=html.unescape(m[2]); parsed=urlsplit(raw)
+            if parsed.scheme or parsed.netloc or not parsed.path: return m[0]
+            asset=attachment(raw,origin)
+            target=(origin.parent/unquote(parsed.path)).resolve()
+            if target in private_corrections: return m[1]+'#'+m[3]
+            if offline_copy:
+                name=offline_names[origin][1]
+                if asset: value=posixpath.relpath(asset,posixpath.dirname(name))
+                elif target in offline_names and offline_names[target][0]==offline_names[origin][0]: value=posixpath.relpath(offline_names[target][1],posixpath.dirname(name))
+                else: raise ValueError(f'Lien HTML hors ligne non déclaré : {origin.name} → {raw}')
+            else:
+                if asset: value=base+'/'+asset
+                elif target in routes: value=routes[target]
+                else: raise ValueError(f'Lien HTML non déclaré : {origin.name} → {raw}')
+            return m[1]+html.escape(value+('#'+parsed.fragment if parsed.fragment else ''),quote=True)+m[3]
+        return re.sub(r'((?:href|src)=")([^"]+)(")',link,text)
+    # Collect attachments before staging, including HTML and published corrections.
     for origin in routes:
         if origin.suffix == '.md':
             for raw in re.findall(r'!?\[[^\]]*\]\(([^\s)]+)\)',origin.read_text(encoding='utf-8-sig')):
                 attachment(raw,origin)
+        elif origin.suffix == '.html':
+            resolve_html(origin.read_text(encoding='utf-8-sig'),origin)
     def offline(text,origin):
         track,name=offline_names[origin]
         def link(m):
@@ -204,13 +226,17 @@ def prepare():
             public_text=resolve(course_text,item['path']); relative='telechargements/'+tid+'/cours/'+slug+'.md'
             write(stage/relative,public_text); files['cours/'+slug+'.md']=offline(course_text,item['path'])
             pdf_entries.append(dict(key=key,title=label,href=item['href'],download=relative,sourceSha256=digest(public_text.encode())))
-            write(stage/key/'index.md',page(label,bar(download_button(base+'/'+relative,'Télécharger le cours'))+'\n\n'+without_heading(public_text)))
+            guide_intro=''
+            if item.get('guidedTp'):
+                guide_intro='<div class="note"><strong>Projet Fournil — parcours guidé</strong><p>Commencez par le TP HTML : 12 étapes, un choix de niveau et des points de contrôle.</p><p><a class="resource-button" href="'+base+'/'+key+'/tp">Ouvrir le projet guidé →</a></p></div>\n\n'
+            write(stage/key/'index.md',page(label,bar(download_button(base+'/'+relative,'Télécharger le cours'))+'\n\n'+guide_intro+without_heading(public_text)))
             for kind in ('html','quiz'):
                 if kind not in item: continue
                 support='cours/'+key+('-interactif.html' if kind=='html' else '-quiz.html')
                 if kind=='html':
-                    raw=item['htmlPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
-                    offline_html=raw.replace(base+'/assets/','../assets/'); files['cours/'+slug+'.html']=offline_html
+                    authored=item['htmlPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
+                    raw=resolve_html(authored,item['htmlPath'])
+                    offline_html=resolve_html(authored,item['htmlPath'],True).replace(base+'/assets/','../assets/'); files['cours/'+slug+'.html']=offline_html
                 else:
                     bank=json.loads(item['quizPath'].read_text(encoding='utf-8-sig')); questions=bank['questions']; assert len(questions)==20
                     for q in questions: assert len(q['choices'])==4 and 0<=q['answer']<4 and q['explanation']
@@ -219,7 +245,11 @@ def prepare():
                     offline_html=raw.replace(base+'/assets/','../assets/').replace(item['href'],slug+'.md'); files['cours/'+slug+'-quiz.html']=offline_html
                 write(stage/support,raw)
                 frame='<section class="support-viewer" data-course-key="'+key+'" data-support-kind="'+kind+'"><iframe class="support-frame" src="'+base+'/'+support+'" data-support-src="../../../'+support+'" title="'+html.escape(label,quote=True)+'"></iframe></section>'
-                write(stage/key/kind/'index.md',page(label+' — '+('HTML interactif' if kind=='html' else 'Quiz'),bar(download_button(base+'/'+relative,'Télécharger le cours'))+'\n'+frame))
+                support_download=('<a class="resource-download" download href="'+base+'/'+support+'">↓ Télécharger le guide (.html)</a>' if kind=='html' else download_button(base+'/'+relative,'Télécharger le cours'))
+                write(stage/key/kind/'index.md',page(label+' — '+('HTML interactif' if kind=='html' else 'Quiz'),bar(support_download)+'\n'+frame))
+                if kind=='html' and item.get('guidedTp'):
+                    tp_frame=frame.replace('data-support-src="../../../','data-support-src="../../')
+                    write(stage/key/'tp.md',page('Projet Fournil — TP guidé',bar(support_download)+'\n'+tp_frame))
             for exercise in item['exercises']:
                 tp=exercise['path']; raw=body(tp.read_text(encoding='utf-8-sig')); tp_label=title(raw); tp_url=base+'/'+exercise['key']; download_stem=exercise['downloadStem']
                 corrected=exercise['correctionPath']; visible=exercise['visible']
@@ -239,7 +269,7 @@ def prepare():
                 write(stage/tp_download,tp_public+ ('\n\n[Afficher les corrections]('+correction_url+')\n' if visible else ''))
                 write(stage/(exercise['key']+'.md'),page(tp_label,bar(download_button(base+'/'+tp_download,'Télécharger le TP'))+'\n'+nav+'\n\n'+without_heading(tp_public)))
                 manifest['exercises'].append(dict(key=exercise['key'],correctionKey=exercise['correctionKey'],downloadStem=download_stem,track=tid,correction=visible))
-            if len(item['exercises'])>1:
+            if len(item['exercises'])>1 and not item.get('guidedTp'):
                 listing='\n\n'.join('- ['+title(e['path'].read_text(encoding='utf-8-sig'))+']('+base+'/'+e['key']+')' for e in item['exercises'])
                 write(stage/key/'tp.md',page('Travaux pratiques — '+label,bar()+'\n\n'+listing))
             links.append('<a class="home-chapter" href="'+item['href']+'"><span class="home-chapter__number">'+slug[:2]+'</span><strong>'+html.escape(label)+'</strong><span aria-hidden="true">→</span></a>')
@@ -274,7 +304,9 @@ def prepare():
     config=re.sub(r'      filterFn: >-\n.*?(?=      mapFn:)', '',config,flags=re.S)
     hidden=[track['id']+'/annexe/index' for track in site['tracks'] if track.get('hideAnnexe')]
     if hidden:
-        config=config.replace('      mapFn: >-', '      filterFn: >-\n        function(node) { return node.slugSegment !== "tags" && !'+json.dumps(hidden)+'.includes(node.slug); }\n      mapFn: >-',1)
+        hidden_prefixes=[track['id']+'/annexe' for track in site['tracks'] if track.get('hideAnnexe')]
+        hidden_prefixes += [c['key']+'/tp/' for c in chapters if c.get('guidedTp')]
+        config=config.replace('      mapFn: >-', '      filterFn: >-\n        function(node) { return node.slugSegment !== "tags" && !'+json.dumps(hidden_prefixes)+'.some(prefix => node.slug.startsWith(prefix)); }\n      mapFn: >-',1)
     config=re.sub(r'(?m)^  pageTitle:.*$',lambda _:'  pageTitle: '+json.dumps(site['title'],ensure_ascii=False),config)
     config=re.sub(r'(?m)^  baseUrl:.*$',lambda _:'  baseUrl: '+url.netloc+url.path,config)
     config=re.sub(r'      mapFn: >-\n.*?(?=      sortFn:)', '      mapFn: >-\n        function(node) {}\n', config, flags=re.S)

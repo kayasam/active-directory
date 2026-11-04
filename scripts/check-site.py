@@ -49,6 +49,12 @@ for track in manifest['tracks']:
             slug=entry['downloadStem']
             assert ('tp/'+slug+'-corrigev2.md' in names)==entry['correction']
         for name in names:
+            if name.endswith('.html'):
+                parser=Links();parser.feed(z.read(name).decode('utf-8'))
+                for link in parser.links:
+                    url=urlsplit(link)
+                    if url.scheme or url.netloc or not url.path:continue
+                    assert posixpath.normpath(posixpath.join(posixpath.dirname(name),unquote(url.path))) in names,(name,link)
             if not name.endswith('.md'):continue
             for link in re.findall(r'!?\[[^\]]*\]\(([^)]+)\)',z.read(name).decode('utf-8')):
                 url=urlsplit(link)
