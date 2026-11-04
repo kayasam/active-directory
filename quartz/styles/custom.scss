@@ -5,6 +5,7 @@
 @use "./course-resources.scss";
 @use "./support-viewer.scss";
 @use "./site-refresh.scss";
+@use "./image-viewer.scss";
 
 body[data-slug="00-contexte/index"] .page-listing {
   display: none;

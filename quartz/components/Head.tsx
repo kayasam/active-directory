@@ -8,6 +8,7 @@ import courseNavigation from "./scripts/course-navigation.inline"
 import courseResources from "./scripts/course-resources.inline"
 import supportViewer from "./scripts/support-viewer.inline"
 import siteExperience from "./scripts/site-experience.inline"
+import imageViewer from "./scripts/image-viewer.inline"
 import courseResourceIndex from "../../content/assets/course-resources.json"
 import workshopIndex from "../../content/assets/workshops.json"
 import siteIdentity from "../../content/assets/site.json"
@@ -118,7 +119,7 @@ export default (() => {
     )
   }
 
-  Head.afterDOMLoaded = [courseNavigation, courseResources, supportViewer, siteExperience]
+  Head.afterDOMLoaded = [courseNavigation, courseResources, supportViewer, siteExperience, imageViewer]
     .map((script) => "(() => {\n" + script + "\n})();")
     .join("\n")
   return Head
