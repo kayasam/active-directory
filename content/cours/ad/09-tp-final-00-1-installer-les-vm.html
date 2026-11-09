@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Créer les VM Hyper-V</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ---------- Thème (identique à 09-projet-fournil.html) ---------- */
+:root{
+  color-scheme:light;
+  --bg:#f7f3ec;--surface:#fffdf9;--surface2:#f2ece2;--ink:#241c15;--dim:#6b5d4f;--line:#e6dccf;--line-strong:#cdbda8;
+  --accent:#b4561f;--accent-soft:#f8e6d8;
+  --ph:#2f6db5;--phs:#e5eefa;
+  --srv:#3c5a86;--srv-s:#e8eef7;
+  --ok:#1f8a4c;--ok-soft:#e1f3e7;--ko:#c23b33;--ko-soft:#fbe4e1;--warn:#9c5f00;--warn-soft:#fff0d4;
+  --term:#1f1914;--term-ink:#f3e9dc;--term-dim:#a6978a;--term-acc:#f2b27c;
+  --shadow:0 1px 2px #3b2a1a0d,0 10px 30px #3b2a1a0f;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#14110e;--surface:#1d1915;--surface2:#28221c;--ink:#f2e9de;--dim:#b4a594;--line:#352d25;--line-strong:#54473a;
+  --accent:#f09a5f;--accent-soft:#3a2416;--ph:#83b3f0;--phs:#1b2a3e;--srv:#9bb6df;--srv-s:#1e2838;
+  --ok:#72d49c;--ok-soft:#15301f;--ko:#f28b82;--ko-soft:#3b1c1a;--warn:#f3c06b;--warn-soft:#3a2c12;
+  --term:#0e0c0a;--shadow:0 1px 2px #0005,0 10px 30px #0004;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#14110e;--surface:#1d1915;--surface2:#28221c;--ink:#f2e9de;--dim:#b4a594;--line:#352d25;--line-strong:#54473a;
+  --accent:#f09a5f;--accent-soft:#3a2416;--ph:#83b3f0;--phs:#1b2a3e;--srv:#9bb6df;--srv-s:#1e2838;
+  --ok:#72d49c;--ok-soft:#15301f;--ko:#f28b82;--ko-soft:#3b1c1a;--warn:#f3c06b;--warn-soft:#3a2c12;
+  --term:#0e0c0a;--shadow:0 1px 2px #0005,0 10px 30px #0004;
+}
+
+/* ---------- Base ---------- */
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,'Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3{font-family:'Bricolage Grotesque',Inter,sans-serif;line-height:1.15;letter-spacing:-.02em}
+p+p{margin-top:.65rem}
+a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+code,pre,kbd,.mono{font-family:'JetBrains Mono','Cascadia Code',Consolas,monospace}
+code{background:var(--surface2);border:1px solid var(--line);border-radius:6px;padding:.05em .38em;font-size:.86em;overflow-wrap:anywhere}
+kbd{display:inline-block;font-size:.78em;font-weight:600;padding:.1em .45em;border-radius:6px;border:1px solid var(--line-strong);border-bottom-width:3px;background:var(--surface)}
+ul,ol{padding-left:1.25rem;margin:.5rem 0 0}
+li+li{margin-top:.35rem}
+strong{font-weight:650}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;flex-wrap:wrap}
+.crumbs{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--dim);flex-wrap:wrap}
+.crumbs a{color:var(--ink);font-weight:600;text-decoration:none}
+.crumbs a:hover{color:var(--accent)}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ghost{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-strong);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--ink)}
+.ghost:hover{border-color:var(--accent)}
+
+/* ---------- Hero ---------- */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:end;padding:18px 0 28px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ph)}
+.kicker::before{content:'';width:22px;height:2px;background:currentColor;border-radius:2px}
+.hero h1{font-size:clamp(2.1rem,4.6vw,3.3rem);font-weight:800;margin:.6rem 0 .8rem}
+.hero h1 em{font-style:normal;color:var(--ph)}
+.lead{color:var(--dim);font-size:1.04rem;max-width:58ch}
+.hero-side{display:grid;gap:10px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:var(--shadow)}
+.fact b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:1.4rem;line-height:1.15}
+.fact span{font-size:.78rem;color:var(--dim)}
+.zero{display:flex;gap:12px;padding:14px 16px;border-radius:16px;background:var(--phs);border:1px solid color-mix(in srgb,var(--ph) 30%,transparent);font-size:.88rem}
+.zero b{color:var(--ph)}
+
+/* ---------- Mise en page ---------- */
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;align-items:start}
+.layout>aside,.layout>main{min-width:0}
+
+/* ---------- Arbre de progression ---------- */
+.rail{position:sticky;top:16px;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.rail-head{display:flex;align-items:center;gap:14px;padding:18px 18px 14px;border-bottom:1px solid var(--line)}
+.ring{width:60px;height:60px;flex:none}
+.ring .track{fill:none;stroke:var(--surface2);stroke-width:7}
+.ring .bar{fill:none;stroke:var(--ph);stroke-width:7;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .5s ease}
+.ring text{font:700 14px Inter,sans-serif;fill:var(--ink)}
+.rail-head b{display:block;font-size:.92rem}
+.rail-head span{display:block;font-size:.76rem;color:var(--dim)}
+.steps{list-style:none;margin:0;padding:12px 12px 14px}
+.steps li{position:relative;margin:0}
+.steps li:not(:last-child)::after{content:'';position:absolute;left:25px;top:30px;bottom:-14px;width:3px;border-radius:3px;background:var(--line);z-index:0}
+.steps li.done:not(:last-child)::after{background:var(--ph)}
+.node{position:relative;z-index:1;display:flex;align-items:center;gap:11px;width:100%;text-align:left;border-radius:12px;padding:6px 8px;text-decoration:none;color:var(--ink)}
+.node:hover{background:var(--surface2)}
+.dot{position:relative;flex:none;width:36px;height:36px}
+.dot svg{width:36px;height:36px;display:block}
+.dot .bg{fill:var(--surface);stroke:var(--line-strong);stroke-width:2}
+.dot .arc{fill:none;stroke:var(--ph);stroke-width:3;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .4s ease}
+.dot .num{position:absolute;inset:0;display:grid;place-items:center;font:700 .74rem 'JetBrains Mono',monospace;color:var(--dim)}
+.done .dot .bg{fill:var(--ph);stroke:var(--ph)}
+.done .dot .num{font-size:0;color:var(--surface)}
+.done .dot .num::after{content:'✓';font:700 .95rem Inter,sans-serif}
+.node-txt span{display:block;font-size:.86rem;font-weight:600;line-height:1.3}
+.node-txt small{display:block;font-size:.72rem;color:var(--dim)}
+.current .node{background:var(--phs)}
+.current .dot .bg{stroke:var(--ph)}
+.current:not(.done) .dot .num{color:var(--ph)}
+.rail-foot{padding:12px 18px 16px;border-top:1px solid var(--line);font-size:.74rem;color:var(--dim)}
+.rail-foot button{border:0;background:none;padding:0;text-decoration:underline;color:var(--dim);font-size:.74rem;margin-top:4px}
+
+/* ---------- Étapes ---------- */
+.step{scroll-margin-top:16px;margin-bottom:30px}
+.step-head{position:relative;overflow:hidden;display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 24px;box-shadow:var(--shadow)}
+.step-head::before{content:'';position:absolute;inset:0 auto 0 0;width:5px;background:var(--ph)}
+.step-num{flex:none;width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--phs);color:var(--ph);font:800 1.5rem 'Bricolage Grotesque',sans-serif}
+.step-head h2{font-size:clamp(1.35rem,2.4vw,1.75rem);font-weight:800}
+.step-head p{color:var(--dim);margin-top:4px}
+.where{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.mach{display:inline-flex;align-items:center;gap:6px;font:600 .74rem 'JetBrains Mono',monospace;padding:3px 9px;border-radius:7px;border:1px solid}
+.mach::before{content:'';width:7px;height:7px;border-radius:2px;background:currentColor}
+.mach.host{color:var(--dim);background:var(--surface2);border-color:var(--line-strong)}
+.mach.srv{color:var(--srv);background:var(--srv-s);border-color:color-mix(in srgb,var(--srv) 35%,transparent)}
+.mach.adm{color:var(--warn);background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-top:14px;min-width:0}
+.card h3{font-size:1.1rem;margin-bottom:8px}
+.sub{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sub .tag{flex:none;font:700 .74rem 'JetBrains Mono',monospace;padding:3px 8px;border-radius:7px;background:var(--phs);color:var(--ph)}
+.sub h3{margin:0}
+.muted{color:var(--dim);font-size:.92rem}
+
+.callout{display:flex;gap:12px;padding:14px 16px;border-radius:14px;margin-top:12px;font-size:.92rem;background:var(--phs);border:1px solid color-mix(in srgb,var(--ph) 30%,transparent)}
+.callout .ci{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--ph);color:var(--surface);font-weight:800;font-size:.85rem}
+.callout.warn{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+.callout.warn .ci{background:var(--warn)}
+.callout.ko{background:var(--ko-soft);border-color:color-mix(in srgb,var(--ko) 35%,transparent)}
+.callout.ko .ci{background:var(--ko)}
+.callout.ok{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 35%,transparent)}
+.callout.ok .ci{background:var(--ok)}
+.callout>div{min-width:0}
+.callout .cmd{margin-bottom:0}
+
+.expect{display:flex;gap:10px;margin-top:10px;padding:11px 14px;border-radius:12px;background:var(--ok-soft);font-size:.9rem;border-left:4px solid var(--ok)}
+.expect>b{flex:none;color:var(--ok)}
+
+.cmd{margin:12px 0;border-radius:14px;overflow:hidden;background:var(--term);color:var(--term-ink);box-shadow:var(--shadow)}
+.cmd-h{display:flex;align-items:center;gap:10px;padding:9px 12px 9px 14px;border-bottom:1px solid #ffffff14;font-size:.78rem;color:var(--term-dim)}
+.cmd-h .dots{display:flex;gap:5px}
+.cmd-h .dots i{width:9px;height:9px;border-radius:50%;background:#ffffff26}
+.cmd-h .host{font:600 .74rem 'JetBrains Mono',monospace;color:var(--term-acc)}
+.cmd-h .copy{margin-left:auto;border:1px solid #ffffff30;background:transparent;color:var(--term-ink);border-radius:7px;padding:3px 10px;font-size:.74rem}
+.cmd-h .copy:hover{background:#ffffff12}
+.cmd pre{margin:0;padding:16px 18px;overflow-x:auto;font-size:.82rem;line-height:1.75}
+.cmd code{background:none;border:0;padding:0;color:inherit;font-size:inherit;overflow-wrap:normal}
+.cmd .c{color:var(--term-dim)}
+
+details{border:1px solid var(--line);border-radius:12px;margin-top:12px;background:var(--surface)}
+details>summary{list-style:none;cursor:pointer;padding:11px 14px;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:10px}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:'+';flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--surface2);font-weight:700;color:var(--ph)}
+details[open]>summary::before{content:'–'}
+details>.dbody{padding:0 16px 14px}
+
+/* Point de contrôle */
+.check{margin-top:14px;border:1.5px dashed color-mix(in srgb,var(--ph) 55%,transparent);border-radius:18px;padding:16px 18px;background:var(--surface)}
+.check-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.check h3{font-size:1rem}
+.check .badge{font-size:.74rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--surface2);color:var(--dim)}
+.check.complete{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.check.complete .badge{background:var(--ok);color:var(--surface)}
+.tick{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:.92rem;margin-top:8px}
+.tick input{appearance:none;flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--line-strong);margin:1px 0 0;display:grid;place-items:center;background:var(--surface);cursor:pointer}
+.tick input::after{content:'✓';font-size:.8rem;font-weight:800;color:var(--surface);transform:scale(0);transition:transform .12s}
+.tick input:checked{background:var(--ok);border-color:var(--ok)}
+.tick input:checked::after{transform:scale(1)}
+.tick:has(input:checked) span{color:var(--dim)}
+
+/* ---------- Schémas ---------- */
+.fig{margin:14px 0 0;padding:18px;border-radius:16px;background:var(--surface2);border:1px solid var(--line);overflow-x:auto}
+.fig svg.dg{display:block;width:100%;height:auto;min-width:600px}
+.fig figcaption{font-size:.8rem;color:var(--dim);margin-top:10px}
+.dg text{font-family:Inter,sans-serif;font-size:13px;fill:var(--ink)}
+.dg .s{font-size:11.5px;fill:var(--dim)}
+.dg .m{font-family:'JetBrains Mono',monospace;font-size:11.5px}
+.dg .b{font-weight:700}
+.dg .t-ph{fill:var(--ph)}.dg .t-srv{fill:var(--srv)}.dg .t-ok{fill:var(--ok)}
+.dg .box{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.2}
+.dg .box-ph{fill:var(--phs);stroke:var(--ph);stroke-width:1.5}
+.dg .box-srv{fill:var(--surface);stroke:var(--srv);stroke-width:1.5}
+.dg .zone{fill:none;stroke:var(--line-strong);stroke-width:1.5;stroke-dasharray:6 5}
+.dg .ln{fill:none;stroke:var(--dim);stroke-width:1.6}
+.dg .ln-ph{fill:none;stroke:var(--ph);stroke-width:1.8}
+.dg .dash{stroke-dasharray:5 4}
+.mk-dim{fill:var(--dim)}.mk-ph{fill:var(--ph)}
+
+/* Jauges de ressources */
+.gauges{display:grid;gap:14px;margin-top:6px}
+.gauge-top{display:flex;justify-content:space-between;gap:10px;font-size:.88rem}
+.gauge-top b{font-weight:650}
+.gauge-top span{color:var(--dim)}
+.gauge-bar{position:relative;height:12px;border-radius:99px;background:var(--surface2);margin-top:6px;overflow:hidden}
+.gauge-bar i{position:absolute;inset:0 auto 0 0;border-radius:99px}
+.gauge-bar .conf{background:color-mix(in srgb,var(--ok) 35%,transparent)}
+.gauge-bar .min{background:var(--warn)}
+.legend{display:flex;gap:16px;font-size:.76rem;color:var(--dim);margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:8px;border-radius:3px}
+
+/* Comparaison Internal / External */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.vs{border-radius:14px;padding:14px 16px;border:1.5px solid var(--line)}
+.vs h4{display:flex;align-items:center;gap:8px;font-size:.95rem}
+.vs h4 i{font-style:normal;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:.8rem;color:var(--surface)}
+.vs p{font-size:.86rem;color:var(--dim);margin-top:6px}
+.vs.no{background:var(--ko-soft);border-color:color-mix(in srgb,var(--ko) 35%,transparent)}
+.vs.no h4 i{background:var(--ko)}
+.vs.yes{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 35%,transparent)}
+.vs.yes h4 i{background:var(--ok)}
+
+/* Tableau des paramètres */
+.params{display:grid;gap:8px;margin-top:10px}
+.param{display:grid;grid-template-columns:230px 1fr;gap:14px;align-items:baseline;padding:10px 14px;border-radius:12px;background:var(--surface2);font-size:.9rem}
+.param code{background:var(--surface)}
+
+/* Assistant d'installation */
+.wizard{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:12px;counter-reset:w}
+.screen{position:relative;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden;font-size:.82rem;display:flex;flex-direction:column}
+.screen-bar{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--surface2);border-bottom:1px solid var(--line);font:700 .7rem 'JetBrains Mono',monospace;color:var(--ph)}
+.screen-bar::after{content:'';margin-left:auto;width:28px;height:6px;border-radius:3px;background:var(--line-strong)}
+.screen-body{padding:10px 11px 12px;line-height:1.45}
+.screen-body b{display:block;font-size:.76rem;color:var(--dim);font-weight:600;margin-bottom:4px}
+.screen.hot{border-color:var(--warn);box-shadow:0 0 0 3px var(--warn-soft)}
+.screen.hot .screen-bar{color:var(--warn)}
+
+.final{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.final li{margin:0;display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--surface2);font-size:.88rem}
+.final li i{flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-style:normal;font-size:.75rem;font-weight:800;border:2px solid var(--line-strong);color:transparent}
+.final li.ok i{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.final li a{color:inherit;text-decoration:none}
+.final li a:hover{color:var(--accent)}
+
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 10px}
+.pager a{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:14px 18px}
+.pager a:hover{border-color:var(--accent)}
+.pager small{font-size:.74rem;color:var(--dim);font-weight:600}
+.pager span{font-weight:650}
+.pager a.next{text-align:right;align-items:flex-end;background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pager a.next small{color:color-mix(in srgb,var(--bg) 70%,transparent)}
+#feedback{font-size:.84rem;color:var(--ok);min-height:1.6em}
+.footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:26px 0;padding-top:18px;border-top:1px solid var(--line);font-size:.8rem;color:var(--dim)}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1060px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static}
+  .steps{display:grid;grid-template-columns:repeat(2,1fr);gap:0 12px}
+  .steps li::after{display:none}
+  .hero{grid-template-columns:1fr}
+  .wizard{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:720px){
+  .wrap{padding:0 16px}
+  .steps,.versus,.final{grid-template-columns:1fr}
+  .wizard{grid-template-columns:1fr 1fr}
+  .param{grid-template-columns:1fr;gap:4px}
+  .step-head{padding:18px 16px;gap:12px}
+  .step-num{width:42px;height:42px;font-size:1.2rem}
+  .card{padding:16px}
+  .pager{grid-template-columns:1fr}
+  .facts .fact b{font-size:1.2rem}
+}
+/* ---------- Intégrée dans 09-projet-fournil.html ---------- */
+.embed body{background:transparent}
+.embed .topbar,.embed .hero,.embed .layout>aside,.embed .footer,.embed .pager{display:none}
+.embed .wrap{padding:16px 18px 2px}
+.embed .layout{display:block}
+.embed .step:last-child{margin-bottom:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+@media print{
+  .rail,.top-actions,.copy,.pager,#feedback{display:none!important}
+  .layout{display:block}
+  body{background:#fff}
+  .cmd{background:#f3f3f3;color:#000;box-shadow:none}
+  .cmd-h .host{color:#000}
+  .step,.cmd,.fig{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <marker id="a-dim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-dim"/></marker>
+  <marker id="a-ph" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-ph"/></marker>
+</defs></svg>
+
+<div class="wrap">
+  <div class="topbar">
+    <nav class="crumbs" aria-label="Fil d’Ariane"><a href="https://cours.kaya.ovh/active-directory/ad/09-tp-final/html#maquette">← Le Fournil · étape 01</a><span>/</span><span>Procédure 00.1</span></nav>
+    <div class="top-actions">
+      <a class="ghost" href="https://cours.kaya.ovh/active-directory/ad/09-tp-final/tp/tp-00-1-installer-les-vm">Version Markdown</a>
+      <a class="ghost" href="https://cours.kaya.ovh/active-directory/ad/09-tp-final/tp/tp-00-1-vmware-workstation">Alternative VMware</a>
+      <button class="ghost" id="print" type="button">Imprimer</button>
+      <button class="ghost" id="theme" type="button" aria-label="Basculer clair / sombre">Thème</button>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div>
+      <span class="kicker">Procédure 00.1 · Hyper-V</span>
+      <h1>Créer les deux<br>machines <em>virtuelles</em></h1>
+      <p class="lead">Du PC nu jusqu’à DC01 et DC02 installés sous Windows Server 2025, sur un réseau privé avec accès à Internet. Sept étapes, toutes sur votre poste.</p>
+    </div>
+    <div class="hero-side">
+      <div class="facts">
+        <div class="fact"><b>1 h</b><span>dont ~30 min d’attente</span></div>
+        <div class="fact"><b>2 VM</b><span>DC01 et DC02</span></div>
+        <div class="fact"><b>Hôte</b><span>PowerShell admin</span></div>
+      </div>
+      <div class="zero"><b>0→1</b><span>On part vraiment de zéro. À la fin, deux serveurs fraîchement installés qui démarrent — ni nommés, ni configurés, ni dans un domaine. <b>C’est normal</b>, ça vient après.</span></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <div class="rail">
+        <div class="rail-head">
+          <svg class="ring" viewBox="0 0 60 60" aria-hidden="true"><circle class="track" cx="30" cy="30" r="24"/><circle class="bar" id="ring-bar" cx="30" cy="30" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8"/><text id="ring-pct" x="30" y="35" text-anchor="middle">0%</text></svg>
+          <div><b id="progress-text">0 / 9 vérifications</b><span>Progression de la procédure</span></div>
+        </div>
+        <ol class="steps">
+          <li><a class="node" href="#e1"><span class="dot"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="arc" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span class="num">1</span></span><span class="node-txt"><span>Vérifier le PC</span><small>virtualisation · ressources</small></span></a></li>
+          <li><a class="node" href="#e2"><span class="dot"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="arc" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span class="num">2</span></span><span class="node-txt"><span>Activer Hyper-V</span><small>redémarrage requis</small></span></a></li>
+          <li><a class="node" href="#e3"><span class="dot"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="arc" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span class="num">3</span></span><span class="node-txt"><span>Réseau du lab</span><small>switch · IP .254 · NAT</small></span></a></li>
+          <li><a class="node" href="#e4"><span class="dot"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="arc" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span class="num">4</span></span><span class="node-txt"><span>Dossiers &amp; ISO</span><small>Windows Server 2025</small></span></a></li>
+          <li><a class="node" href="#e5"><span class="dot"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="arc" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span class="num">5</span></span><span class="node-txt"><span>Créer les VM</span><small>un seul bloc de script</small></span></a></li>
+          <li><a class="node" href="#e6"><span class="dot"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="arc" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span class="num">6</span></span><span class="node-txt"><span>Installer Windows</span><small>×2 · ~20 min chacune</small></span></a></li>
+          <li><a class="node" href="#e7"><span class="dot"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="arc" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span class="num">7</span></span><span class="node-txt"><span>Point de contrôle</span><small>le filet de sécurité</small></span></a></li>
+          <li><a class="node" href="#fin"><span class="dot"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="arc" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span class="num">✓</span></span><span class="node-txt"><span>Bilan</span><small>état attendu</small></span></a></li>
+        </ol>
+        <div class="rail-foot">Coches stockées dans ce navigateur.<br><button id="reset" type="button">Réinitialiser</button></div>
+      </div>
+    </aside>
+
+    <main>
+      <!-- Vue d'ensemble -->
+      <section class="step" id="vue">
+        <figure class="fig" style="margin-top:0">
+          <svg class="dg" viewBox="0 0 760 345" role="img" aria-label="Sur le PC hôte : DC01 et DC02 branchées sur vSwitch-Rennes (Internal) ; la carte vEthernet de l'hôte porte 192.168.3.254 ; le NAT-Fournil sort vers Internet par la carte Wi-Fi ou Ethernet">
+            <rect class="zone" x="10" y="10" width="600" height="325" rx="18"/>
+            <text x="30" y="34" class="b">Votre PC</text><text x="100" y="34" class="s">— l’hôte Hyper-V</text>
+            <rect class="box" x="640" y="44" width="110" height="44" rx="22"/>
+            <text x="695" y="71" text-anchor="middle" class="s">Internet</text>
+            <rect class="box" x="380" y="44" width="210" height="52" rx="12"/>
+            <text x="485" y="66" text-anchor="middle" class="b">Carte Wi-Fi / Ethernet</text>
+            <text x="485" y="84" text-anchor="middle" class="s">réseau de la salle ou box</text>
+            <path class="ln" d="M590 68 H636" marker-end="url(#a-dim)"/>
+            <rect class="box-ph" x="380" y="124" width="210" height="52" rx="12"/>
+            <text x="485" y="146" text-anchor="middle" class="b t-ph">NAT-Fournil</text>
+            <text x="485" y="164" text-anchor="middle" class="m">192.168.3.0/24 · étape 3.3</text>
+            <path class="ln-ph" d="M485 124 V100" marker-end="url(#a-ph)"/>
+            <rect class="box" x="40" y="124" width="290" height="52" rx="12"/>
+            <text x="185" y="146" text-anchor="middle" class="m b">vEthernet (vSwitch-Rennes)</text>
+            <text x="185" y="164" text-anchor="middle" class="s">192.168.3.254 · passerelle des VM · étape 3.2</text>
+            <path class="ln-ph" d="M330 150 H376" marker-end="url(#a-ph)"/>
+            <path class="ln-ph" d="M185 176 V204"/>
+            <rect class="box-ph" x="40" y="204" width="550" height="38" rx="19"/>
+            <text x="315" y="228" text-anchor="middle"><tspan class="b t-ph">vSwitch-Rennes · Internal</tspan><tspan class="s"> — réseau privé entre l’hôte et ses VM · étape 3.1</tspan></text>
+            <path class="ln-ph" d="M175 242 V266 M455 242 V266"/>
+            <rect class="box-srv" x="60" y="266" width="230" height="56" rx="12"/>
+            <text x="175" y="289" text-anchor="middle" class="b t-srv">DC01</text>
+            <text x="175" y="308" text-anchor="middle" class="s">Gen 2 · 4 vCPU · 2–8 Go · 80 Go</text>
+            <rect class="box-srv" x="340" y="266" width="230" height="56" rx="12"/>
+            <text x="455" y="289" text-anchor="middle" class="b t-srv">DC02</text>
+            <text x="455" y="308" text-anchor="middle" class="s">Gen 2 · 4 vCPU · 2–8 Go · 80 Go</text>
+          </svg>
+          <figcaption>Ce qu’on construit. Les adresses fixes des VM (.10 et .2) seront posées dans la procédure 00.2 ; pour l’instant elles n’ont ni nom ni configuration.</figcaption>
+        </figure>
+      </section>
+
+      <!-- 1 -->
+      <section class="step" id="e1" data-step="1">
+        <div class="step-head"><span class="step-num">1</span><div><h2>Vérifier que votre PC peut faire tourner le lab</h2><p>Virtualisation activée dans le firmware, assez de RAM et de disque.</p><div class="where"><span class="mach host">VOTRE POSTE</span><span class="mach adm">PowerShell administrateur</span></div></div></div>
+        <div class="card">
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>virtualisation<button type="button" class="copy">Copier</button></div><pre><code><span class="c"># Le processeur supporte-t-il la virtualisation, et est-elle activée dans le BIOS ?</span>
+Get-ComputerInfo -Property "HyperV*"</code></pre></div>
+          <div class="expect"><b>Attendu</b><span><code>HyperVRequirementVirtualizationFirmwareEnabled : True</code></span></div>
+          <div class="callout ko"><span class="ci">✕</span><div><b>Si c’est False</b> : la virtualisation est désactivée dans le BIOS/UEFI. Redémarrez, entrez dans le BIOS et activez <b>Intel VT-x</b> ou <b>AMD-V</b>.</div></div>
+        </div>
+        <div class="card">
+          <h3>Ressources de l’hôte</h3>
+          <div class="gauges">
+            <div><div class="gauge-top"><b>RAM totale</b><span>minimum 12 Go · <strong>confortable 16 Go</strong></span></div><div class="gauge-bar"><i class="conf" style="width:100%"></i><i class="min" style="width:75%"></i></div></div>
+            <div><div class="gauge-top"><b>Espace disque libre</b><span>minimum 80 Go · <strong>confortable 150 Go</strong></span></div><div class="gauge-bar"><i class="conf" style="width:100%"></i><i class="min" style="width:53%"></i></div></div>
+            <div><div class="gauge-top"><b>Processeur</b><span>minimum 4 cœurs · <strong>confortable 8 cœurs</strong></span></div><div class="gauge-bar"><i class="conf" style="width:100%"></i><i class="min" style="width:50%"></i></div></div>
+          </div>
+          <div class="legend"><span><i style="background:var(--warn)"></i>minimum</span><span><i style="background:color-mix(in srgb,var(--ok) 35%,transparent)"></i>jusqu’au confortable</span></div>
+          <div class="callout warn"><span class="ci">!</span><div><b>12 Go de RAM, c’est juste.</b> Les deux VM demandent 4 Go chacune au démarrage. Laissez la mémoire dynamique activée (c’est le cas dans le script) et fermez les autres applications.</div></div>
+        </div>
+        <div class="check"><div class="check-head"><h3>Point de contrôle</h3><span class="badge">0 / 1</span></div>
+          <label class="tick"><input type="checkbox" data-check="e1-0"><span>La virtualisation est activée (<code>True</code>) et mon PC a les ressources nécessaires.</span></label>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="step" id="e2" data-step="2">
+        <div class="step-head"><span class="step-num">2</span><div><h2>Activer Hyper-V</h2><p>Une fonctionnalité Windows à activer une fois, suivie d’un redémarrage.</p><div class="where"><span class="mach host">VOTRE POSTE</span><span class="mach adm">PowerShell administrateur</span></div></div></div>
+        <div class="card">
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>état actuel<button type="button" class="copy">Copier</button></div><pre><code><span class="c"># Hyper-V est-il déjà là ?</span>
+Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All |
+    Select-Object FeatureName, State</code></pre></div>
+          <p>Si <code>State : Disabled</code> :</p>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>activation<button type="button" class="copy">Copier</button></div><pre><code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All -All</code></pre></div>
+          <div class="callout warn"><span class="ci">↻</span><div><b>Redémarrage obligatoire</b> après cette commande.</div></div>
+          <div class="callout ko"><span class="ci">✕</span><div><b>La fonctionnalité n’apparaît pas du tout ?</b> Vous êtes en Windows Famille / Home, qui n’a pas Hyper-V. Il faut Windows Pro, Entreprise ou Éducation. Alternative documentée : <a href="https://cours.kaya.ovh/active-directory/ad/09-tp-final/tp/tp-00-1-vmware-workstation">VMware Workstation</a>.</div></div>
+        </div>
+        <div class="check"><div class="check-head"><h3>Point de contrôle</h3><span class="badge">0 / 1</span></div>
+          <label class="tick"><input type="checkbox" data-check="e2-0"><span>Hyper-V est activé (<code>State : Enabled</code>) et le PC a redémarré.</span></label>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="step" id="e3" data-step="3">
+        <div class="step-head"><span class="step-num">3</span><div><h2>Créer le réseau virtuel du lab</h2><p>L’étape que tout le monde bâcle — et celle qui fait échouer le TP trois heures plus tard.</p><div class="where"><span class="mach host">VOTRE POSTE</span><span class="mach adm">PowerShell administrateur</span></div></div></div>
+
+        <div class="card">
+          <div class="sub"><span class="tag">3.1</span><h3>Créer le switch virtuel interne</h3></div>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>switch<button type="button" class="copy">Copier</button></div><pre><code>New-VMSwitch -Name "vSwitch-Rennes" -SwitchType Internal</code></pre></div>
+          <p><strong>Pourquoi Internal et pas External ?</strong></p>
+          <div class="versus">
+            <div class="vs no"><h4><i>✕</i>External</h4><p>Les VM sont branchées sur le réseau de la salle et prennent une IP en DHCP. Si 12 élèves créent 12 domaines <code>ad.fournil.lab</code> sur le même LAN : conflits DNS, machines qui rejoignent le mauvais domaine… le chaos.</p></div>
+            <div class="vs yes"><h4><i>✓</i>Internal</h4><p>Un réseau privé entre vos VM et votre PC uniquement : chacun son lab, isolé. Seul inconvénient, pas d’Internet — on corrige ça avec le NAT en 3.3.</p></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="sub"><span class="tag">3.2</span><h3>Donner une IP à l’hôte sur ce réseau</h3></div>
+          <p class="muted">Le switch interne a créé une carte réseau virtuelle <strong>sur votre PC</strong>. C’est elle qui servira de passerelle aux VM.</p>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>IP de la passerelle<button type="button" class="copy">Copier</button></div><pre><code><span class="c"># Retrouver l'index de cette nouvelle carte</span>
+$idx = (Get-NetAdapter -Name "vEthernet (vSwitch-Rennes)").ifIndex
+$idx
+
+<span class="c"># Lui donner l'adresse .254 — ce sera la passerelle des VM</span>
+New-NetIPAddress -InterfaceIndex $idx -IPAddress 192.168.3.254 -PrefixLength 24</code></pre></div>
+        </div>
+
+        <div class="card">
+          <div class="sub"><span class="tag">3.3</span><h3>Activer le NAT pour donner Internet aux VM</h3></div>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>NAT<button type="button" class="copy">Copier</button></div><pre><code>New-NetNat -Name "NAT-Fournil" -InternalIPInterfaceAddressPrefix 192.168.3.0/24</code></pre></div>
+          <figure class="fig">
+            <svg class="dg" viewBox="0 0 760 150" role="img" aria-label="DC01 envoie le paquet à 192.168.3.254, le PC le réexpédie par sa carte Wi-Fi en se faisant passer pour l'expéditeur, jusqu'à Windows Update">
+              <rect class="box-srv" x="10" y="40" width="150" height="56" rx="12"/>
+              <text x="85" y="63" text-anchor="middle" class="b t-srv">DC01</text>
+              <text x="85" y="82" text-anchor="middle" class="s">veut Windows Update</text>
+              <path class="ln-ph" d="M160 68 H216" marker-end="url(#a-ph)"/>
+              <rect class="box-ph" x="220" y="40" width="170" height="56" rx="12"/>
+              <text x="305" y="63" text-anchor="middle" class="m b t-ph">192.168.3.254</text>
+              <text x="305" y="82" text-anchor="middle" class="s">votre PC · NAT-Fournil</text>
+              <path class="ln-ph" d="M390 68 H446" marker-end="url(#a-ph)"/>
+              <rect class="box" x="450" y="40" width="140" height="56" rx="12"/>
+              <text x="520" y="63" text-anchor="middle" class="b">Wi-Fi / Ethernet</text>
+              <text x="520" y="82" text-anchor="middle" class="s">sort avec l’IP du PC</text>
+              <path class="ln" d="M590 68 H626" marker-end="url(#a-dim)"/>
+              <rect class="box" x="630" y="40" width="120" height="56" rx="28"/>
+              <text x="690" y="73" text-anchor="middle" class="b">Internet</text>
+              <text x="305" y="126" text-anchor="middle" class="s">l’hôte se fait passer pour l’expéditeur</text>
+              <text x="305" y="142" text-anchor="middle" class="s">— exactement ce que fait votre box à la maison</text>
+            </svg>
+          </figure>
+        </div>
+
+        <div class="card">
+          <div class="sub"><span class="tag">3.4</span><h3>Vérification</h3></div>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>contrôle<button type="button" class="copy">Copier</button></div><pre><code>Get-VMSwitch -Name "vSwitch-Rennes" | Select-Object Name, SwitchType
+Get-NetIPAddress -IPAddress 192.168.3.254 | Select-Object IPAddress, InterfaceAlias
+Get-NetNat -Name "NAT-Fournil" | Select-Object Name, InternalIPInterfaceAddressPrefix</code></pre></div>
+          <div class="expect"><b>Attendu</b><span>Un switch <code>Internal</code>, l’IP <code>192.168.3.254</code> sur la carte <code>vEthernet (vSwitch-Rennes)</code>, un NAT sur <code>192.168.3.0/24</code>.</span></div>
+          <details><summary><code>New-NetNat : L’objet existe déjà</code> ou conflit</summary><div class="dbody">
+            <p>Un ancien NAT traîne. Listez-les et supprimez celui qui gêne :</p>
+            <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>nettoyage<button type="button" class="copy">Copier</button></div><pre><code>Get-NetNat
+Remove-NetNat -Name "&lt;nom&gt;" -Confirm:$false</code></pre></div>
+            <div class="callout warn"><span class="ci">!</span><div>Windows n’accepte <b>qu’un seul NAT</b> à la fois par préfixe.</div></div>
+          </div></details>
+        </div>
+
+        <div class="check"><div class="check-head"><h3>Point de contrôle</h3><span class="badge">0 / 3</span></div>
+          <label class="tick"><input type="checkbox" data-check="e3-0"><span><code>vSwitch-Rennes</code> existe en <strong>Internal</strong>.</span></label>
+          <label class="tick"><input type="checkbox" data-check="e3-1"><span>L’IP <code>192.168.3.254</code> est sur la carte de l’hôte.</span></label>
+          <label class="tick"><input type="checkbox" data-check="e3-2"><span>Le NAT <code>192.168.3.0/24</code> est actif.</span></label>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="step" id="e4" data-step="4">
+        <div class="step-head"><span class="step-num">4</span><div><h2>Préparer les dossiers et l’ISO</h2><p>Un endroit pour les disques des VM et l’image d’installation.</p><div class="where"><span class="mach host">VOTRE POSTE</span></div></div></div>
+        <div class="card">
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>dossiers<button type="button" class="copy">Copier</button></div><pre><code>New-Item -ItemType Directory -Path "D:\HyperV\ISO" -Force
+New-Item -ItemType Directory -Path "D:\HyperV\VHD" -Force</code></pre></div>
+          <p class="muted">Adaptez <code>D:\</code> si vous n’avez qu’un disque <code>C:</code>.</p>
+          <p style="margin-top:10px">Téléchargez l’<strong>ISO d’évaluation de Windows Server 2025</strong> (180 jours, gratuit) depuis le centre d’évaluation Microsoft et placez-le dans <code>D:\HyperV\ISO\ws2025.iso</code>.</p>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>contrôle de l’ISO<button type="button" class="copy">Copier</button></div><pre><code>Get-Item "D:\HyperV\ISO\ws2025.iso" | Select-Object Name, @{N='Go';E={[math]::Round($_.Length/1GB,2)}}</code></pre></div>
+          <div class="expect"><b>Attendu</b><span>Environ <strong>5 Go</strong>.</span></div>
+        </div>
+        <div class="check"><div class="check-head"><h3>Point de contrôle</h3><span class="badge">0 / 1</span></div>
+          <label class="tick"><input type="checkbox" data-check="e4-0"><span>L’ISO (~5 Go) est dans le dossier ISO et le dossier VHD existe.</span></label>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="step" id="e5" data-step="5">
+        <div class="step-head"><span class="step-num">5</span><div><h2>Créer les deux VM</h2><p>Copiez le bloc entier : il crée DC01 et DC02 d’un coup.</p><div class="where"><span class="mach host">VOTRE POSTE</span><span class="mach adm">PowerShell administrateur</span></div></div></div>
+        <div class="card">
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>création de DC01 et DC02<button type="button" class="copy">Copier</button></div><pre><code><span class="c"># ====== Variables ======</span>
+$IsoPath = "D:\HyperV\ISO\ws2025.iso"
+$VmRoot  = "D:\HyperV"
+$VhdRoot = "D:\HyperV\VHD"
+$Switch  = "vSwitch-Rennes"
+$VhdSize = 80GB
+$RAM     = 4GB
+$CPU     = 4
+
+foreach ($VMName in "DC01","DC02") {
+
+    $VmPath  = Join-Path $VmRoot $VMName
+    $VhdPath = Join-Path $VhdRoot "$VMName.vhdx"
+
+    New-VM -Name $VMName -Generation 2 `
+           -MemoryStartupBytes $RAM `
+           -Path $VmPath `
+           -NewVHDPath $VhdPath -NewVHDSizeBytes $VhdSize `
+           -SwitchName $Switch
+
+    Set-VM -Name $VMName -ProcessorCount $CPU
+
+    <span class="c"># Monter l'ISO et démarrer dessus</span>
+    Add-VMDvdDrive -VMName $VMName
+    Set-VMDvdDrive -VMName $VMName -Path $IsoPath
+    Set-VMFirmware -VMName $VMName -FirstBootDevice (Get-VMDvdDrive -VMName $VMName)
+
+    <span class="c"># Mémoire dynamique : la VM rend la RAM qu'elle n'utilise pas</span>
+    Set-VMMemory -VMName $VMName -DynamicMemoryEnabled $true `
+                 -MinimumBytes 2GB -StartupBytes 4GB -MaximumBytes 8GB
+
+    Write-Host "VM $VMName creee" -ForegroundColor Green
+}</code></pre></div>
+          <h3 style="margin-top:16px">Ce que font les paramètres importants</h3>
+          <div class="params">
+            <div class="param"><code>-Generation 2</code><span>VM en <strong>UEFI</strong>, le choix recommandé pour Windows Server 2025.</span></div>
+            <div class="param"><code>-NewVHDSizeBytes 80GB</code><span>Disque <strong>dynamique</strong> : il ne prend que la place réellement utilisée (~15 Go au début).</span></div>
+            <div class="param"><code>Set-VMFirmware -FirstBootDevice</code><span>Force le démarrage sur le DVD, sinon la VM boote sur un disque vide.</span></div>
+            <div class="param"><code>-DynamicMemoryEnabled $true</code><span>La VM rend la RAM inutilisée à votre PC — vital si vous avez peu de mémoire.</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Vérification</h3>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>contrôle<button type="button" class="copy">Copier</button></div><pre><code>Get-VM DC01,DC02 | Format-Table Name, State, Generation, MemoryStartup, ProcessorCount
+Get-VMNetworkAdapter DC01,DC02 | Format-Table VMName, SwitchName</code></pre></div>
+          <div class="expect"><b>Attendu</b><span>Deux VM en état <code>Off</code>, Generation <code>2</code>, toutes deux sur <code>vSwitch-Rennes</code>.</span></div>
+        </div>
+        <div class="check"><div class="check-head"><h3>Point de contrôle</h3><span class="badge">0 / 1</span></div>
+          <label class="tick"><input type="checkbox" data-check="e5-0"><span>DC01 et DC02 existent, en Generation 2, sur <code>vSwitch-Rennes</code>.</span></label>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="step" id="e6" data-step="6">
+        <div class="step-head"><span class="step-num">6</span><div><h2>Installer Windows Server sur chaque VM</h2><p>À faire <strong>deux fois</strong> : DC01 puis DC02. En parallèle si votre PC a 16 Go de RAM.</p><div class="where"><span class="mach host">VOTRE POSTE</span><span class="ctx" style="font-size:.8rem;color:var(--dim)">puis dans la fenêtre de la VM</span><span class="mach srv">DC01</span><span class="mach srv">DC02</span></div></div></div>
+        <div class="card">
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>démarrer DC01<button type="button" class="copy">Copier</button></div><pre><code>Start-VM -Name DC01
+vmconnect.exe localhost DC01</code></pre></div>
+          <h3 style="margin-top:14px">Les 10 écrans de l’installation</h3>
+          <div class="wizard">
+            <div class="screen hot"><div class="screen-bar">01 · BOOT</div><div class="screen-body"><b>Press any key to boot from CD</b>Appuyez <strong>vite</strong> sur une touche : 5 secondes.</div></div>
+            <div class="screen"><div class="screen-bar">02 · LANGUE</div><div class="screen-body"><b>Langue</b>Français (France) partout, clavier <strong>Français</strong>.</div></div>
+            <div class="screen"><div class="screen-bar">03</div><div class="screen-body"><b>Accueil</b><strong>Installer maintenant</strong></div></div>
+            <div class="screen hot"><div class="screen-bar">04 · ÉDITION</div><div class="screen-body"><b>Édition</b>Windows Server 2025 Standard <strong>(Expérience de bureau)</strong></div></div>
+            <div class="screen"><div class="screen-bar">05 · LICENCE</div><div class="screen-body"><b>Licence</b>Accepter les termes.</div></div>
+            <div class="screen"><div class="screen-bar">06 · TYPE</div><div class="screen-body"><b>Type d’installation</b><strong>Personnalisé (avancé)</strong></div></div>
+            <div class="screen"><div class="screen-bar">07 · DISQUE</div><div class="screen-body"><b>Disque</b>Le disque vierge de 80 Go → Suivant. Aucune partition à la main.</div></div>
+            <div class="screen"><div class="screen-bar">08 · ATTENTE</div><div class="screen-body"><b>Installation</b>~20 min. La VM redémarre toute seule.</div></div>
+            <div class="screen hot"><div class="screen-bar">09 · MOT DE PASSE</div><div class="screen-body"><b>Administrateur</b>Choisissez-en un et <strong>notez-le</strong>.</div></div>
+            <div class="screen"><div class="screen-bar">10 · CONNEXION</div><div class="screen-body"><b>Ctrl+Alt+Suppr</b>Menu <strong>Action</strong> de la fenêtre VM, ou <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Fin</kbd>.</div></div>
+          </div>
+          <div class="callout warn"><span class="ci">!</span><div><b>Choisissez bien « Expérience de bureau ».</b> Server Core n’a pas d’interface graphique ; le TP DFS utilise <code>dfsmgmt.msc</code> et <code>gpmc.msc</code> : sans bureau, vous serez coincé.</div></div>
+          <details><summary>Vous avez raté le « Press any key » ?</summary><div class="dbody">
+            <p>La VM affiche un shell UEFI ou « boot failed ». Éteignez et relancez, puis cliquez dans la fenêtre et martelez une touche :</p>
+            <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>relancer<button type="button" class="copy">Copier</button></div><pre><code>Stop-VM DC01 -TurnOff -Force
+Start-VM DC01</code></pre></div>
+          </div></details>
+          <p style="margin-top:14px"><strong>Répétez pour DC02 :</strong></p>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>démarrer DC02<button type="button" class="copy">Copier</button></div><pre><code>Start-VM -Name DC02
+vmconnect.exe localhost DC02</code></pre></div>
+        </div>
+        <div class="check"><div class="check-head"><h3>Point de contrôle</h3><span class="badge">0 / 1</span></div>
+          <label class="tick"><input type="checkbox" data-check="e6-0"><span>Windows Server est installé sur DC01 et DC02, et j’ai ouvert une session sur le bureau des deux.</span></label>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="step" id="e7" data-step="7">
+        <div class="step-head"><span class="step-num">7</span><div><h2>Le filet de sécurité : un point de contrôle</h2><p>Vous venez de passer une heure. Revenez ici en 30 secondes si vous cassez quelque chose plus tard.</p><div class="where"><span class="mach host">VOTRE POSTE</span><span class="mach adm">PowerShell administrateur</span></div></div></div>
+        <div class="card">
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>point de contrôle<button type="button" class="copy">Copier</button></div><pre><code>Checkpoint-VM -Name DC01 -SnapshotName "01-Windows-installe"
+Checkpoint-VM -Name DC02 -SnapshotName "01-Windows-installe"
+
+Get-VMSnapshot -VMName DC01,DC02 | Format-Table VMName, Name, CreationTime</code></pre></div>
+          <p class="muted">Pour revenir en arrière plus tard :</p>
+          <div class="cmd"><div class="cmd-h"><span class="dots"><i></i><i></i><i></i></span><span class="host">HÔTE</span>restauration<button type="button" class="copy">Copier</button></div><pre><code>Restore-VMSnapshot -VMName DC01 -Name "01-Windows-installe" -Confirm:$false</code></pre></div>
+        </div>
+        <div class="check"><div class="check-head"><h3>Point de contrôle</h3><span class="badge">0 / 1</span></div>
+          <label class="tick"><input type="checkbox" data-check="e7-0"><span>Le point de contrôle <code>01-Windows-installe</code> existe sur les deux VM.</span></label>
+        </div>
+      </section>
+
+      <!-- Bilan -->
+      <section class="step" id="fin">
+        <div class="step-head"><span class="step-num">✓</span><div><h2>Bilan de la procédure 00.1</h2><p>Cette liste se met à jour avec vos coches.</p></div></div>
+        <div class="card">
+          <ul class="final" id="final">
+            <li data-for="e2-0"><i>✓</i><a href="#e2">Hyper-V activé</a></li>
+            <li data-for="e3-0"><i>✓</i><a href="#e3">vSwitch-Rennes créé en Internal</a></li>
+            <li data-for="e3-1"><i>✓</i><a href="#e3">IP 192.168.3.254 sur la carte de l’hôte</a></li>
+            <li data-for="e3-2"><i>✓</i><a href="#e3">NAT 192.168.3.0/24 actif</a></li>
+            <li data-for="e6-0"><i>✓</i><a href="#e6">DC01 et DC02 installées, session ouverte</a></li>
+            <li data-for="e7-0"><i>✓</i><a href="#e7">Point de contrôle sur les deux VM</a></li>
+          </ul>
+          <div class="callout ok"><span class="ci">✓</span><div><b>État attendu :</b> deux serveurs qui démarrent, avec un nom généré au hasard (genre <code>WIN-K3J8DQ2</code>), en DHCP, sans aucun rôle. <b>C’est exactement ce qu’on veut</b> : on les configure à l’étape suivante.</div></div>
+        </div>
+        <div class="pager">
+          <a href="https://cours.kaya.ovh/active-directory/ad/09-tp-final/tp/tp-00-0-demarrer-ici"><small>← Précédent</small><span>00.0 · Démarrer ici</span></a>
+          <a class="next" href="https://cours.kaya.ovh/active-directory/ad/09-tp-final/tp/tp-00-2-preparer-les-serveurs"><small>Suivant →</small><span>00.2 · Préparer les serveurs</span></a>
+        </div>
+        <p id="feedback" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer"><span>Le Fournil · Procédure 00.1 — Hyper-V</span><a href="https://cours.kaya.ovh/active-directory/ad/09-tp-final/html#maquette">Retour au parcours du projet</a></footer>
+</div>
+
+<script>
+(() => {
+  const KEY = 'fournil-hyperv-v1';
+  const RING = 2 * Math.PI * 24, ARC = 2 * Math.PI * 15;
+  const checks = [...document.querySelectorAll('[data-check]')];
+  const nodes = [...document.querySelectorAll('.node')];
+  const sections = nodes.map(n => document.querySelector(n.getAttribute('href')));
+  const feedback = document.getElementById('feedback');
+  const $ = id => document.getElementById(id);
+
+  let state = {};
+  try { const saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') state = saved; } catch {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+
+  function progress() {
+    const done = checks.filter(c => c.checked).length;
+    $('ring-bar').style.strokeDashoffset = RING * (1 - done / checks.length);
+    $('ring-pct').textContent = Math.round(100 * done / checks.length) + '%';
+    $('progress-text').textContent = `${done} / ${checks.length} vérifications`;
+    sections.forEach((section, i) => {
+      const own = [...section.querySelectorAll('[data-check]')];
+      // Le nœud « Bilan » est complet quand tout le reste l'est
+      const list = own.length ? own : checks;
+      const ok = list.filter(c => c.checked).length;
+      const ratio = ok / list.length;
+      nodes[i].querySelector('.arc').style.strokeDashoffset = ARC * (1 - ratio);
+      nodes[i].parentElement.classList.toggle('done', ratio === 1);
+      const box = section.querySelector('.check');
+      if (box) {
+        box.classList.toggle('complete', ratio === 1);
+        box.querySelector('.badge').textContent = ratio === 1 ? 'Validé ✓' : `${ok} / ${own.length}`;
+      }
+    });
+    document.querySelectorAll('#final li').forEach(li => li.classList.toggle('ok', state[li.dataset.for] === true));
+  }
+
+  checks.forEach(c => {
+    c.checked = state[c.dataset.check] === true;
+    c.addEventListener('change', () => { state[c.dataset.check] = c.checked; save(); progress(); });
+  });
+
+  // Surligne dans l'arbre l'étape en cours de lecture
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const i = sections.indexOf(e.target);
+      nodes.forEach((n, j) => n.parentElement.classList.toggle('current', j === i));
+    });
+  }, {rootMargin: '-30% 0px -60% 0px'});
+  sections.forEach(s => spy.observe(s));
+
+  document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', async () => {
+    const text = b.closest('.cmd').querySelector('code').textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      b.textContent = 'Copié ✓'; setTimeout(() => b.textContent = 'Copier', 1600);
+    } catch { feedback.textContent = 'Copie automatique indisponible : sélectionnez le texte de la commande.'; }
+  }));
+
+  $('reset').addEventListener('click', () => {
+    if (!confirm('Effacer les coches de cette procédure ?')) return;
+    state = {}; checks.forEach(c => c.checked = false); save(); progress();
+  });
+
+  const root = document.documentElement;
+  const theme = v => { if (v === 'dark' || v === 'light') root.dataset.theme = v; };
+  try { theme(localStorage.getItem('theme')); } catch {}
+  $('theme').addEventListener('click', () => {
+    const current = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const value = current === 'dark' ? 'light' : 'dark';
+    theme(value);
+    try { localStorage.setItem('theme', value); } catch {}
+  });
+  window.addEventListener('message', e => {
+    if (e.source !== parent) return;
+    if (e.data?.type === 'linux-theme') theme(e.data.theme);
+  });
+
+  // Dans un cadre : version compacte, et la page parente ajuste la hauteur du cadre
+  if (window !== parent) {
+    root.classList.add('embed');
+    document.querySelectorAll('a[href]:not([href^="#"])').forEach(a => a.target = '_blank');
+    const wrap = document.querySelector('.wrap');
+    const send = () => parent.postMessage({type: 'fournil-height', h: wrap.getBoundingClientRect().height + 4}, '*');
+    new ResizeObserver(send).observe(wrap);
+    send();
+  }
+  $('print').addEventListener('click', () => { document.querySelectorAll('details').forEach(d => d.open = true); window.print(); });
+
+  progress();
+})();
+</script>
+</body>
+</html>

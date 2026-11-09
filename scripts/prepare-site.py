@@ -133,6 +133,18 @@ def prepare():
             corrected=exercise['correctionPath']
             if corrected and corrected in routes: offline_names[corrected]=(item['track'],'tp/'+exercise['downloadStem']+'-corrigev2.md')
     for item in annexes: offline_names[item['path']]=(item['track'],'annexe/'+item['slug']+'.md')
+    # Pages HTML autonomes liées depuis un guide HTML (ex. procédure Hyper-V détaillée du projet Fournil).
+    extra_html=[]
+    for item in chapters:
+        if 'htmlPath' not in item: continue
+        for ref in re.findall(r'(?:href|src)="([^"#:?]+\.html)(?:#[^"]*)?"', item['htmlPath'].read_text(encoding='utf-8-sig')):
+            target=(item['htmlPath'].parent/unquote(html.unescape(ref))).resolve()
+            if target in routes or not target.is_file() or not target.is_relative_to(source_root): continue
+            stem=re.sub(r'[^a-z0-9]+','-',target.stem.lower()).strip('-')
+            support='cours/'+item['key']+'-'+stem+'.html'
+            routes[target]=base+'/'+support
+            offline_names[target]=(item['track'],'cours/'+item['slug']+'-'+stem+'.html')
+            extra_html.append((item['key'],target,support))
     def attachment(raw, origin):
         parsed = urlsplit(raw)
         if parsed.scheme == 'asset':
@@ -219,6 +231,10 @@ def prepare():
                 captions={'markdown':'Cours','html':'HTML','quiz':'Quiz','tp':'TP'}
                 symbol=(ROOT/'assets/resource-icons'/f'{kind}.svg').read_text(encoding='utf-8').replace('<svg ','<svg class="resource-symbol" aria-hidden="true" ',1)
                 entries.append(dict(kind=kind,href=href,label=captions[kind],chapterTitle=label,track=tid,symbol=symbol))
+            if item.get('guidedTp'):
+                # Projet guidé : la page du chapitre EST le guide HTML (plus de page Markdown ni de boutons redondants).
+                guided=next(r for r in entries if r['kind']=='html')
+                entries=[dict(guided,href=item['href'],label='Projet guidé')]
             registry[key]=entries
             buttons=''.join('<a class="resource-button" data-resource-kind="'+r['kind']+'" href="'+r['href']+'"><span class="resource-icon">'+r['symbol']+'</span><span class="resource-label">'+r['label']+'</span></a>' for r in entries)
             def bar(download=None): return '<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="'+key+'"><div class="resource-buttons">'+buttons+'</div><div class="resource-actions">'+(download or '')+'<button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>'
@@ -226,10 +242,8 @@ def prepare():
             public_text=resolve(course_text,item['path']); relative='telechargements/'+tid+'/cours/'+slug+'.md'
             write(stage/relative,public_text); files['cours/'+slug+'.md']=offline(course_text,item['path'])
             pdf_entries.append(dict(key=key,title=label,href=item['href'],download=relative,sourceSha256=digest(public_text.encode())))
-            guide_intro=''
-            if item.get('guidedTp'):
-                guide_intro='<div class="note"><strong>Projet Fournil — parcours guidé</strong><p>Commencez par le TP HTML : 12 étapes, un choix de niveau et des points de contrôle.</p><p><a class="resource-button" href="'+base+'/'+key+'/tp">Ouvrir le projet guidé →</a></p></div>\n\n'
-            write(stage/key/'index.md',page(label,bar(download_button(base+'/'+relative,'Télécharger le cours'))+'\n\n'+guide_intro+without_heading(public_text)))
+            if not item.get('guidedTp'):
+                write(stage/key/'index.md',page(label,bar(download_button(base+'/'+relative,'Télécharger le cours'))+'\n\n'+without_heading(public_text)))
             for kind in ('html','quiz'):
                 if kind not in item: continue
                 support='cours/'+key+('-interactif.html' if kind=='html' else '-quiz.html')
@@ -237,6 +251,11 @@ def prepare():
                     authored=item['htmlPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
                     raw=resolve_html(authored,item['htmlPath'])
                     offline_html=resolve_html(authored,item['htmlPath'],True).replace(base+'/assets/','../assets/'); files['cours/'+slug+'.html']=offline_html
+                    for owner,target,extra in extra_html:
+                        if owner!=key: continue
+                        page_text=target.read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
+                        write(stage/extra,resolve_html(page_text,target))
+                        files[offline_names[target][1]]=resolve_html(page_text,target,True).replace(base+'/assets/','../assets/')
                 else:
                     bank=json.loads(item['quizPath'].read_text(encoding='utf-8-sig')); questions=bank['questions']; assert len(questions)==20
                     for q in questions: assert len(q['choices'])==4 and 0<=q['answer']<4 and q['explanation']
@@ -250,6 +269,7 @@ def prepare():
                 if kind=='html' and item.get('guidedTp'):
                     tp_frame=frame.replace('data-support-src="../../../','data-support-src="../../')
                     write(stage/key/'tp.md',page('Projet Fournil — TP guidé',bar(support_download)+'\n'+tp_frame))
+                    write(stage/key/'index.md',page(label,bar(support_download)+'\n'+tp_frame))
             for exercise in item['exercises']:
                 tp=exercise['path']; raw=body(tp.read_text(encoding='utf-8-sig')); tp_label=title(raw); tp_url=base+'/'+exercise['key']; download_stem=exercise['downloadStem']
                 corrected=exercise['correctionPath']; visible=exercise['visible']
